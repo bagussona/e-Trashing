@@ -52,7 +52,7 @@
                 color: #636b6f;
                 padding: 0 25px;
                 font-size: 13px;
-                font-weight: 600;
+                font-weight: 600; 
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -67,5 +67,6 @@
         <div id="app"></div>
         
         <script src="{{asset('js/app.js')}}"></script>
+        <!-- <script src="http://localhost:8080/js/bundle.js"></script> -->
     </body>
 </html>
