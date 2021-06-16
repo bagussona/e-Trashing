@@ -4,7 +4,8 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
+// require('tailwindcss');
 
 /**
  * Next, we will create a fresh React component instance and attach it to
