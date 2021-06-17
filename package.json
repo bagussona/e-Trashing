@@ -30,6 +30,7 @@
         "tailwindcss": "^2.1.4"
     },
     "dependencies": {
-        "fs": "0.0.1-security"
+        "fs": "0.0.1-security",
+        "react-router-dom": "^5.2.0"
     }
 }
