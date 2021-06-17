@@ -17,7 +17,7 @@
 // }
 import React, { useState, useEffect } from 'react';
 
-function Example() {
+function App() {
   const [count, setCount] = useState(0);
 
   // Similar to componentDidMount and componentDidUpdate:
@@ -37,7 +37,7 @@ function Example() {
 }
 
 
-export default Example;
+export default App;
 
 // if (document.getElementById('app')) {
 //     ReactDOM.render(<Example />, document.getElementById('app'));
