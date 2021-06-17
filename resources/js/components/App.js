@@ -18,22 +18,21 @@
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [pageLoading, setPageLoading] = useState(true);
 
-  // Similar to componentDidMount and componentDidUpdate:
-  useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
-  });
+  useEffect(
+    () => setPageLoading(false)
+  )
 
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
+  if (pageLoading) {
+    return (
+      <div>Loading</div>
+    )
+  } else if (!pageLoading) {
+    return (
+      <div>Bank Sampah Loaded</div>
+    )
+  }
 }
 
 
