@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+// Route::get('/', function () {
+//     return view('app');
+// });
+
+Route::get('/{path?}', [
+  'uses' => 'ReactController@show', 
+  'as' => 'app', 
+  'where' => ['path' => '.*']
+]);
 
 Auth::routes();
 
