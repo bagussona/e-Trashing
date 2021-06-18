@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
+import Dashboard from './Dashboard';
 
 function App() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -24,6 +25,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' component={Login} />
+          <Route path='/dashboard' component={Dashboard} />
         </Switch>
       </Router>
     )
