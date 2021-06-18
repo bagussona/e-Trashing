@@ -27,6 +27,9 @@ class UserController extends Controller
         return response()->json(compact('credentials', 'token'));
     }
 
+
+##### Customer Area #####
+
     public function registerCustomer(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
@@ -51,6 +54,10 @@ class UserController extends Controller
 
         return response()->json(compact('customer'), 201);
     }
+
+##### End of Customer Area #####
+
+##### Staff Area #####
 
     public function registerStaff(Request $request){
         // dd($request);
@@ -77,6 +84,11 @@ class UserController extends Controller
         return response()->json(compact('staff'), 201);
     }
 
+##### End of Staff Area #####
+
+
+##### Pengepul Area #####
+
     public function registerPengepul(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
@@ -101,6 +113,11 @@ class UserController extends Controller
 
         return response()->json(compact('pengepul'), 201);
     }
+
+##### End of Pengepul Area #####
+
+
+##### All User can access the feature ######
 
     public function userProfile()
     {
@@ -127,3 +144,5 @@ class UserController extends Controller
         return response()->json(compact('user'));
     }
 }
+
+##### End of Feature #####
