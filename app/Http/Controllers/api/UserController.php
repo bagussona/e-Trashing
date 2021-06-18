@@ -27,7 +27,7 @@ class UserController extends Controller
         return response()->json(compact('credentials', 'token'));
     }
 
-    public function register(Request $request){
+    public function registerCustomer(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:100',
@@ -50,7 +50,53 @@ class UserController extends Controller
         return response()->json(compact('customer'), 201);
     }
 
-    public function getAuthenticatedUser()
+    public function registerStaff(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:100',
+        'username' => 'required|string|max:20|unique:users',
+        'email' => 'required|string|email|max:50|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $staff1 = User::create([
+            'name' => $request->get('name'),
+            'username' => $request->get('username'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+        ]);
+
+        return response()->json(compact('staff1'), 201);
+    }
+
+    public function registerPengepul(Request $request){
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:100',
+        'username' => 'required|string|max:20|unique:users',
+        'email' => 'required|string|email|max:50|unique:users',
+        'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $pengepul = User::create([
+            'name' => $request->get('name'),
+            'username' => $request->get('username'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+        ]);
+
+        return response()->json(compact('pengepul'), 201);
+    }
+
+    public function userProfile()
     {
         try {
 

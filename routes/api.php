@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('register', 'api\UserController@register');
+Route::post('register', 'api\UserController@registerCustomer');
 Route::post('login', 'api\UserController@login');
 
-Route::get('profile', 'api\UserController@getAuthenticatedUser')->middleware('jwt.verify');
+Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
