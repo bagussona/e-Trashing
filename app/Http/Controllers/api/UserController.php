@@ -47,6 +47,8 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password')),
         ]);
 
+        $customer->assignRole('customer');
+
         return response()->json(compact('customer'), 201);
     }
 
@@ -63,14 +65,16 @@ class UserController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $staff1 = User::create([
+        $staff = User::create([
             'name' => $request->get('name'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
 
-        return response()->json(compact('staff1'), 201);
+        $staff->assignRole('staff');
+
+        return response()->json(compact('staff'), 201);
     }
 
     public function registerPengepul(Request $request){
@@ -92,6 +96,8 @@ class UserController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
+
+        $pengepul->assignRole('pengepul');
 
         return response()->json(compact('pengepul'), 201);
     }

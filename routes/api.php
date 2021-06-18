@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::post('register', 'api\UserController@registerCustomer');
-Route::post('pengepul/register', 'api\UserController@registerPengepul');
-Route::post('staff/register', 'api\UserController@registerStaff');
+Route::post('register/pengepul', 'api\UserController@registerPengepul');
+Route::post('register/staff', 'api\UserController@registerStaff');
 
 Route::post('login', 'api\UserController@login');
 
