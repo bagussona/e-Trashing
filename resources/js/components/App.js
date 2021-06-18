@@ -8,17 +8,24 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
+import LoadingPage from './Assets/LoadingPage';
 
 function App() {
   const [pageLoading, setPageLoading] = useState(true);
 
   useEffect(
+    // () => {
     () => setPageLoading(false)
+
+      // return () => {
+      //   setPageLoading(true)
+      // }
+    // }
   )
 
   if (pageLoading) {
     return (
-      <div>Loading</div>
+      <LoadingPage />
     )
   } else if (!pageLoading) {
     return (
