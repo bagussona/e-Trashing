@@ -356,12 +356,15 @@ function Login() {
   var login = function login() {
     var formData = new FormData(); // formData.append('name', 'customer');
 
-    formData.append('username', 'linda'); // formData.append('email', 'sayaganteng@gantengsekali.com');
+    formData.append('username', 'admin'); // formData.append('email', 'sayaganteng@gantengsekali.com');
 
-    formData.append('password', 'lfy256lfy256'); // formData.append('password_confirmation', '123123123')
+    formData.append('password', 'adminadmin'); // formData.append('password_confirmation', '123123123')
 
-    fetch('http://localhost:8000/api/login', {
+    fetch('https://bts-id.herokuapp.com/api/login', {
       method: 'POST',
+      headers: {
+        'cors': 'no-cors'
+      },
       body: formData
     }).then( /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(res) {

@@ -13,9 +13,12 @@ function Login() {
     // formData.append('password_confirmation', '123123123')
 
     fetch(
-      'http://localhost:8000/api/login', 
+      'https://bts-id.herokuapp.com/api/login', 
       {
         method: 'POST',
+        headers: {
+          'cors': 'no-cors'
+        },
         body: formData
       }
     )

@@ -18,14 +18,6 @@ mix.js('resources/js/app.js', 'public/js')
     require("tailwindcss"),
   ]);
 
-// exports.onCreateWebpackConfig = ({actions, getConfig}) => {
-//   const config = getConfig();
-
-//   config.node = {
-//     fs: 'empty'
-//   };
-// }
-
 // module.exports = {
 //   module: {
 //     rules: [
