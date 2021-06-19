@@ -66,7 +66,7 @@
     <body>
         <div id="app" class="min-h-screen 2xl:container 2xl:mx-auto p-8"></div>
         
-        <script src="{{asset('js/app.js')}}"></script>
+        <script src="{{mix('js/app.js')}}"></script>
         <!-- <script src="http://localhost:8080/js/bundle.js"></script> -->
     </body>
 </html>
