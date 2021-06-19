@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 function Login() {
@@ -13,7 +14,7 @@ function Login() {
     // formData.append('password_confirmation', '123123123')
 
     fetch(
-      'http://localhost:8000/api/login', 
+      'https://bts-id.herokuapp.com/api/login', 
       {
         method: 'POST',
         headers: {
@@ -24,9 +25,18 @@ function Login() {
     )
     .then(async res => {
       const body = await res.json();
-      console.log(body)
+      const data = document.querySelector('#data');
+      data.innerHTML = JSON.stringify(body, null, 2)
     })
     .catch(err => console.error(err))
+    // axios.post('http://bts-id.herokuapp.com', {
+    //   data: formData, 
+    //   headers: {
+    //     'cors': 'no-cors'
+    //   }
+    // })
+    // .then(res => console.log(res))
+    // .catch(err => console.error(err))
   }
 
   useEffect(() => {
@@ -37,6 +47,7 @@ function Login() {
     <>
       <div>Login</div>
       <Link to='/'>Home</Link>
+      <div><pre id="data"></pre></div>
     </>
   )
 }
