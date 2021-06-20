@@ -1,11 +1,15 @@
 import { React, useState } from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 import Dashboard from '../Dashboard';
-import { deleteToken, token } from '../../token/token';
 // import Home from './Home';
 
 
 function Home() {
+
+  const getCookieValue = (name) => (
+    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
+  )
+
   return (
     <div>
       <div>
@@ -17,8 +21,7 @@ function Home() {
         <Route path='/dashboard' component={Dashboard} />
         <Route exact path='/' component={Home} />
       </Switch> */}
-      <div>{token}</div>
-      <button onClick={() => deleteToken()}>Delete token</button>
+      <div><pre>{getCookieValue('current_token')}</pre></div>
     </div>
   )
 }

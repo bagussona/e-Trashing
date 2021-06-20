@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginAxios, loginFetch } from '../apis/api';
-import { token, saveToken } from '../token/token';
 
 function Login() {
   const [userCredential, setUserCredential] = useState({
@@ -33,20 +32,20 @@ function Login() {
     //   data.innerHTML = JSON.stringify(body, null, 2)
     // })
     // .catch(err => console.error(err))
-    // loginAxios(formData)
-    // .then(res => {
-    //   saveToken(res.data.token);
-    //   document.querySelector('#data').innerHTML = JSON.stringify(res.data, null, 2);
-    //   console.log(token);
-    // })
-    // .catch(err => console.error(err));
-    loginFetch(formData)
+    loginAxios(formData)
     .then(res => {
-      saveToken(res);
-      document.querySelector('#data').innerHTML = JSON.stringify(res, null, 2);
-      // console.log(token)
+      document.querySelector('#data').innerHTML = JSON.stringify(res.data, null, 2);
+      document.cookie = `current_token=${res.token}`
     })
     .catch(err => console.error(err));
+    // loginFetch(formData)
+    // .then(res => {
+    //   // saveToken(res.token);
+    //   document.querySelector('#data').innerHTML = JSON.stringify(res, null, 2);
+    //   document.cookie = `current_token=${res.token}`
+    //   // console.log(token)
+    // })
+    // .catch(err => console.error(err));
   }
 
   // const testButton = (data) => {
