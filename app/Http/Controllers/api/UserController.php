@@ -13,6 +13,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class UserController extends Controller
 {
     public function login(Request $request){
+        $msg = "Logged In";
         $credentials = $request->only('username', 'password');
 
         try{
@@ -24,7 +25,7 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        return response()->json(compact('credentials', 'token'));
+        return response()->json(compact('token', 'msg'));
     }
 
 
