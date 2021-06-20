@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-
 Route::middleware(['cors'])->group(function () {
     // Route::post('/hogehoge', 'Controller@hogehoge');
 
