@@ -19,10 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('register', 'api\UserController@registerCustomer');
-Route::post('register/pengepul', 'api\UserController@registerPengepul');
-Route::post('register/staff', 'api\UserController@registerStaff');
 
-Route::post('login', 'api\UserController@login');
+Route::middleware(['cors'])->group(function () {
+    // Route::post('/hogehoge', 'Controller@hogehoge');
 
-Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
+    Route::post('register', 'api\UserController@registerCustomer');
+    Route::post('register/pengepul', 'api\UserController@registerPengepul');
+    Route::post('register/staff', 'api\UserController@registerStaff');
+
+    Route::post('login', 'api\UserController@login');
+
+    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
+
+});
+
+
