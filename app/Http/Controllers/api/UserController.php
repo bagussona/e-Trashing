@@ -8,12 +8,14 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
+use Spatie\Permission\Contracts\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserController extends Controller
 {
     public function login(Request $request){
         $logged_in = "true";
+
         $credentials = $request->only('username', 'password');
 
         try{
