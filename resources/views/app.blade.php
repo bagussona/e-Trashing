@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet"> -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
         <!-- Styles -->
         <!-- <style>
             html, body {
@@ -52,7 +52,7 @@
                 color: #636b6f;
                 padding: 0 25px;
                 font-size: 13px;
-                font-weight: 600; 
+                font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -65,7 +65,7 @@
     </head>
     <body>
         <div id="app" class="min-h-screen 2xl:container 2xl:mx-auto p-8"></div>
-        
+
         <script src="{{mix('js/app.js')}}"></script>
         <!-- <script src="http://localhost:8080/js/bundle.js"></script> -->
     </body>
