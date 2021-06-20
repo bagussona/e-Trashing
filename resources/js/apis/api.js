@@ -3,16 +3,16 @@ import axios from 'axios';
 const apiUrl = "https://bts-id.herokuapp.com/api"
 
 const loginAxios = (data) => {
-  var exportData = null;
+  // var exportData = null;
   
-  axios.post('https://bts-id.herokuapp.com', data)
+  const axiosData = axios.post(`${apiUrl}/login`, data)
   .then(res => {
-    console.log(res)
-    exportData = res
+    // console.log(res)
+    return res;
   })
-  .catch(err => console.error(err))
+  .catch(err => err)
 
-  return exportData;
+  return axiosData;
 }
 
 const loginFetch = (data) => {
@@ -21,7 +21,7 @@ const loginFetch = (data) => {
   const fetchData = fetch(
     `${apiUrl}/login`, 
     {
-      method: 'POST', 
+      method: 'POST',
       body: data
     }
   )
@@ -29,7 +29,7 @@ const loginFetch = (data) => {
     if (res.status == 200) {
       const body = await res.json();
       // return exportData = body.token;
-      return body.token;
+      return body;
     }
   })
   .catch(err => err)
