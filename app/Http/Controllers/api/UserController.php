@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -15,19 +16,23 @@ class UserController extends Controller
 {
     public function login(Request $request){
         $logged_in = "true";
-
         $credentials = $request->only('username', 'password');
+        // $role = $request->user();
 
         try{
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
-                }
-            } catch (JWTException $e){
+            }
+        } catch (JWTException $e){
 
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
+        // $role = Auth::user()->roles->pluck('name', 'id');
+        $role = Auth::user()->role_names[0];
+        // $role = Auth::user();
+        // dd($role);
 
-        return response()->json(compact('token', 'logged_in'));
+        return response()->json(compact('token', 'logged_in', 'role'));
     }
 
 

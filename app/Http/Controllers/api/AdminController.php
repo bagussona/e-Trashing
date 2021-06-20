@@ -11,6 +11,9 @@ use JWTAuth;
 
 class AdminController extends Controller
 {
+
+##### Admin Permission #####
+
     public function updateStaff(Request $request, $id){
         $this->validate($request, [
             'name' => 'required|string|max:50',
@@ -26,7 +29,9 @@ class AdminController extends Controller
         ]);
     }
 
-    ##### Bendahara Area #####
+##### Update profile by admin #####
+
+##### Bendahara Area #####
 
     public function registerBendahara(Request $request){
         // dd($request);
@@ -53,5 +58,7 @@ class AdminController extends Controller
         return response()->json(compact('bendahara'), 201);
     }
 
-##### End of Pengepul Area #####
+##### End of Bendahara Area #####
+
+
 }
