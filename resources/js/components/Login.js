@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginAxios, loginFetch } from '../apis/api';
 
-function Login() {
+function Login(props) {
+  const { history } = props;
+
   const [userCredential, setUserCredential] = useState({
     username: '', 
     password: ''
@@ -14,8 +16,12 @@ function Login() {
     formData.append('password', userCredential.password);
 
     loginAxios(formData)
-    .then(res => {
-      console.log(res)
+    .then(async res => {
+      const body = await res;
+      const cookies = body.data;
+
+      document.cookie = 
+      // history.push('/dashboard')
     })
   }
 
