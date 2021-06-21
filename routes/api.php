@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::middleware(['cors'])->group(function () {
-    // Route::post('/hogehoge', 'Controller@hogehoge');
 
     Route::post('register', 'api\UserController@registerCustomer');
     Route::post('register/pengepul', 'api\UserController@registerPengepul');
@@ -28,8 +27,11 @@ Route::middleware(['cors'])->group(function () {
     Route::post('register/bendahara', 'api\AdminController@registerBendahara');
 
     Route::post('login', 'api\UserController@login');
+    Route::get('form/dataLogin', 'api\UserController@listData');
 
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
+    Route::post('profile/update/{id}', 'api\AdminController@update');
+    Route::delete('profile/delete/{id}', 'api\AdminController@destroy');
 
 });
 

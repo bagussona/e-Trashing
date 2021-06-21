@@ -11,16 +11,37 @@ use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Spatie\Permission\Contracts\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
+// use Symfony\Component\HttpFoundation\Cookie;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
+
+    ##### Decode Cookies #####
+
+        // private function getLoginData(){
+        //     // $credentials = $request->only('username', 'password');
+        //     // // $token = auth()->attempt($credentials);
+        //     // $token = JWTAuth::attempt($credentials);
+
+        //     // return response()->json(compact('token'));
+
+        //     $login_data = json_decode(request()->cookie('form_login'), false);
+        //     $login_data = $login_data != '' ? $login_data:[];
+
+        //     return $login_data;
+        // }
+
+    ##### End of Decode Cookies #####
+
     public function login(Request $request){
         $logged_in = "true";
         $credentials = $request->only('username', 'password');
-        // $role = $request->user();
+            $username = $credentials['username'];
 
         try{
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (! $token = JWTAuth::attempt($credentials)){
+                // dd($token);
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
         } catch (JWTException $e){
@@ -28,21 +49,45 @@ class UserController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
         // $role = Auth::user()->roles->pluck('name', 'id');
+
         $role = Auth::user()->role_names[0];
         // $role = Auth::user();
         // dd($role);
 
-        return response()->json(compact('token', 'logged_in', 'role'));
+
+        ##### Cookies #####
+        // $login_data = [
+        //     'logged_in' => $logged_in,
+        //     'credentials' => $credentials,
+        //     'token' => $token,
+        //     'role' => $role
+        // ];
+        // $cookie = cookie('form_login', json_encode($login_data), 1440);
+        // dd(Cookie::get());
+
+        ##### end of Cookies #####
+        return response()->json(compact('logged_in', 'username', 'token', 'role'), 200);
     }
 
 
-##### Customer Area #####
+    ##### List Data #####
+
+        // public function listData(){
+        //     $list_data = $this->getLoginData();
+        //     // dd($list_data);
+
+        //     return response()->json(compact('list_data'));
+        // }
+
+    ##### End of List Data #####
+
+    ##### Customer Area #####
 
     public function registerCustomer(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:100',
-        'username' => 'required|string|max:20|unique:users',
+            'name' => 'required|string|max:100',
+            'username' => 'required|string|max:20|unique:users',
         'email' => 'required|string|email|max:50|unique:users',
         'password' => 'required|string|min:6|confirmed',
         ]);
@@ -56,6 +101,8 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+            'location' => '-7.995573596215699, 110.29540549192244'
         ]);
 
         $customer->assignRole('customer');
@@ -85,6 +132,8 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+            'location' => '-7.995573596215699, 110.29540549192244'
         ]);
 
         $staff->assignRole('staff');
@@ -115,6 +164,8 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+            'location' => '-7.995573596215699, 110.29540549192244'
         ]);
 
         $pengepul->assignRole('pengepul');
