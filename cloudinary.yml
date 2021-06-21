@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: tookoo-dil
+  api_key: '219477799662292'
+  api_secret: HQSuHDssMzoU11hfplY6MGXT9ms
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: tookoo-dil
+  api_key: '219477799662292'
+  api_secret: HQSuHDssMzoU11hfplY6MGXT9ms
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: tookoo-dil
+  api_key: '219477799662292'
+  api_secret: HQSuHDssMzoU11hfplY6MGXT9ms
+  enhance_image_tag: true
+  static_file_support: false
