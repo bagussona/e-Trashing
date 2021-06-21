@@ -25,6 +25,7 @@ Route::middleware(['cors'])->group(function () {
     Route::post('register', 'api\UserController@registerCustomer');
     Route::post('register/pengepul', 'api\UserController@registerPengepul');
     Route::post('register/staff', 'api\UserController@registerStaff');
+    Route::post('register/bendahara', 'api\AdminController@registerBendahara');
 
     Route::post('login', 'api\UserController@login');
 
