@@ -10,73 +10,37 @@ function Login() {
 
   const userLogin = () => {
     const formData = new FormData();
-    // formData.append('name', 'customer');
     formData.append('username', userCredential.username);
-    // formData.append('email', 'sayaganteng@gantengsekali.com');
     formData.append('password', userCredential.password);
-    // formData.append('password_confirmation', '123123123')
 
-    // fetch(
-    //   'https://bts-id.herokuapp.com/api/login', 
-    //   {
-    //     method: 'POST',
-    //     // headers: {
-    //     //   'cors': 'no-cors'
-    //     // },
-    //     body: formData
-    //   }
-    // )
-    // .then(async res => {
-    //   const body = await res.json();
-    //   const data = document.querySelector('#data');
-    //   data.innerHTML = JSON.stringify(body, null, 2)
-    // })
-    // .catch(err => console.error(err))
     loginAxios(formData)
     .then(res => {
-      document.querySelector('#data').innerHTML = JSON.stringify(res.data, null, 2);
-      document.cookie = `current_token=${res.token}`
+      document.querySelector('#data').innerHTML = JSON.stringify(res, null, 2);
+
+      if (res.name === 'Error') {
+        document.cookie = "current_token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+      } else {
+        document.cookie = `current_token = ${res.data.token}`
+        document.cookie = `logged_in = ${res.data.logged_in}`
+      }
     })
-    .catch(err => console.error(err));
-    // loginFetch(formData)
-    // .then(res => {
-    //   // saveToken(res.token);
-    //   document.querySelector('#data').innerHTML = JSON.stringify(res, null, 2);
-    //   document.cookie = `current_token=${res.token}`
-    //   // console.log(token)
-    // })
-    // .catch(err => console.error(err));
   }
 
-  // const testButton = (data) => {
-  //   saveToken(data);
-  //   // console.log(typeof(data.toString()))
-
-  //   document.querySelector('#data').innerHTML = token;
-  // }
-
-  // useEffect(() => {
-  //   // console.log(userCredential)
-  //   userLogin();
-  // })
-
   return (
-    <>
+    <div className="box-content flex flex-col items-center">
       {/* <div>Login</div> */}
       <input type="text" value={userCredential.username} onChange={(ev) => setUserCredential({
         ...userCredential, 
         username: ev.target.value
-      })}/>
+      })} className="p-2 m-4 w-80 border border-transparent focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent shadow-md"/>
       <input type="password" value={userCredential.password} onChange={(ev) => setUserCredential({
         ...userCredential,
         password  : ev.target.value
-      })}/>
-      <button onClick={() => userLogin()}>Masuk
-      {/* <button onClick={() => testButton(JSON.stringify(userCredential, null, 2))}>Test Button</button> */}
-    </button>
+      })} className="p-2 m-4 w-80 border border-transparent focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent shadow-md"/>
+      <button onClick={() => userLogin()} className="font-extralight p-2 bg-green-600 hover:bg-green-700 active:bg-green-600 focus:outline-none text-white w-20 text-lg tracking-widest" style={{fontFamily: ['Inter', 'sans-serif']}}>Masuk</button>
       <Link to='/'>Home</Link>
-      <div><pre id="data"></pre></div>
-    </>
+      <div className="shadow-2xl w-1/2 overflow-x-auto bg-green-100 text-green-600 rounded-sm p-2"><pre id="data"></pre></div>
+    </div>
   )
 }
 

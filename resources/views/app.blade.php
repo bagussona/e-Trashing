@@ -8,7 +8,7 @@
 
         <!-- Fonts -->
         <!-- <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet"> -->
-        <link href="css/app.css" rel="stylesheet">
+        <link href="{{mix('css/app.css')}}" rel="stylesheet">
         <!-- Styles -->
         <!-- <style>
             html, body {
@@ -64,7 +64,7 @@
         </style> -->
     </head>
     <body>
-        <div id="app" class="min-h-screen 2xl:container 2xl:mx-auto p-8"></div>
+        <div id="app"></div>
 
         <script src="{{mix('js/app.js')}}"></script>
         <!-- <script src="http://localhost:8080/js/bundle.js"></script> -->

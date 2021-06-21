@@ -7,35 +7,15 @@ const loginAxios = (data) => {
   
   const axiosData = axios.post(`${apiUrl}/login`, data)
   .then(res => {
-    // console.log(res)
-    return res;
+    return res
   })
-  .catch(err => err)
+  .catch(err => {
+    // console.log(err)
+    return err
+  })
 
   return axiosData;
 }
 
-const loginFetch = (data) => {
-  // var exportData = null;
 
-  const fetchData = fetch(
-    `${apiUrl}/login`, 
-    {
-      method: 'POST',
-      body: data
-    }
-  )
-  .then(async res => {
-    if (res.status == 200) {
-      const body = await res.json();
-      // return exportData = body.token;
-      return body;
-    }
-  })
-  .catch(err => err)
-
-  return fetchData;
-}
-
-
-export { loginAxios, loginFetch };
+export { loginAxios };
