@@ -62,7 +62,7 @@ class UserController extends Controller
 
     public function listData(){
         $list_data = $this->getLoginData();
-        dd($list_data);
+        // dd($list_data);
 
         return response()->json(compact('list_data'));
     }
