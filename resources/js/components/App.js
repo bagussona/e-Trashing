@@ -30,16 +30,14 @@ function App() {
     )
   } else if (!pageLoading) {
     return (
-      <div className="min-h-screen 2xl:container 2xl:mx-auto p-10">
-        <Router>
+      <Router>
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route path='/dashboard' component={Dashboard} />
             <Route path='/login' component={Login} />
             <Route path='/register' component={Register} />
-            <Route path='/dashboard' component={Dashboard} />
           </Switch>
         </Router>
-      </div>
     )
   }
 }
