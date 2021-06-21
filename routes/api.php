@@ -27,7 +27,7 @@ Route::middleware(['cors'])->group(function () {
     Route::post('register/bendahara', 'api\AdminController@registerBendahara');
 
     Route::post('login', 'api\UserController@login');
-    Route::get('form/dataLogin', 'api\UserController@listData');
+    Route::get('token', 'api\UserController@getToken');
 
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
     Route::post('profile/update/{id}', 'api\AdminController@update');

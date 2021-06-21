@@ -19,18 +19,13 @@ class UserController extends Controller
 
     ##### Decode Cookies #####
 
-        // private function getLoginData(){
-        //     // $credentials = $request->only('username', 'password');
-        //     // // $token = auth()->attempt($credentials);
-        //     // $token = JWTAuth::attempt($credentials);
+        private function getLoginData(){
 
-        //     // return response()->json(compact('token'));
+            $cookies = json_decode(request()->cookie('token'), true);
+            $cookies = $cookies != '' ? $cookies:[];
 
-        //     $login_data = json_decode(request()->cookie('form_login'), false);
-        //     $login_data = $login_data != '' ? $login_data:[];
-
-        //     return $login_data;
-        // }
+            return $cookies;
+        }
 
     ##### End of Decode Cookies #####
 
@@ -56,28 +51,31 @@ class UserController extends Controller
 
 
         ##### Cookies #####
-        // $login_data = [
+        $cookies = [
         //     'logged_in' => $logged_in,
         //     'credentials' => $credentials,
-        //     'token' => $token,
-        //     'role' => $role
-        // ];
-        // $cookie = cookie('form_login', json_encode($login_data), 1440);
+            'token' => $token,
+            // 'role' => $role
+        ];
+        $cookie = cookie('token', json_encode($cookies), 1440);
         // dd(Cookie::get());
 
         ##### end of Cookies #####
-        return response()->json(compact('logged_in', 'username', 'token', 'role'), 200);
+
+        return response()->json(compact('logged_in', 'username', 'token', 'role'), 200)->cookie($cookie);
     }
 
 
     ##### List Data #####
 
-        // public function listData(){
-        //     $list_data = $this->getLoginData();
-        //     // dd($list_data);
+        public function getToken(){
+            $token = $this->getLoginData();
+            $jwt = $token['token'];
+            // dd($jwt);
+            // dd($token[0]);
 
-        //     return response()->json(compact('list_data'));
-        // }
+            return response()->json(compact('jwt'), 200);
+        }
 
     ##### End of List Data #####
 
