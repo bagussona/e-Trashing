@@ -20,7 +20,7 @@ function Login(props) {
       const body = await res;
       const cookies = body.data;
 
-      document.cookie = 
+      console.log(cookies)
       // history.push('/dashboard')
     })
   }
