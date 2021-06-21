@@ -11,28 +11,33 @@ use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Spatie\Permission\Contracts\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
+// use Symfony\Component\HttpFoundation\Cookie;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
 
-    private function getLoginData(){
-        // $credentials = $request->only('username', 'password');
-        // // $token = auth()->attempt($credentials);
-        // $token = JWTAuth::attempt($credentials);
+    ##### Decode Cookies #####
 
-        // return response()->json(compact('token'));
+        // private function getLoginData(){
+        //     // $credentials = $request->only('username', 'password');
+        //     // // $token = auth()->attempt($credentials);
+        //     // $token = JWTAuth::attempt($credentials);
 
-        $login_data = json_decode(request()->cookie('form_login'), true);
-        $login_data = $login_data != '' ? $login_data:[];
+        //     // return response()->json(compact('token'));
 
-        return $login_data;
-    }
+        //     $login_data = json_decode(request()->cookie('form_login'), false);
+        //     $login_data = $login_data != '' ? $login_data:[];
+
+        //     return $login_data;
+        // }
+
+    ##### End of Decode Cookies #####
 
     public function login(Request $request){
         $logged_in = "true";
         $credentials = $request->only('username', 'password');
-        // $role = $request->user();
-
+            $username = $credentials['username'];
 
         try{
             if (! $token = JWTAuth::attempt($credentials)){
@@ -49,23 +54,32 @@ class UserController extends Controller
         // $role = Auth::user();
         // dd($role);
 
-        $login_data = [
-            'logged_in' => $logged_in,
-            'credentials' => $credentials,
-            'token' => $token,
-            'role' => $role
-        ];
-        $cookie = cookie('form_login', json_encode($login_data), 1440);
 
-        return response()->json(['success' => 'Anda Berhasil Login'])->cookie($cookie);
+        ##### Cookies #####
+        // $login_data = [
+        //     'logged_in' => $logged_in,
+        //     'credentials' => $credentials,
+        //     'token' => $token,
+        //     'role' => $role
+        // ];
+        // $cookie = cookie('form_login', json_encode($login_data), 1440);
+        // dd(Cookie::get());
+
+        ##### end of Cookies #####
+        return response()->json(compact('logged_in', 'username', 'token', 'role'), 200);
     }
 
-    public function listData(){
-        $list_data = $this->getLoginData();
-        // dd($list_data);
 
-        return response()->json(compact('list_data'));
-    }
+    ##### List Data #####
+
+        // public function listData(){
+        //     $list_data = $this->getLoginData();
+        //     // dd($list_data);
+
+        //     return response()->json(compact('list_data'));
+        // }
+
+    ##### End of List Data #####
 
     ##### Customer Area #####
 
