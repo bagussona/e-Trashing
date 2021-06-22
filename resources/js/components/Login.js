@@ -2,6 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginAxios, loginFetch } from '../apis/api';
 
+const dayParser = (day) => {
+  switch (day) {
+    case 0:
+      return 'Sun';
+    case 1:
+      return 'Mon';
+    case 2:
+      return 'Tue';
+    case 3:
+      return 'Wed';
+    case 4:
+      return 'Thu';
+    case 5:
+      return 'Fri';
+    case 6:
+      return 'Sat';
+    default:
+      break;
+  }
+}
+
+const monthParser = (num) => {
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+  for (let month in months) {
+    if (num == month) {
+      return months[month]
+    }
+  }
+}
+
+const timeDigitParser = (num) => {
+  var newNum = num.toString()
+  if (newNum.length === 1) {
+    return '0'+num
+  } else {
+    return num
+  }
+}
+
 function Login(props) {
   const { history } = props;
 
@@ -18,10 +58,17 @@ function Login(props) {
     loginAxios(formData)
     .then(async res => {
       const body = await res;
+      // console.log('executed first');
       const cookies = body.data;
+      // console.log('executed second');
 
-      console.log(cookies)
-      // history.push('/dashboard')
+      const date = new Date();
+      document.cookie = `token = ${cookies.token}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+      document.cookie = `logged_in = ${cookies.logged_in}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+      document.cookie = `role = ${cookies.role}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+      document.cookie = `username = ${cookies.username}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+      
+      history.push('/dashboard')
     })
   }
 
