@@ -84,7 +84,7 @@ function Login(props) {
               <img className="absolute transform -translate-y-1/2" src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg" style={{ top: 45 + '%' }}/>
               <input 
                 type="text" 
-                className="pl-7 text-base text-gray-400 w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 "
+                className="pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-current bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 "
                 style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }} 
                 placeholder="Enter Your Username" 
                 value={userCredential.username}
@@ -98,7 +98,7 @@ function Login(props) {
               <img className="absolute transform -translate-y-1/2" src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg" style={{ top: 45 + '%' }}/>
               <input 
                 type="password" 
-                className="pl-7 text-base text-gray-400 w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 "
+                className="pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-current bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 "
                 style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}} 
                 placeholder="Password" 
                 value={userCredential.password}

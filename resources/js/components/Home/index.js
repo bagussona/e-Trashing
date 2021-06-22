@@ -13,7 +13,7 @@ function Home() {
   const getCookie = (name) => {
     const cookie = getCookieValue(name);
 
-    return cookie !== '' ? cookie : `${cookie} tidak ditemukan`
+    return cookie || 'tidak ditemukan';
   }
 
   const userLogout = () => {
@@ -28,8 +28,7 @@ function Home() {
   return (
     <div className="min-h-screen 2xl:container 2xl:mx-auto p-10 flex flex-col items-center justify-center">
       <div className="flex space-x-2 mb-4">
-        <Link to='/dashboard'>Dashboard</Link>
-        {getCookie('logged_in') === 'true' ? null : <>
+        {getCookie('logged_in') === 'true' ? <Link to='/dashboard'>Dashboard</Link> : <>
           <Link to='/login'>Masuk</Link>
           <Link to='/register'>Register</Link>
         </>}
