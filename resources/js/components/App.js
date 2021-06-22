@@ -10,6 +10,7 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import LoadingPage from './Assets/LoadingPage';
 import Home from './Home';
+import Footer from './Footer';
 
 function App() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -31,13 +32,14 @@ function App() {
   } else if (!pageLoading) {
     return (
       <Router>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/dashboard' component={Dashboard} />
-            <Route path='/login' component={Login} />
-            <Route path='/register' component={Register} />
-          </Switch>
-        </Router>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+        </Switch>
+        <Footer />
+      </Router>
     )
   }
 }

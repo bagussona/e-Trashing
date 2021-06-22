@@ -66,7 +66,7 @@
         </style> -->
     </head>
     <body>
-        <div id="app" class="bg-gray-100 min-h-screen"></div>
+        <div id="app" class="flex flex-col bg-gray-100 h-screen"></div>
 
         <script src="{{mix('js/app.js')}}"></script>
         <!-- <script src="http://localhost:8080/js/bundle.js"></script> -->
