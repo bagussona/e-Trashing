@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\JenisSampah;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -93,6 +95,81 @@ class AdminController extends Controller
             'data'          => $id
         ], Response::HTTP_NO_CONTENT);
     }
+
+##### End of Delete area #####
+
+##### Logout Function #####
+
+public function logoutSession(Auth $id){
+
+    // dd($id->id);
+    // Auth::logout();
+    $id->auth()->logout(true);
+
+    // Pass true to force the token to be blacklisted "forever"
+    // auth()->logout(true);
+
+    return response()->json(['Sukses' => 'Anda berhasil logout'], 200);
+}
+
+public function logout( Request $request ) {
+
+    $token = $request->header( 'Authorization' );
+    // dd($token);
+
+    try {
+        JWTAuth::parseToken()->invalidate( $token );
+
+        return response()->json( [
+            'error'   => false,
+            'message' => trans( 'auth.logged_out' )
+        ] );
+    } catch ( TokenExpiredException $exception ) {
+        return response()->json( [
+            'error'   => true,
+            'message' => trans( 'auth.token.expired' )
+
+        ], 401 );
+    } catch ( TokenInvalidException $exception ) {
+        return response()->json( [
+            'error'   => true,
+            'message' => trans( 'auth.token.invalid' )
+        ], 401 );
+
+    } catch ( JWTException $exception ) {
+        return response()->json( [
+            'error'   => true,
+            'message' => trans( 'auth.token.missing' )
+        ], 500 );
+    }
+
+    // return response()->json(['Sukses' => 'Anda berhasil logout'], 200);
+}
+
+
+##### Admin CRUD Jenis Sampah @KG #####
+
+    public function storeJenisSampah(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            '@KG' => 'required|integer'
+        ]);
+
+        if ($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $jenisSampah = JenisSampah::create([
+            'name' => $request->get('name'),
+            '@KG' => $request->get('@KG')
+        ]);
+
+        return response()->json(compact('jenisSampah'), 201);
+    }
+
+
+
 
 ##### End of Admin Delete Feature #####
 

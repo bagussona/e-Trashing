@@ -2014,14 +2014,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login */ "./resources/js/components/Login.js");
 /* harmony import */ var _Register__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Register */ "./resources/js/components/Register.js");
 /* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dashboard */ "./resources/js/components/Dashboard.js");
 /* harmony import */ var _Assets_LoadingPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Assets/LoadingPage */ "./resources/js/components/Assets/LoadingPage.js");
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Home */ "./resources/js/components/Home/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Footer.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2036,6 +2037,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // import Home from './Home';
+
 
 
 
@@ -2061,21 +2063,21 @@ function App() {
   );
 
   if (pageLoading) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Assets_LoadingPage__WEBPACK_IMPORTED_MODULE_4__.default, {});
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Assets_LoadingPage__WEBPACK_IMPORTED_MODULE_4__.default, {});
   } else if (!pageLoading) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.BrowserRouter, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Switch, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Switch, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
           exact: true,
           path: "/",
           component: _Home__WEBPACK_IMPORTED_MODULE_5__.default
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
           path: "/dashboard",
           component: _Dashboard__WEBPACK_IMPORTED_MODULE_3__.default
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
           path: "/login",
           component: _Login__WEBPACK_IMPORTED_MODULE_1__.default
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
           path: "/register",
           component: _Register__WEBPACK_IMPORTED_MODULE_2__.default
         })]
@@ -2149,6 +2151,43 @@ function Dashboard() {
 
 /***/ }),
 
+/***/ "./resources/js/components/Footer.js":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Footer.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+function Footer(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    className: "w-full flex items-center justify-center",
+    style: {
+      height: props.height
+    },
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+      className: "text-gray-400 tracking-widest",
+      style: {
+        fontFamily: ['Inter', 'sans-serif'],
+        fontWeight: 200
+      },
+      children: "Bank Tukar Sampah Indonesia | 2021"
+    })
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Footer);
+
+/***/ }),
+
 /***/ "./resources/js/components/Home/index.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/Home/index.js ***!
@@ -2181,17 +2220,25 @@ function Home() {
 
   var getCookie = function getCookie(name) {
     var cookie = getCookieValue(name);
-    return cookie !== '' ? cookie : "".concat(cookie, " tidak ditemukan");
+    return cookie || 'tidak ditemukan';
+  };
+
+  var userLogout = function userLogout() {
+    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "logged_in = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "role = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "username = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    location.reload();
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "min-h-screen 2xl:container 2xl:mx-auto p-10 flex flex-col items-center justify-center",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "flex space-x-2 mb-4",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+      children: getCookie('logged_in') === 'true' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
         to: "/dashboard",
         children: "Dashboard"
-      }), getCookie('logged_in') === 'true' ? null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
           to: "/login",
           children: "Masuk"
@@ -2199,14 +2246,21 @@ function Home() {
           to: "/register",
           children: "Register"
         })]
-      })]
+      })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "w-1/2 overflow-auto",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
-        children: getCookie('current_token')
+        children: getCookie('token')
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
         children: getCookie('logged_in')
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
+        children: getCookie('role')
       })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      onClick: function onClick() {
+        return userLogout();
+      },
+      children: "Logout"
     })]
   });
 }
@@ -2229,9 +2283,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _apis_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../apis/api */ "./resources/js/apis/api.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Footer.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2262,6 +2317,56 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+var dayParser = function dayParser(day) {
+  switch (day) {
+    case 0:
+      return 'Sun';
+
+    case 1:
+      return 'Mon';
+
+    case 2:
+      return 'Tue';
+
+    case 3:
+      return 'Wed';
+
+    case 4:
+      return 'Thu';
+
+    case 5:
+      return 'Fri';
+
+    case 6:
+      return 'Sat';
+
+    default:
+      break;
+  }
+};
+
+var monthParser = function monthParser(num) {
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  for (var month in months) {
+    if (num == month) {
+      return months[month];
+    }
+  }
+};
+
+var timeDigitParser = function timeDigitParser(num) {
+  var newNum = num.toString();
+
+  if (newNum.length === 1) {
+    return '0' + num;
+  } else {
+    return num;
+  }
+};
+
 function Login(props) {
   var history = props.history;
 
@@ -2279,7 +2384,7 @@ function Login(props) {
     formData.append('password', userCredential.password);
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_2__.loginAxios)(formData).then( /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(res) {
-        var body, cookies;
+        var body, cookies, date;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2289,10 +2394,22 @@ function Login(props) {
 
               case 2:
                 body = _context.sent;
-                cookies = body.data;
-                console.log(cookies); // history.push('/dashboard')
 
-              case 5:
+                // console.log('executed first');
+                if (res.status === 200) {
+                  cookies = body.data; // console.log('executed second');
+
+                  date = new Date();
+                  document.cookie = "token = ".concat(cookies.token, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
+                  document.cookie = "logged_in = ".concat(cookies.logged_in, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
+                  document.cookie = "role = ".concat(cookies.role, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
+                  document.cookie = "username = ".concat(cookies.username, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
+                  history.push('/dashboard');
+                } else {
+                  alert(res);
+                }
+
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -2306,124 +2423,167 @@ function Login(props) {
     }());
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-    className: "relative min-h-screen",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-      className: "absolute w-1/4 h-1/2 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 rounded box-border",
-      style: {
-        boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
-      },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: "relative w-full h-full",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "flex items-center justify-center h-24",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
-            className: "text-blue-400 text-2xl subpixel-antialiased",
-            style: {
-              fontFamily: ['Inter', 'sans-serif'],
-              fontWeight: 500
-            },
-            children: "LOGIN | BTS ID"
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: "flex flex-col w-full h-full items-center p-5",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "flex flex-row w-full items-center h-10 mb-6 relative",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-              className: "absolute transform -translate-y-1/2",
-              src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg",
-              style: {
-                top: 45 + '%'
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              type: "text",
-              className: "pl-7 text-base text-gray-400 w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "flex items-center justify-center flex-grow",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "w-1/4 h-4/6 bg-gray-100 rounded box-border",
+        style: {
+          boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
+        },
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "relative w-full h-full",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "flex items-center justify-center h-24",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+              className: "text-blue-400 text-2xl subpixel-antialiased tracking-wider",
               style: {
                 fontFamily: ['Inter', 'sans-serif'],
                 fontWeight: 400
               },
-              placeholder: "Enter Your Username",
-              value: userCredential.username,
-              onChange: function onChange(e) {
-                return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
-                  username: e.target.value
-                }));
-              }
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "flex flex-row w-full items-center h-10 mb-6 relative",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-              className: "absolute transform -translate-y-1/2",
-              src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg",
-              style: {
-                top: 45 + '%'
-              }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              type: "password",
-              className: "pl-7 text-base text-gray-400 w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
-              style: {
-                fontFamily: ['Inter', 'sans-serif'],
-                fontWeight: 400
-              },
-              placeholder: "Password",
-              value: userCredential.password,
-              onChange: function onChange(e) {
-                return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
-                  password: e.target.value
-                }));
-              }
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: "flex flex-row w-full justify-end items-center h-10 mb-6",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-              className: "text-blue-400",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
-                to: "#",
+              children: "WELCOME BACK :)"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "flex flex-col w-full h-full items-center p-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "flex flex-row w-full items-center h-10 mb-6 relative",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                className: "absolute transform -translate-y-1/2",
+                src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg",
+                style: {
+                  top: 45 + '%'
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "text",
+                className: "pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
                 style: {
                   fontFamily: ['Inter', 'sans-serif'],
                   fontWeight: 400
                 },
-                children: "Forgot Password?"
+                placeholder: "Enter Your Username",
+                value: userCredential.username,
+                onChange: function onChange(e) {
+                  return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
+                    username: e.target.value
+                  }));
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "flex flex-row w-full items-center h-10 mb-6 relative",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                className: "absolute transform -translate-y-1/2",
+                src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg",
+                style: {
+                  top: 45 + '%'
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "password",
+                className: "pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
+                style: {
+                  fontFamily: ['Inter', 'sans-serif'],
+                  fontWeight: 400
+                },
+                placeholder: "Password",
+                value: userCredential.password,
+                onChange: function onChange(e) {
+                  return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
+                    password: e.target.value
+                  }));
+                }
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "flex flex-row w-full justify-end items-center h-10 mb-6",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                className: "text-blue-400",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+                  to: "#",
+                  style: {
+                    fontFamily: ['Inter', 'sans-serif'],
+                    fontWeight: 400
+                  },
+                  children: "Forgot Password?"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "flex flex-row w-full justify-end items-center h-10 mb-6 space-x-4",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                className: "h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-200 active:bg-white transition-colors duration-300 shadow-md",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "text-blue-400",
+                  style: {
+                    fontFamily: ['Inter', 'sans-serif'],
+                    fontWeight: 400
+                  },
+                  children: "SIGN UP"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                className: "h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-md",
+                onClick: function onClick() {
+                  return userLogin();
+                },
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "text-white",
+                  style: {
+                    fontFamily: ['Inter', 'sans-serif'],
+                    fontWeight: 400
+                  },
+                  children: "SIGN IN"
+                })
+              })]
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "absolute w-11/12 bg-blue-400 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded",
+            style: {
+              height: 23 + '%',
+              bottom: -82,
+              boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
+            },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "w-full h-full flex items-center justify-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "flex flex-row items-center space-x-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "inline-block text-white mr-2",
+                  style: {
+                    fontFamily: ['Inter', 'sans-serif'],
+                    fontWeight: 400
+                  },
+                  children: "Sign in With"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                  href: "https://google.com",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/google.svg",
+                    style: {
+                      height: 24 + 'px',
+                      width: 24 + 'px'
+                    }
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                  href: "https://facebook.com",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/facebook.svg",
+                    style: {
+                      height: 24 + 'px',
+                      width: 24 + 'px'
+                    }
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+                  href: "https://twitter.com",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                    src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/twitter.svg",
+                    style: {
+                      height: 24 + 'px',
+                      width: 24 + 'px'
+                    }
+                  })
+                })]
               })
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            className: "flex flex-row w-full justify-end items-center h-10 mb-6 space-x-4",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-              className: "h-full bg-white shadow-md px-6 rounded focus:outline-none hover:bg-gray-200 active:bg-white transition-colors duration-300",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                className: "text-blue-400",
-                style: {
-                  fontFamily: ['Inter', 'sans-serif'],
-                  fontWeight: 400
-                },
-                children: "SIGN UP"
-              })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-              className: "h-full bg-blue-400 shadow-md px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300",
-              onClick: function onClick() {
-                return userLogin();
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-                className: "text-white",
-                style: {
-                  fontFamily: ['Inter', 'sans-serif'],
-                  fontWeight: 400
-                },
-                children: "SIGN IN"
-              })
-            })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "absolute w-11/12 bg-blue-400 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded",
-          style: {
-            height: 25 + '%',
-            bottom: -82,
-            boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'
-          }
-        })]
+        })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-      className: ""
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_3__.default, {
+      height: "25%"
     })]
   });
 }

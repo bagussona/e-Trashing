@@ -32,6 +32,8 @@ Route::middleware(['cors'])->group(function () {
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
     Route::post('profile/update/{id}', 'api\AdminController@update');
     Route::delete('profile/delete/{id}', 'api\AdminController@destroy');
+    Route::post('logout/{id}', 'api\AdminController@logoutSession');
+    Route::post('logout', 'api\AdminController@logout');
 
 });
 
