@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
@@ -12,6 +13,7 @@ use JWTAuth;
 use Spatie\Permission\Contracts\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 // use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
@@ -60,8 +62,6 @@ class UserController extends Controller
         $cookie = cookie('token', json_encode($cookies), 1440);
         // dd(Cookie::get());
 
-        ##### end of Cookies #####
-
         return response()->json(compact('logged_in', 'username', 'token', 'role'), 200)->cookie($cookie);
     }
 
@@ -84,8 +84,9 @@ class UserController extends Controller
     public function registerCustomer(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'username' => 'required|string|max:20|unique:users',
+        'first_name' => 'required|string|max:30',
+        'last_name' => 'required|string|max:30',
+        'username' => 'required|string|max:20|unique:users',
         'email' => 'required|string|email|max:50|unique:users',
         'password' => 'required|string|min:6|confirmed',
         ]);
@@ -95,7 +96,8 @@ class UserController extends Controller
         }
 
         $customer = User::create([
-            'name' => $request->get('name'),
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
@@ -109,70 +111,6 @@ class UserController extends Controller
     }
 
 ##### End of Customer Area #####
-
-##### Staff Area #####
-
-    public function registerStaff(Request $request){
-        // dd($request);
-        $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:100',
-        'username' => 'required|string|max:20|unique:users',
-        'email' => 'required|string|email|max:50|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $staff = User::create([
-            'name' => $request->get('name'),
-            'username' => $request->get('username'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
-        ]);
-
-        $staff->assignRole('staff');
-
-        return response()->json(compact('staff'), 201);
-    }
-
-##### End of Staff Area #####
-
-
-##### Pengepul Area #####
-
-    public function registerPengepul(Request $request){
-        // dd($request);
-        $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:100',
-        'username' => 'required|string|max:20|unique:users',
-        'email' => 'required|string|email|max:50|unique:users',
-        'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $pengepul = User::create([
-            'name' => $request->get('name'),
-            'username' => $request->get('username'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
-        ]);
-
-        $pengepul->assignRole('pengepul');
-
-        return response()->json(compact('pengepul'), 201);
-    }
-
-##### End of Pengepul Area #####
-
 
 ##### All User can access the feature ######
 
@@ -200,6 +138,23 @@ class UserController extends Controller
 
         return response()->json(compact('user'));
     }
+
+// Get Profile
+
+public function profileDetail($id){
+    $pname = User::find($id);
+    // $padd = Address::find($id, ['address', 'user_id']); //Not Used
+    // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
+    // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Profile Detail',
+        'data1' => $pname,
+        // 'data2' => $padd,
+        // 'data3' => $pavt,
+    ], Response::HTTP_OK);
+}
+
 }
 
 ##### End of Feature #####

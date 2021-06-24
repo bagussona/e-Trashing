@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\JenisSampah;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,8 @@ class AdminController extends Controller
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'name' => 'required|string|max:50',
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
             'email' => 'nullable|email|max:50',
             'nohape' => 'required|string|max:15',
             'avatar' => 'nullable|image|mimes:png,jpg,jpeg',
@@ -31,7 +33,8 @@ class AdminController extends Controller
 
         $user = User::find($id);
         $user->update([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'nohape' => $request->nohape,
             'avatar' => $response,
@@ -56,34 +59,41 @@ class AdminController extends Controller
 
 ##### Update profile by admin #####
 
-##### Bendahara Area #####
+##### Registrasi Staff Area #####
 
-    public function registerBendahara(Request $request){
+    public function registerStaff(Request $request){
         // dd($request);
         $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:100',
-        'username' => 'required|string|max:20|unique:users',
+        'first_name' => 'required|string|max:30',
+        'last_name' => 'required|string|max:30',
+        // 'username' => 'required|string|max:20|unique:users',
         'email' => 'required|string|email|max:50|unique:users',
         'password' => 'required|string|min:6|confirmed',
+        'role' => 'required|string',
         ]);
 
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
 
-        $bendahara = User::create([
-            'name' => $request->get('name'),
-            'username' => $request->get('username'),
+        $role = $request->get('role');
+        // $random = Str::random(6);
+        $username = $request->get('first_name');
+
+        $user = User::create([
+            'first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'username' => $request->get('role').".".strtolower($username),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
 
-        $bendahara->assignRole('bendahara');
+        $user->assignRole($role);
 
-        return response()->json(compact('bendahara'), 201);
+        return response()->json(compact('user'), 201);
     }
 
-##### End of Bendahara Area #####
+##### End of Registrasi Area #####
 
 ##### Delete Account by Admin #####
 
@@ -99,18 +109,6 @@ class AdminController extends Controller
 ##### End of Delete area #####
 
 ##### Logout Function #####
-
-public function logoutSession(Auth $id){
-
-    // dd($id->id);
-    // Auth::logout();
-    $id->auth()->logout(true);
-
-    // Pass true to force the token to be blacklisted "forever"
-    // auth()->logout(true);
-
-    return response()->json(['Sukses' => 'Anda berhasil logout'], 200);
-}
 
 public function logout( Request $request ) {
 
@@ -146,8 +144,30 @@ public function logout( Request $request ) {
     // return response()->json(['Sukses' => 'Anda berhasil logout'], 200);
 }
 
+public function getAllUser(){
+    $user = User::all();
+    // dd($user);
+
+    return response()->json(compact('user'), 200);
+}
 
 ##### Admin CRUD Jenis Sampah @KG #####
+
+    public function getAllSampah(){
+        $jenisSampah = JenisSampah::all();
+        // dd($user);
+
+        return response()->json(compact('jenisSampah'), 200);
+    }
+
+    public function getDetailSampah($id){
+        $detailJenisSampah = JenisSampah::find($id);
+        // $padd = Address::find($id, ['address', 'user_id']); //Not Used
+        // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
+        // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
+
+        return response()->json(compact('detailJenisSampah'), 200);
+    }
 
     public function storeJenisSampah(Request $request){
 
@@ -168,7 +188,42 @@ public function logout( Request $request ) {
         return response()->json(compact('jenisSampah'), 201);
     }
 
+    public function updateJenisSampah(Request $request, $id){
+        $this->validate($request, [
+            'name' => 'required|string',
+            '@KG' => 'required|integer'
+        ]);
 
+        $jenisSampah = JenisSampah::find($id);
+        $jenisSampah->update([
+            'name' => $request->get('name'),
+            '@KG' => $request->get('@KG')
+        ]);
+
+        try {
+            $jenisSampah->save();
+            return response()->json([
+                'status'        => 'success',
+                'message'       => 'jenisSampah Updated Successfully',
+                'data'          => $jenisSampah
+                ], Response::HTTP_OK);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status'        => 'failed',
+                'message'       => 'Something went wrong',
+                'data'          => $th
+                ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function destroyJenisSampah(JenisSampah $id){
+        $id->delete();
+        return response()->json([
+            'status'        => 'success',
+            'message'       => 'Sampah Deleted Succesfully',
+            'data'          => $id
+        ], Response::HTTP_NO_CONTENT);
+    }
 
 
 ##### End of Admin Delete Feature #####

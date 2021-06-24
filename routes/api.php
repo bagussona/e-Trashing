@@ -17,24 +17,45 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Route::post('logout/{id}', 'api\AdminController@logoutSession');
 
-
+### Authentication All
 Route::middleware(['cors'])->group(function () {
-
-    Route::post('register', 'api\UserController@registerCustomer');
-    Route::post('register/pengepul', 'api\UserController@registerPengepul');
-    Route::post('register/staff', 'api\UserController@registerStaff');
-    Route::post('register/bendahara', 'api\AdminController@registerBendahara');
 
     Route::post('login', 'api\UserController@login');
     Route::get('token', 'api\UserController@getToken');
 
-    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify');
-    Route::post('profile/update/{id}', 'api\AdminController@update');
-    Route::delete('profile/delete/{id}', 'api\AdminController@destroy');
-    Route::post('logout/{id}', 'api\AdminController@logoutSession');
-    Route::post('logout', 'api\AdminController@logout');
+});
+
+### Customer Area->
+Route::middleware(['cors'])->group(function () {
+
+    Route::post('register', 'api\UserController@registerCustomer');
+
+    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
+
 
 });
 
 
+### Admin Area->
+Route::middleware(['cors'])->group(function () {
+
+    // CRUD User management
+    Route::get('get/user', 'api\AdminController@getAllUser'); //READ All User [R]
+
+    // CRUD Bendahara, Staff 1 & Pengepul
+    Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [C]
+
+    Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [U]
+    Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [D]
+    Route::post('logout', 'api\AdminController@logout'); //Logout api
+
+    // CRUD Jenis Sampah & @KG
+    Route::get('jenisSampah', 'api\AdminController@getAllSampah'); //READ Semua data jenis sampah
+    Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah'); //READ detail jenis sampah
+    Route::post('jenisSampah', 'api\AdminController@storeJenisSampah'); //CREATE jenis sampah
+    Route::post('jenisSampah/update/{id}', 'api\AdminController@updateJenisSampah'); //UPDATE jenis sampah
+    Route::delete('jenisSampah/delete/{id}', 'api\AdminController@destroyJenisSampah'); //DELETE jenis sampahDelete
+
+});

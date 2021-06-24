@@ -2128,8 +2128,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Footer */ "./resources/js/components/Footer.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -2137,12 +2138,50 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Dashboard() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      children: "Dashboard"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-      to: "/",
-      children: "Home"
+  var getCookieValue = function getCookieValue(name) {
+    var _document$cookie$matc;
+
+    return ((_document$cookie$matc = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')) === null || _document$cookie$matc === void 0 ? void 0 : _document$cookie$matc.pop()) || '';
+  };
+
+  var getCookie = function getCookie(name) {
+    var cookie = getCookieValue(name);
+    return cookie || 'tidak ditemukan';
+  };
+
+  var userLogout = function userLogout() {
+    document.cookie = "token = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "logged_in = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "role = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    document.cookie = "username = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    var userLogoutVar = ['logged_in', 'role'];
+
+    for (var i in userLogoutVar) {
+      localStorage.removeItem(userLogoutVar[i]);
+    }
+
+    location.reload();
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    className: "flex flex-col h-screen",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "flex flex-col items-center justify-center flex-grow",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        children: "Dashboard"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+        to: "/",
+        children: "Home"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        onClick: function onClick() {
+          return userLogout();
+        },
+        children: "Logout"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: ""
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_1__.default, {
+      height: "5%"
     })]
   });
 }
@@ -2201,7 +2240,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Dashboard */ "./resources/js/components/Dashboard.js");
+/* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Footer */ "./resources/js/components/Footer.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -2228,39 +2267,60 @@ function Home() {
     document.cookie = "logged_in = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     document.cookie = "role = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     document.cookie = "username = ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    var userLogoutVar = ['logged_in', 'role'];
+
+    for (var i in userLogoutVar) {
+      localStorage.removeItem(userLogoutVar[i]);
+    }
+
     location.reload();
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "min-h-screen 2xl:container 2xl:mx-auto p-10 flex flex-col items-center justify-center",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "flex space-x-2 mb-4",
-      children: getCookie('logged_in') === 'true' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-        to: "/dashboard",
-        children: "Dashboard"
-      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-          to: "/login",
-          children: "Masuk"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-          to: "/register",
-          children: "Register"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "flex flex-col items-center justify-center h-screen",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "flex space-x-2 mb-4",
+        children: getCookie('logged_in') === 'true' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          to: "/dashboard",
+          children: "Dashboard"
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+            to: "/login",
+            children: "Masuk"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+            to: "/register",
+            children: "Register"
+          })]
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "w-1/2 overflow-auto",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
+          children: getCookie('token')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
+          children: getCookie('logged_in')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
+          children: getCookie('role')
         })]
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "w-1/2 overflow-auto",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
-        children: getCookie('token')
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
-        children: getCookie('logged_in')
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("pre", {
-        children: getCookie('role')
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        onClick: function onClick() {
+          return userLogout();
+        },
+        children: "Logout"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return userLogout();
-      },
-      children: "Logout"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "h-screen"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "h-screen"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "h-screen"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "h-screen flex flex-col",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "flex-grow"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Footer__WEBPACK_IMPORTED_MODULE_1__.default, {
+        height: "33%"
+      })]
     })]
   });
 }
@@ -2314,7 +2374,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+ // Custom Function
 
+/** ------------------------------------------------------------- */
 
 
 
@@ -2366,6 +2428,9 @@ var timeDigitParser = function timeDigitParser(num) {
     return num;
   }
 };
+/** ------------------------------------------------------------- */
+// React Functional Component
+
 
 function Login(props) {
   var history = props.history;
@@ -2378,13 +2443,27 @@ function Login(props) {
       userCredential = _useState2[0],
       setUserCredential = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+    username: false,
+    password: false
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      invalidCredential = _useState4[0],
+      setInvalidCredential = _useState4[1];
+
+  var getCookieValue = function getCookieValue(name) {
+    var _document$cookie$matc;
+
+    return ((_document$cookie$matc = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')) === null || _document$cookie$matc === void 0 ? void 0 : _document$cookie$matc.pop()) || '';
+  };
+
   var userLogin = function userLogin() {
     var formData = new FormData();
     formData.append('username', userCredential.username);
     formData.append('password', userCredential.password);
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_2__.loginAxios)(formData).then( /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(res) {
-        var body, cookies, date;
+        var body, cookies, date, isLoggedIn, userRole, toLocalStorage, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2404,9 +2483,24 @@ function Login(props) {
                   document.cookie = "logged_in = ".concat(cookies.logged_in, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
                   document.cookie = "role = ".concat(cookies.role, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
                   document.cookie = "username = ".concat(cookies.username, "; expires = ").concat(dayParser(date.getDay() + 1), ", ").concat(date.getDate() + 1, " ").concat(monthParser(date.getMonth()), " ").concat(date.getFullYear(), " ").concat(timeDigitParser(date.getHours()), ":").concat(timeDigitParser(date.getMinutes()), ":").concat(timeDigitParser(date.getSeconds()), " GMT; path=/;");
+                  isLoggedIn = getCookieValue('logged_in');
+                  userRole = getCookieValue('role');
+                  toLocalStorage = [{
+                    'logged_in': isLoggedIn
+                  }, {
+                    'role': userRole
+                  }];
+
+                  for (i in toLocalStorage) {
+                    localStorage.setItem(Object.keys(toLocalStorage[i]).toString(), Object.values(toLocalStorage[i]).toString());
+                  }
+
                   history.push('/dashboard');
                 } else {
-                  alert(res);
+                  setInvalidCredential({
+                    username: true,
+                    password: true
+                  });
                 }
 
               case 4:
@@ -2423,7 +2517,21 @@ function Login(props) {
     }());
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var listener = function listener(event) {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+        event.preventDefault();
+        userLogin();
+      }
+    };
+
+    document.addEventListener("keydown", listener);
+    return function () {
+      return document.removeEventListener("keydown", listener);
+    };
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "h-screen flex flex-col",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "flex items-center justify-center flex-grow",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -2434,14 +2542,14 @@ function Login(props) {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "relative w-full h-full",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            className: "flex items-center justify-center h-24",
+            className: "flex flex-col items-center justify-center h-24",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
               className: "text-blue-400 text-2xl subpixel-antialiased tracking-wider",
               style: {
                 fontFamily: ['Inter', 'sans-serif'],
                 fontWeight: 400
               },
-              children: "WELCOME BACK :)"
+              children: "SELAMAT DATANG"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "flex flex-col w-full h-full items-center p-5",
@@ -2449,21 +2557,26 @@ function Login(props) {
               className: "flex flex-row w-full items-center h-10 mb-6 relative",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                 className: "absolute transform -translate-y-1/2",
-                src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg",
+                src: invalidCredential.username ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/envelope-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg',
                 style: {
                   top: 45 + '%'
                 }
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                 type: "text",
-                className: "pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
+                className: "pl-7 text-base w-full h-full border-b-3 ".concat(invalidCredential.username ? "border-red-400" : "border-gray-300", " placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300"),
                 style: {
                   fontFamily: ['Inter', 'sans-serif'],
                   fontWeight: 400
                 },
                 placeholder: "Enter Your Username",
                 value: userCredential.username,
+                onFocus: function onFocus() {
+                  return setInvalidCredential(_objectSpread(_objectSpread({}, invalidCredential), {}, {
+                    username: false
+                  }));
+                },
                 onChange: function onChange(e) {
-                  return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
+                  setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
                     username: e.target.value
                   }));
                 }
@@ -2472,19 +2585,24 @@ function Login(props) {
               className: "flex flex-row w-full items-center h-10 mb-6 relative",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
                 className: "absolute transform -translate-y-1/2",
-                src: "https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg",
+                src: invalidCredential.password ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/lock-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg',
                 style: {
                   top: 45 + '%'
                 }
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                 type: "password",
-                className: "pl-7 text-base w-full h-full border-b-3 border-gray-300 placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300 ",
+                className: "pl-7 text-base w-full h-full border-b-3 ".concat(invalidCredential.password ? "border-red-400" : "border-gray-300", " placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300"),
                 style: {
                   fontFamily: ['Inter', 'sans-serif'],
                   fontWeight: 400
                 },
                 placeholder: "Password",
                 value: userCredential.password,
+                onFocus: function onFocus() {
+                  return setInvalidCredential(_objectSpread(_objectSpread({}, invalidCredential), {}, {
+                    password: false
+                  }));
+                },
                 onChange: function onChange(e) {
                   return setUserCredential(_objectSpread(_objectSpread({}, userCredential), {}, {
                     password: e.target.value
