@@ -74,7 +74,7 @@ class UserController extends Controller
             // dd($jwt);
             // dd($token[0]);
 
-            return response()->json(compact('jwt'), 200);
+            return $jwt;
         }
 
     ##### End of List Data #####
@@ -142,18 +142,31 @@ class UserController extends Controller
 // Get Profile
 
 public function profileDetail($id){
-    $pname = User::find($id);
-    // $padd = Address::find($id, ['address', 'user_id']); //Not Used
-    // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
-    // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
+    $user = User::find($id);
+
+    $token = $this->getToken();
+
+    if ($user == ! $token) {
+        # code...
+        return response()->json([
+            'status' => 'failed',
+            'message' => 'Something went wrong',
+            'data1' => $user,
+            // 'data2' => $padd,
+            // 'data3' => $pavt,
+        ], Response::HTTP_OK);
+    } else{
     return response()->json([
         'status' => 'success',
         'message' => 'Profile Detail',
-        'data1' => $pname,
-        // 'data2' => $padd,
-        // 'data3' => $pavt,
-    ], Response::HTTP_OK);
-}
+        'data' => $user,
+        ], Response::HTTP_OK);
+        }
+    }
+
+    // $padd = Address::find($id, ['address', 'user_id']); //Not Used
+    // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
+    // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
 
 }
 

@@ -13,6 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, HasRoles;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -54,5 +56,9 @@ class User extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims(){
         return [];
+    }
+
+    public function passbooks(){
+        return $this->hasMany(User::class);
     }
 }

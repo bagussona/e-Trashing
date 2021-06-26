@@ -33,6 +33,7 @@ Route::middleware(['cors'])->group(function () {
     Route::post('register', 'api\UserController@registerCustomer');
 
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
+    Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R]
 
 
 });
@@ -42,7 +43,7 @@ Route::middleware(['cors'])->group(function () {
 Route::middleware(['cors'])->group(function () {
 
     // CRUD User management
-    Route::get('get/user', 'api\AdminController@getAllUser'); //READ All User [R]
+    Route::get('get/user', 'api\AdminController@getAllUser')->middleware('jwt.verify'); //READ All User [R]
 
     // CRUD Bendahara, Staff 1 & Pengepul
     Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [C]
@@ -52,10 +53,17 @@ Route::middleware(['cors'])->group(function () {
     Route::post('logout', 'api\AdminController@logout'); //Logout api
 
     // CRUD Jenis Sampah & @KG
-    Route::get('jenisSampah', 'api\AdminController@getAllSampah'); //READ Semua data jenis sampah
-    Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah'); //READ detail jenis sampah
+    Route::get('jenisSampah', 'api\AdminController@getAllSampah')->middleware('jwt.verify'); //READ Semua data jenis sampah
+    Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah')->middleware('jwt.verify'); //READ detail jenis sampah
     Route::post('jenisSampah', 'api\AdminController@storeJenisSampah'); //CREATE jenis sampah
     Route::post('jenisSampah/update/{id}', 'api\AdminController@updateJenisSampah'); //UPDATE jenis sampah
     Route::delete('jenisSampah/delete/{id}', 'api\AdminController@destroyJenisSampah'); //DELETE jenis sampahDelete
+
+});
+
+### Authentication All
+Route::middleware(['cors'])->group(function () {
+
+    Route::post('{id}/timbanganSampah', 'api\StaffController@timbanganSampah');
 
 });

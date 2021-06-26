@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
@@ -19,7 +20,7 @@ class AdminController extends Controller
 ##### Admin Permission #####
 
     public function update(Request $request, $id){
-        $this->validate($request, [
+    $this->validate($request, [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             'email' => 'nullable|email|max:50',
@@ -57,7 +58,7 @@ class AdminController extends Controller
         }
     }
 
-##### Update profile by admin #####
+##### End of Update profile by admin #####
 
 ##### Registrasi Staff Area #####
 
@@ -83,7 +84,7 @@ class AdminController extends Controller
         $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
-            'username' => $request->get('role').".".strtolower($username),
+            'username' => $role."@".strtolower($username),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
@@ -145,8 +146,31 @@ public function logout( Request $request ) {
 }
 
 public function getAllUser(){
+    // $role = Auth::user()->role_names[0];
     $user = User::all();
-    // dd($user);
+    // dd($role);
+    // $role = $user->first_name;
+    // $try = $role[0];
+    // $roles = "";
+    // foreach ($user as $key) {
+        // dd($key['role_names'][0]);
+        // $role_names = $key['role_names'];
+        // dd($user);
+        // dd($role_names);
+        // $role = $role_names[0];
+        // $role = [];
+
+        // return $user;
+    // }
+
+    // $name = $user->first_name;
+
+    // $role_names = $user->json_encode($user['location']);
+    // dd($role_names);
+    // dd($role);
+    // echo $user['location'];
+
+        // $role = Role::all();
 
     return response()->json(compact('user'), 200);
 }
