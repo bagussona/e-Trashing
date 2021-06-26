@@ -24,23 +24,25 @@ Route::middleware(['cors'])->group(function () {
 
     Route::post('login', 'api\UserController@login');
     Route::get('token', 'api\UserController@getToken');
+    Route::post('register', 'api\UserController@registerCustomer');
 
 });
 
 ### Customer Area->
-Route::middleware(['cors'])->group(function () {
-
-    Route::post('register', 'api\UserController@registerCustomer');
+Route::group([
+    'middleware' => ['jwt.verify', 'role:admin|customer|staff|bendahara|pengepul']
+], function () {
 
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
     Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R]
-
 
 });
 
 
 ### Admin Area->
-Route::middleware(['cors'])->group(function () {
+Route::group([
+    'middleware' => ['jwt.verify']
+], function () {
 
     // CRUD User management
     Route::get('get/user', 'api\AdminController@getAllUser')->middleware('jwt.verify'); //READ All User [R]
@@ -62,7 +64,9 @@ Route::middleware(['cors'])->group(function () {
 });
 
 ### Authentication All
-Route::middleware(['cors'])->group(function () {
+Route::group([
+    'middleware' => ['jwt.verify']
+], function () {
 
     Route::post('{id}/timbanganSampah', 'api\StaffController@timbanganSampah');
 

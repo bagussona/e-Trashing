@@ -162,11 +162,11 @@ public function profileDetail($id){
         'data' => $user,
         ], Response::HTTP_OK);
         }
+        // $padd = Address::find($id, ['address', 'user_id']); //Not Used
+        // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
+        // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
     }
 
-    // $padd = Address::find($id, ['address', 'user_id']); //Not Used
-    // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
-    // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
 
 }
 
