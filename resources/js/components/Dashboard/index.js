@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import DashboardMain from './DashboardMain';
 // import Footer from '../Footer';
 import UserList from './UserList';
 import CreateAccount from './CreateAccount';
 import CreateGarbage from './CreateGarbage';
+import StaffProfile from './StaffProfile';
 import { getUser } from '../../apis/api';
 // import UserInformation from './UserInformation';
 import { getCookie } from '../../utilities/obtain_cookie';
@@ -66,10 +67,10 @@ function Dashboard(props) {
           <div id="dashboard-sidebar" className="h-screen bg-white flex flex-col items-center w-20 absolute left-0 z-30" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 0px 8px'}}>
             <div id="sidebar-content-container" className="w-full h-full bg-transparent my-10 relative flex flex-col items-center">
               <div id="sidebar-top-content" className="w-full flex items-center flex-col">
-                <div id="avatar-wrapper" className="rounded-full h-14 w-14 relative mb-20">
+                <Link to={`/dashboard/${getCookie('role')}profile`} id="avatar-wrapper" className="inline-block rounded-full h-14 w-14 relative mb-20">
                   <div id="online-alert" className="h-4 w-4 bottom-0 right-0 rounded-full bg-green-300 absolute" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}></div>
                   <img src={userData.avatar} className="object-cover rounded-full h-full w-full" alt="user-photo-profile" />
-                </div>
+                </Link>
                 <div id="menus" className="flex flex-col items-center space-y-10 w-full">
                   <button onClick={() => history.push('/dashboard')}>
                     <img src={(props.location.pathname) === '/dashboard' ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668205/BTS-ID/active/house-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/house.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="home" />
@@ -99,7 +100,7 @@ function Dashboard(props) {
             <Route path='/dashboard' exact component={DashboardMain} />
             <Route path='/dashboard/userlist' component={UserList} />
             <Route path='/dashboard/createaccount' component={CreateAccount} />
-            {/* <Route path={`/dashboard/${getCookie('role')}profile`} component={StaffProfile} /> */}
+            <Route path={`/dashboard/${getCookie('role')}profile`} component={StaffProfile} />
             <Route path='/dashboard/creategarbage' component={CreateGarbage} />
           </Switch>
         </div>

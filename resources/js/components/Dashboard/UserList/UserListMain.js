@@ -14,7 +14,8 @@ function UserListMain(props) {
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [firstAttempt, setFirstAttempt] = useState(false);
-  const [secondElapsed, setSecondElapsed] = useState(0);
+  const [staff, setStaff] = useState([]);
+  const [customer, setCustomer] = useState([]);
 
   var intervalId;
 
@@ -47,6 +48,13 @@ function UserListMain(props) {
             return <Redirect to='/dashboard' />
           } else {
             setUserList(user)
+            user.forEach(el => {
+              if ((el.role_names).toString() === 'customer') {
+                console.log('customer');
+              } else {
+                console.log((el.role_names).toString());
+              }
+            });
           }
         } else {
           console.log('error getting user list')
@@ -123,7 +131,7 @@ function UserListMain(props) {
                       fontFamily: ['Inter', 'sans-serif'],
                       height: 110 + 'px'
                     }}
-                    className="rounded w-full border-r-6 box-border border-gray-100 hover:border-blue-400 transition-colors duration-300"
+                    className={`rounded w-full border-r-6 box-border ${(el.role_names).toString() === 'customer' ? 'border-blue-400' : 'border-red-400'} hover:border-green-400 transition-colors duration-300`}
                   >
                     <div id="user-card-content-wrapper" className="w-full h-full flex flex-row p-4">
                       <div id="left-content" className="h-full w-20 flex items-center justify-center">
