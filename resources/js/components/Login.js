@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { loginAxios, loginFetch } from '../apis/api';
 import Footer from './Footer';
 
 
-// Custom Function
-/** ------------------------------------------------------------- */
+/** Custom External Functions */
 const dayParser = (day) => {
   switch (day) {
     case 0:
@@ -45,12 +44,15 @@ const timeDigitParser = (num) => {
     return num
   }
 }
+/** End of Functions */
 
-/** ------------------------------------------------------------- */
-
-// React Functional Component
+/** React Functional Component */
 function Login(props) {
+  /** Token */
   const { history } = props;
+  /** End of Token */
+
+  /** States */
   const [userCredential, setUserCredential] = useState({
     username: '', 
     password: ''
@@ -59,7 +61,9 @@ function Login(props) {
     username: false, 
     password: false
   });
+  /** End of State */
 
+  /** Cookies and Login related Methods */
   const getCookieValue = (name) => (
     document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
   )
@@ -101,6 +105,7 @@ function Login(props) {
       }
     })
   }
+  /** End of Cookie and related Methods */
 
   useEffect(() => {
     const listener = event => {
@@ -110,94 +115,100 @@ function Login(props) {
       }
     }
 
-    document.addEventListener("keydown", listener);
+    window.addEventListener("keydown", listener);
 
-    return () => document.removeEventListener("keydown", listener);
+    return () => window.removeEventListener("keydown", listener);
   })
 
-  return (
-    <div className="h-screen flex flex-col">
-      <div className="flex items-center justify-center flex-grow">
-        <div className="w-1/4 h-4/6 bg-gray-100 rounded box-border" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-          <div className="relative w-full h-full">
-            <div className="flex flex-col items-center justify-center h-24">
-              <h1 className="text-blue-400 text-2xl subpixel-antialiased tracking-wider" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>SELAMAT DATANG</h1>
-            </div>
-            <div className="flex flex-col w-full h-full items-center p-5">
-              <div className="flex flex-row w-full items-center h-10 mb-6 relative">
-                <img className="absolute transform -translate-y-1/2" src={invalidCredential.username ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/envelope-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/envelope-fill_3.svg'} style={{ top: 45 + '%' }}/>
-                <input 
-                  type="text" 
-                  className={`pl-7 text-base w-full h-full border-b-3 ${invalidCredential.username ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300` }
-                  style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }} 
-                  placeholder="Enter Your Username" 
-                  value={userCredential.username}
-                  onFocus={() => setInvalidCredential(
-                    {...invalidCredential, 
-                      username: false
-                    }
-                  )}
-                  onChange={e => {
-                    setUserCredential({
+  if (getCookieValue('logged_in') === 'true') {
+    return <Redirect to='/dashboard' />
+  } else {
+    return (
+      <div className="h-screen flex flex-col">
+        <div className="flex items-center justify-center flex-grow">
+          <div className="w-1/4 h-4/6 bg-white rounded box-border" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+            <div className="relative w-full h-full">
+              <div className="flex flex-col items-center justify-center h-24">
+                <h1 className="text-blue-400 text-2xl subpixel-antialiased tracking-wider" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>WELCOME</h1>
+              </div>
+              <div className="flex flex-col w-full h-full items-center p-5">
+                <div className="flex flex-row w-full items-center h-10 mb-6 relative">
+                  <img alt="username" className="absolute transform -translate-y-1/2 h-4 w-4" src={invalidCredential.username ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669105/BTS-ID/random/person-fill-red.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669105/BTS-ID/random/person-fill.svg"} style={{ top: 45 + '%' }}/>
+                  <input 
+                    type="text" 
+                    className={`pl-7 text-gray-600 w-full h-full border-b-3 ${invalidCredential.username ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300` }
+                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }} 
+                    placeholder="Enter Your Username" 
+                    value={userCredential.username}
+                    onFocus={() => setInvalidCredential(
+                      {...invalidCredential, 
+                        username: false
+                      }
+                    )}
+                    onChange={e => {
+                      setUserCredential({
+                        ...userCredential, 
+                        username: e.target.value
+                      })
+                    }}
+                  />
+                </div>
+                <div className="flex flex-row w-full items-center h-10 mb-6 relative">
+                  <img alt="password" className="absolute transform -translate-y-1/2" src={invalidCredential.password ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/lock-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg'} style={{ top: 45 + '%' }}/>
+                  <input 
+                    type="password" 
+                    className={`pl-7 text-gray-600 w-full h-full border-b-3 ${invalidCredential.password ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300`}
+                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}} 
+                    placeholder="Password" 
+                    value={userCredential.password}
+                    onFocus={() => setInvalidCredential(
+                      {...invalidCredential, 
+                        password: false
+                      }
+                    )}
+                    onChange={e => setUserCredential({
                       ...userCredential, 
-                      username: e.target.value
-                    })
-                  }}
-                />
+                      password: e.target.value
+                    })}
+                  />
+                </div>
+                <div className="flex flex-row w-full justify-end items-center h-10 mb-6">
+                  <span className="text-blue-400"><Link to="#" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>Forgot Password?</Link></span>
+                </div>
+                <div className="flex flex-row w-full justify-end items-center h-10 mb-6 space-x-4">
+                  <button className="h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg">
+                    <span className="text-blue-400" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN UP</span>
+                  </button>
+                  <button className="h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => userLogin()}>
+                    <span className="text-white" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN IN</span>
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-row w-full items-center h-10 mb-6 relative">
-                <img className="absolute transform -translate-y-1/2" src={invalidCredential.password ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/lock-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg'} style={{ top: 45 + '%' }}/>
-                <input 
-                  type="password" 
-                  className={`pl-7 text-base w-full h-full border-b-3 ${invalidCredential.password ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300`}
-                  style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}} 
-                  placeholder="Password" 
-                  value={userCredential.password}
-                  onFocus={() => setInvalidCredential(
-                    {...invalidCredential, 
-                      password: false
-                    }
-                  )}
-                  onChange={e => setUserCredential({
-                    ...userCredential, 
-                    password: e.target.value
-                  })}
-                />
-              </div>
-              <div className="flex flex-row w-full justify-end items-center h-10 mb-6">
-                <span className="text-blue-400"><Link to="#" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>Forgot Password?</Link></span>
-              </div>
-              <div className="flex flex-row w-full justify-end items-center h-10 mb-6 space-x-4">
-                <button className="h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-200 active:bg-white transition-colors duration-300 shadow-md">
-                  <span className="text-blue-400" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN UP</span>
-                </button>
-                <button className="h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-md" onClick={() => userLogin()}>
-                  <span className="text-white" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN IN</span>
-                </button>
-              </div>
-            </div>
-            <div className="absolute w-11/12 bg-blue-400 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded" style={{ height: 23 + '%', bottom: -82, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="flex flex-row items-center space-x-5">
-                  <span className="inline-block text-white mr-2" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>Sign in With</span>
-                  <a href="https://google.com">
-                    <img src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/google.svg" style={{ height: 24 + 'px', width: 24 + 'px' }}/>
-                  </a>
-                  <a href="https://facebook.com">
-                    <img src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/facebook.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} />
-                  </a>
-                  <a href="https://twitter.com">
-                    <img src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624329645/BTS-ID/twitter.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} />
-                  </a>
+              <div className="absolute w-11/12 bg-blue-400 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded" style={{ height: 23 + '%', bottom: -82, boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="flex flex-row items-center space-x-5">
+                    <span className="inline-block text-white mr-2" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>Sign in With</span>
+                    <a target="_blank" rel="noopener norefferer" href="https://google.com">
+                      <img alt="google" src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624627048/BTS-ID/google_2.svg" style={{ height: 24 + 'px', width: 24 + 'px' }}/>
+                    </a>
+                    <a target="_blank" rel="noopener norefferer" href="https://facebook.com">
+                      <img alt="facebook" src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624627048/BTS-ID/facebook_2.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} />
+                    </a>
+                    <a target="_blank" rel="noopener norefferer" href="https://twitter.com">
+                      <img alt="twitter" src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624627048/BTS-ID/twitter_2.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Footer height="25%" />
       </div>
-      <Footer height="25%" />
-    </div>
-  )
+    )
+  }
 }
+/** End of React Functional Component */
+
 
 export default Login;

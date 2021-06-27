@@ -10,7 +10,7 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import LoadingPage from './Assets/LoadingPage';
 import Home from './Home';
-import Footer from './Footer';
+// import Footer from '../Footer';
 
 function App() {
   const [pageLoading, setPageLoading] = useState(true);
