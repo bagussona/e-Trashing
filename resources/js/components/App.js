@@ -4,26 +4,19 @@ import {
   Switch, 
   Route
 } from 'react-router-dom';
-// import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
 import LoadingPage from './Assets/LoadingPage';
 import Home from './Home';
-// import Footer from '../Footer';
+
 
 function App() {
   const [pageLoading, setPageLoading] = useState(true);
 
-  useEffect(
-    // () => {
-    () => setPageLoading(false)
-
-      // return () => {
-      //   setPageLoading(true)
-      // }
-    // }
-  )
+  useEffect(() => {
+    setPageLoading(false)
+  }, [])
 
   if (pageLoading) {
     return (

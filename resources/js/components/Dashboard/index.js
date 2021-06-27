@@ -7,6 +7,7 @@ import CreateAccount from './CreateAccount';
 import CreateGarbage from './CreateGarbage';
 import { getUser } from '../../apis/api';
 // import UserInformation from './UserInformation';
+import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
 import LoadingPage from '../Assets/LoadingPage';
 
@@ -16,18 +17,6 @@ function Dashboard(props) {
   const { history } = props;
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-
-  /** Cookie related Method */
-  const getCookieValue = (name) => (
-    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
-  )
-
-  const getCookie = (name) => {
-    const cookie = getCookieValue(name);
-
-    return cookie || 'tidak ditemukan';
-  }
-  /** End of Method */
 
   const logoutMethod = () => {
     const userLogoutVar = [isLogin, userRole];

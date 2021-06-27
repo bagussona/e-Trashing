@@ -5,10 +5,6 @@ import Header from '../../Header';
 
 function UserProfile() {
 
-  // useEffect(() => {
-
-  // }, [])
-
   return (
     <div id="dashboard-content" className="pl-16 py-10 ml-20 h-full">
       {/* <Header page={`${}`}/> */}

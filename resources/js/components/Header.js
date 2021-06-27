@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 
-const headerCondition = (location) => {
-  switch (location) {
-    case '/dashboard/userlist/user/:id':
-      return <div>Test</div>
-  }
-}
+// const headerCondition = (location) => {
+//   switch (location) {
+//     case '/dashboard/userlist/user/:id':
+//       return <div>Test</div>
+//   }
+// }
 
 
 function Header(props) {

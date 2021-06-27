@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { loginAxios, loginFetch } from '../apis/api';
+import { loginAxios } from '../apis/api';
+import { getCookieValue } from '../utilities/obtain_cookie';
 import Footer from './Footer';
 
 
@@ -64,10 +65,6 @@ function Login(props) {
   /** End of State */
 
   /** Cookies and Login related Methods */
-  const getCookieValue = (name) => (
-    document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
-  )
-
   const userLogin = () => {
     const formData = new FormData();
     formData.append('username', userCredential.username);

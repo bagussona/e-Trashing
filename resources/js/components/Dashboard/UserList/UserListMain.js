@@ -7,53 +7,74 @@ import { Link, Redirect } from 'react-router-dom';
 import LoadingPage from '../../Assets/LoadingPage';
 import Header from '../../Header';
 import { getUserList } from '../../../apis/api';
+import { getCookie } from '../../../utilities/obtain_cookie';
 
 
 function UserListMain(props) {
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [cardHover, setCardHover] = useState(false);
+  const [firstAttempt, setFirstAttempt] = useState(false);
+  const [secondElapsed, setSecondElapsed] = useState(0);
 
-  // const cardRef = useRef(null);
+  var intervalId;
+
+  const fetchIntervally = () => {
+    intervalId = window.setInterval(() => {
+      getUserList(getCookie('token'))
+        .then(res => {
+          if (res.status === 200) {
+            const user = res.data.user
+            if (res.data.status === 'Token is Expired') {
+              return <Redirect to='/dashboard' />
+            } else {
+              setUserList(user)
+            }
+          } else {
+            console.log('error getting user list')
+          }
+        })
+      console.log('time elapsed 1800000 milisecond')
+    }, 1800000)
+  }
 
   useEffect(() => {
-    getUserList()
-    .then(res => {
-      if (res.status === 200) {
-        console.log(res)
-        if (res.data.status === 'Token is Expired') {
-          return <Redirect to='/dashboard' />
+    if (firstAttempt === false) {
+      getUserList(getCookie('token'))
+      .then(res => {
+        if (res.status === 200) {
+          const user = res.data.user
+          if (res.data.status === 'Token is Expired') {
+            return <Redirect to='/dashboard' />
+          } else {
+            setUserList(user)
+          }
         } else {
-          setUserList(res.data.user)
+          console.log('error getting user list')
         }
-      } else {
-        console.log('error getting user list')
-      }
 
-      setLoading(false)
-    })
+        if (firstAttempt === false) {
+          setFirstAttempt(true)
+        }
+
+        setLoading(false)
+      })
+    } else {
+      fetchIntervally();
+    }
+
+    return () => {
+      setFirstAttempt(false)
+      clearInterval(intervalId);
+    }
   }, [])
 
-  // if (loading) {
-  //   return <LoadingPage />
-  // } else {
-  //   return (
-  //     <div id="dashboard-content" className="pl-16 py-14 ml-20">
-  //       <div id="page-title" className="text-gray-600 text-xl pb-16" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>User List</div>
-  //       <div id="page-content" >
 
-  //       </div>
-        
-  //     </div>
-  //   )
-  // }
   return (
     <div id="dashboard-content" className="px-16 pt-10 pb-16 ml-20 h-full overflow-auto">
       {loading ? 
         <LoadingPage /> : 
         <>
-          {/* <div id="page-title" className="text-gray-600 text-xl h-8 flex flex-row items-center" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>User List</div> */}
-          <Header page="User List" location={props.location}/>
+          <Header page='User List'/>
           <div id="page-content" className="flex w-full h-auto justify-center flex-col">
             <div id="users-information" className="h-auto w-full grid grid-cols-5 gap-8">
               <div id="information-1" className="w-full flex flex-row py-4 mb-16 box-border items-center" style={{ height: 110 + 'px', marginTop: 3+'px' }}>
@@ -100,8 +121,7 @@ function UserListMain(props) {
                     style={{
                       boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                       fontFamily: ['Inter', 'sans-serif'],
-                      height: 110 + 'px',
-                      // width: 300 + 'px'
+                      height: 110 + 'px'
                     }}
                     className="rounded w-full border-r-4 box-border border-gray-100 hover:border-blue-400 transition-colors duration-300"
                   >
@@ -114,13 +134,11 @@ function UserListMain(props) {
                         <span id="username" className="text-gray-400 text-sm" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>@{el.username}</span>
                         {(el.role_names[0]).toString() === 'customer' ? <span id="user-email" className="text-gray-700 text-sm" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>Saldo: <span id="user-bill" style={{fontWeight: 300}}>IDR 400.000</span></span> : null}
                       </div>
-                      {/* <div id="side-border" className={`h-full ${cardHover ? 'bg-blue-400' : 'bg-transparent'} transition-colors duration-300`} style={{width: 2+'px'}}></div> */}
                     </div>
                   </div>
                 </Link> 
               ))}
             </div>
-            {/* <Link to='userlist/user/1'>User 1</Link> */}
           </div>
         </>
       }
