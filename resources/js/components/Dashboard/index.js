@@ -38,7 +38,7 @@ function Dashboard(props) {
   }
 
   useEffect(() => {
-    if (getCookie(isLogin) === 'true') {
+    if (localStorage.getItem(isLogin) === 'true') {
       getUser(getCookie('token'))
       .then(res => {
         if (res.status === 200) {
@@ -58,7 +58,7 @@ function Dashboard(props) {
     }
   }, [])
 
-  if (getCookie(isLogin) === 'true') {
+  if (localStorage.getItem(isLogin) === 'true') {
     if (loading) {
       return <LoadingPage />
     } else {

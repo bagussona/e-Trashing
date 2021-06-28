@@ -9,7 +9,9 @@ function StaffProfile() {
   }, [])
 
   return (
-    <div>Staff Profile</div>
+    <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
+      <div>Staff Profile</div>
+    </div>  
   )
 }
 

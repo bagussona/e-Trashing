@@ -8,14 +8,18 @@ import LoadingPage from '../../Assets/LoadingPage';
 import Header from '../../Header';
 import { getUserList } from '../../../apis/api';
 import { getCookie } from '../../../utilities/obtain_cookie';
+// import { useStore } from '../../../utilities/store';
 
 
 function UserListMain(props) {
+  // const { user, loading } = props;
+
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [firstAttempt, setFirstAttempt] = useState(false);
   const [staff, setStaff] = useState([]);
   const [customer, setCustomer] = useState([]);
+  // const manipulate = useStore(state => state.setData)
 
   var intervalId;
 
@@ -80,9 +84,10 @@ function UserListMain(props) {
   return (
     <div id="dashboard-content" className="px-16 pt-10 pb-16 ml-20 h-full overflow-auto">
       {loading ? 
-        <LoadingPage /> : 
+        <LoadingPage height="full" width="full"/> : 
         <>
           <Header page='User List'/>
+          {/* <button onClick={() => manipulate('data')}>set Data</button> */}
           <div id="page-content" className="flex w-full h-auto justify-center flex-col">
             <div id="users-information" className="h-auto w-full grid grid-cols-5 gap-8">
               <div id="information-1" className="w-full flex flex-row py-4 mb-16 box-border items-center" style={{ height: 110 + 'px', marginTop: 3+'px' }}>

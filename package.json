@@ -33,6 +33,7 @@
         "fs": "0.0.1-security",
         "query-string": "^7.0.1",
         "react-router-dom": "^5.2.0",
-        "react-spinners": "^0.11.0"
+        "react-spinners": "^0.11.0",
+        "zustand": "^3.5.4"
     }
 }
