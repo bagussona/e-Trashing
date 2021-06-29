@@ -33,6 +33,7 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|customer|staff|bendahara|pengepul']
 ], function () {
 
+    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
     Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R]
 
 });
