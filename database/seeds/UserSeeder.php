@@ -27,8 +27,8 @@ class UserSeeder extends Seeder
 
         $staff = User::create([
             'first_name' => 'Staff',
-            'last_name' => 'Penjemput',
-            'username' => 'staff',
+            'last_name' => 'Staff_1',
+            'username' => 'staff_1.staff',
             'email' => 'staff@btsid.com',
             'password' => bcrypt('staffstaff'),
             'nohape' => '082128796431',
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
         $pengepul = User::create([
             'first_name' => 'Staff',
             'last_name' => 'Pengepul',
-            'username' => 'pengepul',
+            'username' => 'pengepul.staff',
             'email' => 'pengepul@btsid.com',
             'password' => bcrypt('pengepulpengepul'),
             'nohape' => '082128796431',

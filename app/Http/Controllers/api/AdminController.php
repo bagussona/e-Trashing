@@ -27,7 +27,7 @@ class AdminController extends Controller
             'nohape' => 'required|string|max:15',
             'avatar' => 'nullable|image|mimes:png,jpg,jpeg',
             'location' => 'nullable|string',
-        ]);
+    ]);
 
         $response = cloudinary()->upload($request->file('avatar')->getRealPath())->getSecurePath();
             // dd($response);
@@ -84,9 +84,11 @@ class AdminController extends Controller
         $user = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
-            'username' => $role."@".strtolower($username),
+            'username' => $role.".".strtolower($username),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+            'location' => '-7.995573596215699, 110.29540549192244'
         ]);
 
         $user->assignRole($role);
@@ -147,13 +149,32 @@ public function logout( Request $request ) {
 
 public function getAllUser(){
     // $role = Auth::user()->role_names[0];
-    $user = User::all();
-    // dd($role);
+    $users = User::all();
+
+    // dd($users);
     // $role = $user->first_name;
     // $try = $role[0];
     // $roles = "";
-    // foreach ($user as $key) {
-        // dd($key['role_names'][0]);
+
+    $value = [];
+    foreach ($users as $user) {
+        // $user['role_names'] = $user["role_names"][0];
+
+        $value[] = [
+            "uid" => $user["id"],
+            "first_name" => $user["first_name"],
+            "last_name" => $user["last_name"],
+            "username" => $user["username"],
+            "email" => $user["email"],
+            "password" => $user["password"],
+            "nohape" => $user["nohape"],
+            "avatar" => $user["avatar"],
+            "location" => $user["location"],
+            "role_names" => $user["role_names"][0]
+        ];
+
+    }
+        // $a = [1];
         // $role_names = $key['role_names'];
         // dd($user);
         // dd($role_names);
@@ -161,7 +182,6 @@ public function getAllUser(){
         // $role = [];
 
         // return $user;
-    // }
 
     // $name = $user->first_name;
 
@@ -172,7 +192,8 @@ public function getAllUser(){
 
         // $role = Role::all();
 
-    return response()->json(compact('user'), 200);
+    // return response()->json(["users" => $value], 200);
+    return response()->json(compact('value'), 200);
 }
 
 ##### Admin CRUD Jenis Sampah @KG #####

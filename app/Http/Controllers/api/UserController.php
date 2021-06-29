@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\PassbookCustomer;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -101,6 +102,7 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'nohape' => '(0262) 69691',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
             'location' => '-7.995573596215699, 110.29540549192244'
         ]);
@@ -114,35 +116,29 @@ class UserController extends Controller
 
 ##### All User can access the feature ######
 
-    public function userProfile()
-    {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-
-        return response()->json(compact('user'));
-    }
-
 // Get Profile
 
 public function profileDetail($id){
     $user = User::find($id);
+    $wkwk = PassbookCustomer::where("user_id", $id)->get();
+    // dd($wkwk);
+
+    $result = [];
+    foreach ($wkwk as $wk){
+        // dd($wkwk);
+        // dd($wk);
+        $result[] = [
+            "Berat" => $wk["Berat"],
+            "Saldo" => $wk["Saldo"]
+        ];
+    }
+
+    $awikwo = $result[count($result)-1];
+
+    $saldo = $awikwo["Saldo"];
+    $total_setoran = $awikwo["Berat"];
+
+    // dd($total_setoran);
 
     $token = $this->getToken();
 
@@ -160,10 +156,11 @@ public function profileDetail($id){
         'status' => 'success',
         'message' => 'Profile Detail',
         'data' => $user,
+        'saldo' => $saldo,
+        'berat.sampah.terkumpul' => $total_setoran,
         ], Response::HTTP_OK);
         }
         // $padd = Address::find($id, ['address', 'user_id']); //Not Used
-        // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
         // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
     }
 

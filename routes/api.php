@@ -33,7 +33,6 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|customer|staff|bendahara|pengepul']
 ], function () {
 
-    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
     Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R]
 
 });
@@ -63,11 +62,21 @@ Route::group([
 
 });
 
-### Authentication All
+### Staff_1 All
 Route::group([
     'middleware' => ['jwt.verify']
 ], function () {
 
-    Route::post('{id}/timbanganSampah', 'api\StaffController@timbanganSampah');
+    Route::get('get/all/passbooks', 'api\StaffController@index');
+    // Route::get('get/{id}/detail/passbook', 'api\StaffController@detailSetoran');
+
+    // Route::get('get/{id}/list/timbangan', 'api\StaffController@detailSetoran');
+    Route::get('get/{id}/timbangan', 'api\StaffController@listTimbangan');
+
+    Route::post('{id}/checkout', 'api\StaffController@checkout');
+
+    Route::post('{id}/addToTimbangan', 'api\StaffController@addToTimbangan');
+    Route::post('timbanganSampah/update/{id}', 'api\StaffController@updateTimbanganSampah');
+    Route::delete('delete/timbanganSampah/{id}', 'api\StaffController@destroy');
 
 });
