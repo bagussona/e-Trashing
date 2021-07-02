@@ -7,7 +7,7 @@ import {
 import Login from './Login';
 import Register from './Register';
 import Dashboard from './Dashboard';
-import LoadingPage from './Assets/LoadingPage';
+import { ClimbingBoxLoading } from './Assets/LoadingPage';
 import Home from './Home';
 
 
@@ -20,7 +20,7 @@ function App() {
 
   if (pageLoading) {
     return (
-      <LoadingPage />
+      <ClimbingBoxLoading />
     )
   } else if (!pageLoading) {
     return (

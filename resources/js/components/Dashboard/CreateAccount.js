@@ -8,7 +8,7 @@ function CreateAccount() {
 
   return (
     <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
-      <Header page="Create Account" />
+      <Header page="Add Staff" />
       <div>Create Account</div>
 
       {/* <button onClick={manipulate('data')}>Tambah zustand</button> */}

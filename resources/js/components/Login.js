@@ -65,10 +65,10 @@ function Login(props) {
   /** End of State */
 
   /** Cookies and Login related Methods */
-  const userLogin = () => {
+  const userLogin = (data) => {
     const formData = new FormData();
-    formData.append('username', userCredential.username);
-    formData.append('password', userCredential.password);
+    formData.append('username', data.username);
+    formData.append('password', data.password);
 
     loginAxios(formData)
     .then(async res => {
@@ -86,7 +86,7 @@ function Login(props) {
         document.cookie = `username = ${cookies.username}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
 
         const isLoggedIn = getCookieValue('logged_in');
-        const userRole = getCookieValue('role');
+        const userRole = getCookieValue('role'); 
 
         const toLocalStorage = [{ 'logged_in': isLoggedIn }, { 'role': userRole }];
         for (let i in toLocalStorage) {
@@ -101,14 +101,22 @@ function Login(props) {
         })
       }
     })
+
+    // for (var pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`);
+    // }
+
+    // console.log(userCredential.username);
+    // console.log(userCredential.password);
   }
   /** End of Cookie and related Methods */
 
   useEffect(() => {
     const listener = event => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-        event.preventDefault();
-        userLogin();
+        event.preventDefault(); 
+        userLogin(userCredential);
+        // console.log(userCredential)
       }
     }
 
@@ -116,6 +124,10 @@ function Login(props) {
 
     return () => window.removeEventListener("keydown", listener);
   })
+
+  // useEffect(() => {
+  //   console.log(userCredential);
+  // })
 
   if (getCookieValue('logged_in') === 'true') {
     return <Redirect to='/dashboard' />
@@ -125,7 +137,7 @@ function Login(props) {
         <div className="flex items-center justify-center flex-grow">
           <div className="w-1/4 h-4/6 bg-white rounded box-border" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
             <div className="relative w-full h-full">
-              <div className="flex flex-col items-center justify-center h-24">
+              <div className="flex items-center justify-center h-24">
                 <h1 className="text-blue-400 text-2xl subpixel-antialiased tracking-wider" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>WELCOME</h1>
               </div>
               <div className="flex flex-col w-full h-full items-center p-5">
@@ -173,10 +185,10 @@ function Login(props) {
                   <span className="text-blue-400"><Link to="#" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>Forgot Password?</Link></span>
                 </div>
                 <div className="flex flex-row w-full justify-end items-center h-10 mb-6 space-x-4">
-                  <button className="h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg">
+                  <button className="w-30 h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg">
                     <span className="text-blue-400" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN UP</span>
                   </button>
-                  <button className="h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => userLogin()}>
+                  <button className="w-30 h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => userLogin()}>
                     <span className="text-white" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN IN</span>
                   </button>
                 </div>

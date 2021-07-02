@@ -9,15 +9,35 @@ module.exports = {
   theme: {
     extend: {
       borderWidth: {
+        1: '1px',
         3: '3px', 
         6: '6px'
       },
+      zIndex: {
+        '99': '99',
+        '100': '100',
+        '101': '101',
+        '999': '999'
+      },
+      width: {
+        '30': '7.5rem',
+        '9/20': '45%',
+      },
+      height: {
+        '100': '25rem', 
+        '120': '30rem',
+        '125': '31.25rem',
+        '140': '35rem',
+      },
+      minHeight: {
+        '125': '31.25rem'
+      }
     },
   },
   variants: {
     extend: {
       backgroundColor: ['active'],
-      margin: ['first', 'last'],
+      margin: ['first', 'last', 'hover', 'active']
     },
   },
   plugins: [

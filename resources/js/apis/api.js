@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const apiUrl = "https://bts-id.herokuapp.com/api"
+const apiURL = "https://bts-id.herokuapp.com/api"
 
-const loginAxios = (data) => {
+const loginAxios = data => {
   
-  const axiosData = axios.post(`${apiUrl}/login`, data)
+  const axiosData = axios.post(`${apiURL}/login`, data)
   .then(res => {
     return res
   })
@@ -15,8 +15,8 @@ const loginAxios = (data) => {
   return axiosData;
 }
 
-const getUserList = (token) => {
-  const axiosData = axios.get(`${apiUrl}/get/user`, {headers: {'Authorization': `Bearer ${token}`}})
+const getUserList = token => {
+  const axiosData = axios.get(`${apiURL}/get/user`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => {
     return res
   })
@@ -27,8 +27,68 @@ const getUserList = (token) => {
   return axiosData;
 }
 
-const getUser = (token) => {
-  const axiosData = axios.get(`${apiUrl}/profile`, {headers: {'Authorization': `Bearer ${token}`}})
+const getUser = token => {
+  const axiosData = axios.get(`${apiURL}/profile`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => {
+    return res
+  })
+  .catch(err => {
+    return err
+  })
+
+  return axiosData;
+}
+
+const getGarbage = token => {
+  const axiosData = axios.get(`${apiURL}/jenisSampah`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => {
+    return res
+  })
+  .catch(err => {
+    return err
+  })
+
+  return axiosData;
+}
+
+const getProfileById = (token, id) => {
+  const axiosData = axios.get(`${apiURL}/api/profile/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => {
+    return res
+  })
+  .catch(err => {
+    return err
+  })
+
+  return axiosData;
+}
+
+const setGarbage = (token, data) => {
+  const axiosData = axios.post(`${apiURL}/jenisSampah`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => {
+    return res
+  })
+  .catch(err => {
+    return err
+  })
+
+  return axiosData;
+}
+
+const editGarbage = (token, data, id) => {
+  const axiosData = axios.post(`${apiURL}/jenisSampah/update/${id}`,data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => {
+    return res
+  })
+  .catch(err => {
+    return res
+  })
+
+  return axiosData;
+}
+
+const deleteGarbage = (token, id) => {
+  const axiosData = axios.delete(`${apiURL}/jenisSampah/delete/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => {
     return res
   })
@@ -43,5 +103,10 @@ const getUser = (token) => {
 export { 
   loginAxios, 
   getUserList, 
-  getUser 
+  getUser,
+  getGarbage,
+  getProfileById,
+  setGarbage,
+  editGarbage,
+  deleteGarbage
 };

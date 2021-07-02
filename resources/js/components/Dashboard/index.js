@@ -10,7 +10,7 @@ import { getUser } from '../../apis/api';
 // import UserInformation from './UserInformation';
 import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
-import LoadingPage from '../Assets/LoadingPage';
+import { ClimbingBoxLoading } from '../Assets/LoadingPage';
 
 
 function Dashboard(props) {
@@ -26,6 +26,7 @@ function Dashboard(props) {
     }
 
     location.reload();
+    // history.push('/login')
   }
 
   const userLogout = () => {
@@ -60,31 +61,36 @@ function Dashboard(props) {
 
   if (localStorage.getItem(isLogin) === 'true') {
     if (loading) {
-      return <LoadingPage />
+      return <ClimbingBoxLoading />
     } else {
       return (
         <div id="dashboard-container" className="h-screen relative">
           <div id="dashboard-sidebar" className="h-screen bg-white flex flex-col items-center w-20 absolute left-0 z-30" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 0px 8px'}}>
             <div id="sidebar-content-container" className="w-full h-full bg-transparent my-10 relative flex flex-col items-center">
               <div id="sidebar-top-content" className="w-full flex items-center flex-col">
-                <Link to={`/dashboard/${getCookie('role')}profile`} id="avatar-wrapper" className="inline-block rounded-full h-14 w-14 relative mb-20">
+                <Link to={`/dashboard/${localStorage.getItem(userRole)}profile`} id="avatar-wrapper" className="inline-block rounded-full h-14 w-14 relative mb-20">
                   <div id="online-alert" className="h-4 w-4 bottom-0 right-0 rounded-full bg-green-300 absolute" style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}></div>
                   <img src={userData.avatar} className="object-cover rounded-full h-full w-full" alt="user-photo-profile" />
                 </Link>
-                <div id="menus" className="flex flex-col items-center space-y-10 w-full">
-                  <button onClick={() => history.push('/dashboard')}>
+                <div id="menus" className="flex flex-col items-center w-full">
+                  <button onClick={() => history.push('/dashboard')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname) === '/dashboard' ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
                     <img src={(props.location.pathname) === '/dashboard' ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668205/BTS-ID/active/house-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/house.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="home" />
                   </button>
-                  <button onClick={() => history.push('/dashboard/userlist')}>
+                  <button onClick={() => history.push('/dashboard/userlist')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/userlist') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
                     <img src={(props.location.pathname).includes('/dashboard/userlist') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669474/BTS-ID/active/people-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669408/BTS-ID/inactive/people.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="userlist" />
                   </button>
-                  <button onClick={() => history.push('/dashboard/createaccount')}>
-                    <img src={(props.location.pathname).includes('/dashboard/createaccount') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668235/BTS-ID/active/person-plus-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/person-plus.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="create user" />
-                  </button>
-                  <button onClick={() => history.push('/dashboard/creategarbage')}>
-                    <img src={(props.location.pathname).includes('/dashboard/creategarbage') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668398/BTS-ID/active/trash-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/trash.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="create trash" />
-                  </button>
-                  <button onClick={() => history.push('/dashboard')}>
+                  {
+                    localStorage.getItem(userRole) === 'bendahara' ? null : 
+                    <>
+                      <button onClick={() => history.push('/dashboard/createaccount')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/createaccount') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
+                        <img src={(props.location.pathname).includes('/dashboard/createaccount') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668235/BTS-ID/active/person-plus-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/person-plus.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="create user" />
+                      </button>
+                      <button onClick={() => history.push('/dashboard/creategarbage')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/creategarbage') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
+                        <img src={(props.location.pathname).includes('/dashboard/creategarbage') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668398/BTS-ID/active/trash-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/trash.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="create trash" />
+                      </button>
+                    </>
+                  }
+                  <button onClick={() => history.push('/dashboard')} className="py-5 w-full h-full flex items-center justify-center ">
                     <img src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/sliders.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} alt="settings" />
                   </button>
                 </div>
@@ -100,7 +106,7 @@ function Dashboard(props) {
             <Route path='/dashboard' exact component={DashboardMain} />
             <Route path='/dashboard/userlist' component={UserList} />
             <Route path='/dashboard/createaccount' component={CreateAccount} />
-            <Route path={`/dashboard/${getCookie('role')}profile`} component={StaffProfile} />
+            <Route path={`/dashboard/${localStorage.getItem(userRole)}profile`} component={StaffProfile} />
             <Route path='/dashboard/creategarbage' component={CreateGarbage} />
           </Switch>
         </div>

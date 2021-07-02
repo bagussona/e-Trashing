@@ -5,9 +5,9 @@ import Header from '../../Header';
 function UserBill(props) {
 
   return (
-    <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
+    <div>
       <Header page='User Bill'/>
-      <button onClick={() => console.log(props)}>Back</button>
+      <button onClick={() => console.log(props.props)}>Back</button>
     </div>
   )
 }
