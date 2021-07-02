@@ -165,11 +165,10 @@ function UserListMain(props) {
                   <div
                     id="user-card-wrapper"
                     style={{
-                      boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                       fontFamily: ['Inter', 'sans-serif'],
                       height: 110 + 'px'
                     }}
-                    className="rounded w-full border-r-6 box-border border-green-400"
+                    className="rounded w-full border-r-6 box-border border-green-400 shadow-md"
                   >
                     <div id="user-card-content-wrapper" className="w-full h-full flex flex-row p-4">
                       <div id="left-content" className="h-full w-20 flex items-center justify-center flex-col">
@@ -195,11 +194,10 @@ function UserListMain(props) {
                     <div
                         id="user-card-wrapper"
                         style={{
-                          boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                           fontFamily: ['Inter', 'sans-serif'],
                           height: 110 + 'px'
                         }}
-                        className="rounded w-full border-r-6 box-border border-red-400 hover:border-green-400 transition-colors duration-200"
+                        className="rounded w-full border-r-6 box-border border-red-400 hover:border-green-400 transition-colors duration-200 shadow-md"
                       >
                         <div id="user-card-content-wrapper" className="w-full h-full flex flex-row p-4">
                           <div id="left-content" className="h-full w-20 flex items-center justify-center flex-col">
@@ -215,15 +213,14 @@ function UserListMain(props) {
                           </div>
                         </div>
                       </div> : 
-                      <Link to={`userlist/user/${el.uid}`} key={idx} className="w-full h-auto hover:-ml-1 hover:-mt-1 transtion-all duration-200 active:ml-0 active:mt-0">
+                      <Link to={`userlist/user/${el.uid}`} key={idx} className="w-full h-auto bg-white hover:bg-gray-100 active:bg-white transition-colors">
                         <div
                           id="user-card-wrapper"
                           style={{
-                            boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                             fontFamily: ['Inter', 'sans-serif'],
                             height: 110 + 'px'
                           }}
-                          className="rounded w-full border-r-6 box-border border-red-400 hover:border-green-400 transition-colors duration-200"
+                          className="rounded w-full border-r-6 box-border border-red-400 hover:border-green-400 transition-colors duration-200 shadow-md"
                         >
                           <div id="user-card-content-wrapper" className="w-full h-full flex flex-row p-4">
                             <div id="left-content" className="h-full w-20 flex items-center justify-center flex-col">
@@ -247,15 +244,14 @@ function UserListMain(props) {
                 <span id="current-user-title" className="text-lg text-gray-600" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 600 }}>Customers</span>
                 <div id="list-user-wrapper" className="w-full grid grid-cols-5 h-auto gap-8">
                   {customer.map((el, idx) => (
-                    <Link to={`userlist/user/${el.uid}`} key={idx} className="w-full h-auto hover:-ml-1 hover:-mt-1 transtion-all duration-200 active:ml-0 active:mt-0">
+                    <Link to={`userlist/user/${el.uid}`} key={idx} className="w-full h-auto bg-white hover:bg-gray-100 active:bg-white transition-colors">
                       <div 
                         id="user-card-wrapper" 
                         style={{
-                          boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
                           fontFamily: ['Inter', 'sans-serif'],
                           height: 110 + 'px'
                         }}
-                        className="rounded w-full border-r-6 box-border border-blue-400 hover:border-green-400 transition-colors duration-200"
+                        className="rounded w-full border-r-6 box-border border-blue-400 hover:border-green-400 transition-colors duration-200 shadow-md"
                       >
                         <div id="user-card-content-wrapper" className="w-full h-full flex flex-row p-4">
                           <div id="left-content" className="h-full w-20 flex items-center justify-center flex-col">

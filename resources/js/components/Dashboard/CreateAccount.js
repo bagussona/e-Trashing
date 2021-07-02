@@ -7,11 +7,11 @@ function CreateAccount() {
   // const manipulate = useStore(state => state.setData);
 
   return (
-    <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
+    <div id="dashboard-content" className="flex flex-col px-16 py-10 ml-20 h-full">
       <Header page="Add Staff" />
-      <div>Create Account</div>
+      <div id="page-content" className="w-full flex-grow bg-white shadow-md rounded">
 
-      {/* <button onClick={manipulate('data')}>Tambah zustand</button> */}
+      </div>
     </div>
   )
 }

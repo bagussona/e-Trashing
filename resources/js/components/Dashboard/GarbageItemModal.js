@@ -22,7 +22,7 @@ function GarbageItemModal(props) {
   }
 
   const fileInputHandle = ev => {
-    console.log(ev.target.files);
+    // console.log(ev.target.files);
 
     if (ev.target.files && ev.target.files[0]) {
       let img = ev.target.files[0];
@@ -40,7 +40,7 @@ function GarbageItemModal(props) {
 
     setGarbage(getCookie('token'), formData)
     .then(res => {
-      console.log(res)
+      // console.log(res)
       setLoading(false);
       umountModal()
     })
@@ -58,7 +58,7 @@ function GarbageItemModal(props) {
 
     editGarbage(getCookie('token'), formData, id)
     .then(res => {
-      console.log(res);
+      // console.log(res);
       setLoading(false);
       umountModal()
     })

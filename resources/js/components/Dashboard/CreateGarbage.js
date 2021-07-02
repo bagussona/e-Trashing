@@ -75,7 +75,7 @@ function CreateGarbage() {
                 <button 
                   id="add-button" 
                     className="w-30 h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg"
-                  onClick={() => setAddItemModal(true)}
+                    onClick={() => setAddItemModal(true)}
                   >
                   <span id="add-item-text" className="text-gray-100" style={{fontFamily: ['Inter', 'sans-serif'], fontFamily: 400}}>Add Item</span>
                 </button>

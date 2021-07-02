@@ -11,6 +11,7 @@ import { getUser } from '../../apis/api';
 import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
 import { ClimbingBoxLoading } from '../Assets/LoadingPage';
+import Settings from './Settings';
 
 
 function Dashboard(props) {
@@ -59,7 +60,11 @@ function Dashboard(props) {
     }
   }, [])
 
-  if (localStorage.getItem(isLogin) === 'true') {
+  // useEffect(() => {
+  //   console.log('test')
+  // })
+
+  if (getCookie('logged_in') === 'true') {
     if (loading) {
       return <ClimbingBoxLoading />
     } else {
@@ -90,8 +95,8 @@ function Dashboard(props) {
                       </button>
                     </>
                   }
-                  <button onClick={() => history.push('/dashboard')} className="py-5 w-full h-full flex items-center justify-center ">
-                    <img src="https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/sliders.svg" style={{ height: 24 + 'px', width: 24 + 'px' }} alt="settings" />
+                  <button onClick={() => history.push('/dashboard/settings')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/settings') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
+                    <img src={(props.location.pathname).includes('/dashboard/settings') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1625236852/BTS-ID/sliders-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/sliders.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="settings" />
                   </button>
                 </div>
               </div>
@@ -108,6 +113,7 @@ function Dashboard(props) {
             <Route path='/dashboard/createaccount' component={CreateAccount} />
             <Route path={`/dashboard/${localStorage.getItem(userRole)}profile`} component={StaffProfile} />
             <Route path='/dashboard/creategarbage' component={CreateGarbage} />
+            <Route path='/dashboard/settings' component={Settings} />
           </Switch>
         </div>
       )
