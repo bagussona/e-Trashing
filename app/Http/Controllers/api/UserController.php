@@ -63,7 +63,7 @@ class UserController extends Controller
         $cookie = cookie('token', json_encode($cookies), 1440);
         // dd(Cookie::get());
 
-        return response()->json(compact('logged_in', 'username', 'token', 'role'), 200)->cookie($cookie);
+        return response()->json(compact('logged_in', 'username', 'role', 'token'), 200)->cookie($cookie);
     }
 
 
@@ -104,10 +104,22 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password')),
             'nohape' => '(0262) 69691',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
+            'location' => '-7.995573596215699, 110.29540549192244',
+            'sampah_terkumpul' => 0,
+            'saldo' => 0
         ]);
 
         $customer->assignRole('customer');
+
+        $passbook_customer = PassbookCustomer::create([
+            'user_id' => $customer->id,
+            'Tanggal' => date("Y-m-d"),
+            'Keterangan' => 0,
+            'Berat' => 0,
+            'Debit' => 0,
+            'Credit' => 0,
+            'Saldo' => 0
+        ]);
 
         return response()->json(compact('customer'), 201);
     }
@@ -175,18 +187,16 @@ public function profileDetail($id){
             'data1' => $user,
             // 'data2' => $padd,
             // 'data3' => $pavt,
-        ], Response::HTTP_OK);
+        ], Response::HTTP_BAD_REQUEST);
     } else{
     return response()->json([
         'status' => 'success',
         'message' => 'Profile Detail',
-        'data' => $user,
-        'saldo' => $saldo,
-        'berat.sampah.terkumpul' => $total_setoran,
+        'data' => $user
+        // 'saldo' => $saldo,
+        // 'berat.sampah.terkumpul' => $total_setoran,
         ], Response::HTTP_OK);
         }
-        // $padd = Address::find($id, ['address', 'user_id']); //Not Used
-        // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
     }
 
 

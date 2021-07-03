@@ -25,7 +25,7 @@ class CreatePassbookCustomersTable extends Migration
             $table->integer('Debit')->nullable()->default(0);
             $table->integer('Credit')->nullable()->default(0);
             $table->integer('Saldo')->nullable()->default(0);
-            $table->timestamps(false);
+            $table->timestamps();
         });
     }
 

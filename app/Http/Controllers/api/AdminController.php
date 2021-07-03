@@ -4,10 +4,13 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\JenisSampah;
+use App\PassbookBendahara;
+use App\PassbookCustomer;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
@@ -81,19 +84,34 @@ class AdminController extends Controller
         // $random = Str::random(6);
         $username = $request->get('first_name');
 
-        $user = User::create([
+        $staff = User::create([
             'first_name' => $request->get('first_name'),
             'last_name' => $request->get('last_name'),
             'username' => $role.".".strtolower($username),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
+            'nohape' => '082128796431',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
+            'location' => '-7.995573596215699, 110.29540549192244',
+            'sampah_terkumpul' => 0,
+            'saldo' => 0
         ]);
 
-        $user->assignRole($role);
+        // print($staff->id);
 
-        return response()->json(compact('user'), 201);
+        $staff->assignRole($role);
+
+        $passbook_staff = PassbookBendahara::create([
+            'user_id' => $staff->id,
+            'Tanggal' => date("Y-m-d"),
+            'Keterangan' => 0,
+            'Berat' => 0,
+            'Debit' => 0,
+            'Credit' => 0,
+            'Saldo' => 0
+        ]);
+
+        return response()->json(compact('staff'), 201);
     }
 
 ##### End of Registrasi Area #####
@@ -148,52 +166,91 @@ public function logout( Request $request ) {
 }
 
 public function getAllUser(){
-    // $role = Auth::user()->role_names[0];
+
     $users = User::all();
 
+    // $users = DB::table('users')->join('passbook_customers', 'users.id', '=', 'passbook_customers.user_id' )->select('users.*', 'passbook_customers.user_id', 'passbook_customers.Berat', 'passbook_customers.Saldo')->get();
+
     // dd($users);
-    // $role = $user->first_name;
-    // $try = $role[0];
-    // $roles = "";
-
-    $value = [];
+    $values = [];
     foreach ($users as $user) {
-        // $user['role_names'] = $user["role_names"][0];
+    // dd($user->id);
+    // dd($count);
 
-        $value[] = [
-            "uid" => $user["id"],
-            "first_name" => $user["first_name"],
-            "last_name" => $user["last_name"],
-            "username" => $user["username"],
-            "email" => $user["email"],
-            "password" => $user["password"],
-            "nohape" => $user["nohape"],
-            "avatar" => $user["avatar"],
-            "location" => $user["location"],
-            "role_names" => $user["role_names"][0]
+        $values[] = [
+            "uid" => $user->id,
+            "first_name" => $user->first_name,
+            "last_name" => $user->last_name,
+            "username" => $user->username,
+            "email" => $user->email,
+            "password" => $user->password,
+            "nohape" => $user->nohape,
+            "avatar" => $user->avatar,
+            "location" => $user->location,
+    //         "role_names" => $user["role_names"][0],
+            "sampah_terkumpul" => $user->sampah_terkumpul . " KG",
+            "saldo" => $user->saldo
         ];
 
     }
-        // $a = [1];
-        // $role_names = $key['role_names'];
-        // dd($user);
-        // dd($role_names);
-        // $role = $role_names[0];
-        // $role = [];
 
-        // return $user;
+    // dd($uid);
+    // dd($values);
+    // $result = [];
+    // foreach ($values as $value){
+    //     // dd($value);
+    //     // dd($wk);
 
-    // $name = $user->first_name;
+    //     $result[] = [
+    //         "uid" => $value["uid"],
+    //         "First_name" => $value["first_name"],
+    //         "Last_name" => $value["last_name"],
+    //         "Username" => $value["username"],
+    //         "Email" => $value["email"],
+    //         "Password" => $value["password"],
+    //         "No_Hape" => $value["nohape"],
+    //         "Avatar" => $value["avatar"],
+    //         "Location" => $value["location"],
+    //         "Berat" => $value["berat"],
+    //         "Saldo" => $value["saldo"]
+    //     ];
 
-    // $role_names = $user->json_encode($user['location']);
-    // dd($role_names);
-    // dd($role);
-    // echo $user['location'];
+    // }
 
-        // $role = Role::all();
+    // // dd($result);
 
-    // return response()->json(["users" => $value], 200);
-    return response()->json(compact('value'), 200);
+    // $all_result = [];
+    // for ($i=0; $i < count($result); $i++) {
+    //     # code...
+    //     array_push($all_result, $result[$i]['uid']);
+    // }
+
+    // // $uid = DB::table('users')->select('users.id')->get();
+    // // dd($all_result);
+    // // dd($uid[2]->id);
+
+    // // dd($all_result[8]); // ini berubah disini [8]
+    // // dd($result[8]['uid']);
+    // // dd($all_result[1][$result[1]['uid']]);
+    // // $all_result[8]
+
+    // // dd(count($result));
+    // $test = [];
+    // for ($i = 0; $i < count($result); $i++) {
+    //     if ($result[$i]['uid'] == $all_result[$result[$i]['uid']-1]) {
+    //     // if ($result[$i]['uid'] == $uid[$i]->id) {
+    //         // dd($result[$i]['uid']);
+    //         // dd($uid[9]->id);
+    //         // dd($all_result[$result[$i]["uid"]-1]);
+    //         // array_push($test, $result[$i]['uid']);
+    //         $test[] = $result[$i];
+    //     }
+    // }
+
+    // dd($test);
+
+
+    return response()->json(compact('values'), 200);
 }
 
 ##### Admin CRUD Jenis Sampah @KG #####
@@ -206,10 +263,8 @@ public function getAllUser(){
     }
 
     public function getDetailSampah($id){
+
         $detailJenisSampah = JenisSampah::find($id);
-        // $padd = Address::find($id, ['address', 'user_id']); //Not Used
-        // $padd = DB::table('addresses')->where('user_id', $id)->get(['address', 'user_id']);
-        // $pavt = DB::table('avatars')->where('user_id', $id)->get(['avatar', 'user_id']);
 
         return response()->json(compact('detailJenisSampah'), 200);
     }

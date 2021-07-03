@@ -20,7 +20,9 @@ class UserSeeder extends Seeder
             'password' => bcrypt('adminadmin'),
             'nohape' => '082128796431',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
+            'location' => '-7.995573596215699, 110.29540549192244',
+            'sampah_terkumpul' => 0,
+            'saldo' => 0
         ]);
 
         $admin->assignRole('admin');
@@ -33,7 +35,9 @@ class UserSeeder extends Seeder
             'password' => bcrypt('staffstaff'),
             'nohape' => '082128796431',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
+            'location' => '-7.995573596215699, 110.29540549192244',
+            'sampah_terkumpul' => 0,
+            'saldo' => 0
         ]);
 
         $staff->assignRole('staff');
@@ -46,7 +50,9 @@ class UserSeeder extends Seeder
             'password' => bcrypt('pengepulpengepul'),
             'nohape' => '082128796431',
             'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244'
+            'location' => '-7.995573596215699, 110.29540549192244',
+            'sampah_terkumpul' => 0,
+            'saldo' => 0
         ]);
 
         $pengepul->assignRole('pengepul');

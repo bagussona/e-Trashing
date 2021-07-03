@@ -13,7 +13,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, HasRoles;
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'password', 'nohape', 'avatar', 'location'
+        'first_name', 'last_name', 'username', 'email', 'password', 'nohape', 'avatar', 'location', 'sampah_terkumpul', 'saldo'
     ];
 
     /**

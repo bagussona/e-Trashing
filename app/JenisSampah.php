@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class JenisSampah extends Model
 {
 
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $fillable = [
         'name', '@KG'

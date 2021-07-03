@@ -24,7 +24,7 @@ class CreatePassbooksTable extends Migration
             // $table->integer('Credit')->nullable()->default(0);
             $table->integer('Subtotal')->nullable()->default(0);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps(false);
+            $table->timestamps();
         });
     }
 

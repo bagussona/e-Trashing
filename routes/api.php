@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 ### Authentication All
 Route::middleware(['cors'])->group(function () {
 
-    Route::post('login', 'api\UserController@login');
-    Route::get('token', 'api\UserController@getToken');
-    Route::post('register', 'api\UserController@registerCustomer');
+    Route::post('login', 'api\UserController@login'); //[All User]
+    Route::get('token', 'api\UserController@getToken'); //[All User]
+    Route::post('register', 'api\UserController@registerCustomer'); //[Customer]
 
 });
 
@@ -33,51 +33,80 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|customer|staff|bendahara|pengepul']
 ], function () {
 
-    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R]
-    Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R]
+    Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
+    Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer]
+    Route::get('profile/{id}', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer]
 
 });
 
 
 ### Admin Area->
 Route::group([
-    'middleware' => ['jwt.verify']
+    'middleware' => ['jwt.verify', 'role:admin']
 ], function () {
 
     // CRUD User management
-    Route::get('get/user', 'api\AdminController@getAllUser')->middleware('jwt.verify'); //READ All User [R]
+    Route::get('get/user', 'api\AdminController@getAllUser')->middleware('jwt.verify'); //READ All User [Admin, Bendahara]
 
     // CRUD Bendahara, Staff 1 & Pengepul
-    Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [C]
+    Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [Admin]
 
-    Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [U]
-    Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [D]
-    Route::post('logout', 'api\AdminController@logout'); //Logout api
+    Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
+    Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [Admin]
+    Route::post('logout', 'api\AdminController@logout'); //Logout api [Admin, Staff1, Pengepul, Bendahara, Customer]
 
     // CRUD Jenis Sampah & @KG
-    Route::get('jenisSampah', 'api\AdminController@getAllSampah')->middleware('jwt.verify'); //READ Semua data jenis sampah
-    Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah')->middleware('jwt.verify'); //READ detail jenis sampah
-    Route::post('jenisSampah', 'api\AdminController@storeJenisSampah'); //CREATE jenis sampah
-    Route::post('jenisSampah/update/{id}', 'api\AdminController@updateJenisSampah'); //UPDATE jenis sampah
-    Route::delete('jenisSampah/delete/{id}', 'api\AdminController@destroyJenisSampah'); //DELETE jenis sampahDelete
+    Route::get('jenisSampah', 'api\AdminController@getAllSampah')->middleware('jwt.verify'); //READ Semua data jenis sampah [Admin, Staff1]
+    Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah')->middleware('jwt.verify'); //READ detail jenis sampah [Admin, Staff1]
+    Route::post('jenisSampah', 'api\AdminController@storeJenisSampah'); //CREATE jenis sampah [Admin]
+    Route::post('jenisSampah/update/{id}', 'api\AdminController@updateJenisSampah'); //UPDATE jenis sampah [Admin]
+    Route::delete('jenisSampah/delete/{id}', 'api\AdminController@destroyJenisSampah'); //DELETE jenis sampahDelete [Admin]
 
 });
 
 ### Staff_1 All
 Route::group([
-    'middleware' => ['jwt.verify']
+    'middleware' => ['jwt.verify', 'role:admin|staff']
 ], function () {
 
-    Route::get('get/all/passbooks', 'api\StaffController@index');
-    // Route::get('get/{id}/detail/passbook', 'api\StaffController@detailSetoran');
+    Route::get('staff/all/passbooks', 'api\StaffController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
 
-    // Route::get('get/{id}/list/timbangan', 'api\StaffController@detailSetoran');
-    Route::get('get/{id}/timbangan', 'api\StaffController@listTimbangan');
+    Route::get('staff/{id}/timbangan', 'api\StaffController@listTimbangan'); //Staff1 ->cek sampah  di cart yg sudah di input
 
-    Route::post('{id}/checkout', 'api\StaffController@checkout');
+    Route::post('staff/{id}/checkout', 'api\StaffController@checkout'); //Staff1 ->Transaksi sampah yg sudah di input
 
-    Route::post('{id}/addToTimbangan', 'api\StaffController@addToTimbangan');
-    Route::post('timbanganSampah/update/{id}', 'api\StaffController@updateTimbanganSampah');
-    Route::delete('delete/timbanganSampah/{id}', 'api\StaffController@destroy');
+    Route::post('staff/{id}/addToTimbangan', 'api\StaffController@addToTimbangan'); //Staff1 ->add sampah ke cart
+    Route::post('staff/timbangan/update/{id}', 'api\StaffController@updateTimbanganSampah'); //Staff1 ->update sampah yg masih di cart
+    Route::delete('staff/delete/timbangan/{id}', 'api\StaffController@destroy'); //Staff1 ->delete sampah yg ada di cart
+
+});
+
+### Staff_2 - Pengepul All
+Route::group([
+    'middleware' => ['jwt.verify', 'role:admin|pengepul']
+], function () {
+
+    Route::get('pengepul/{id}/passbooks', 'api\PengepulController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
+
+    Route::get('pengepul/{id}/timbangan', 'api\PengepulController@listTimbanganBendahara'); //Pengepul ->cek sampah  di cart yg sudah di input
+
+    Route::post('pengepul/{id}/checkout', 'api\PengepulController@checkoutBendahara'); //Pengepul ->Transaksi sampah yg sudah di input
+
+    Route::post('pengepul/{id}/addToTimbangan', 'api\PengepulController@addToTimbanganBendahara'); //Pengepul ->add sampah ke cart
+    Route::post('pengepul/timbangan/update/{id}', 'api\PengepulController@updateTimbanganSampahBendahara'); //Pengepul ->update sampah yg masih di cart
+    Route::delete('pengepul/delete/timbangan/{id}', 'api\PengepulController@destroy'); //Pengepul ->delete sampah yg ada di cart
+
+});
+
+### Staff_3 - Bendahara All
+Route::group([
+    'middleware' => ['jwt.verify', 'role:admin|bendahara']
+], function () {
+
+    Route::get('bendahara/all/setoran', 'api\BendaharaController@readAllSetoran'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
+    Route::get('bendahara/customer/{id}/setoran', 'api\BendaharaController@readAllSetoranCustomer');
+    Route::get('bendahara/customer/{id}/passbook', 'api\BendaharaController@readPassbookCustomers');
+    Route::get('bendahara/{id}/setoran', 'api\BendaharaController@readAllSetoranPengepul');
+    Route::get('bendahara/{id}/passbook', 'api\BendaharaController@readPassbookBendaharas');
 
 });

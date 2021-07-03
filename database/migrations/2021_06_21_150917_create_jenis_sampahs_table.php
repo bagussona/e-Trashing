@@ -17,7 +17,7 @@ class CreateJenisSampahsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->integer('@KG')->nullable()->default(0);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

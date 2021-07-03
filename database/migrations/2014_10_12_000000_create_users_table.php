@@ -24,8 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('nohape')->nullable(true);
             $table->string('avatar')->nullable();
             $table->string('location')->nullable();
+            $table->integer('sampah_terkumpul')->nullable();
+            $table->integer('saldo')->nullable();
             $table->rememberToken();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
