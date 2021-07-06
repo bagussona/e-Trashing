@@ -198,7 +198,7 @@ function UserListMain(props) {
                         <span id="name" style={{ fontWeight: 400 }}>{el.first_name} {el.last_name}</span>
                       </div>
                       <div id="username-table-body" className="w-56 p-4 flex items-center h-full">
-                        <span id="username" className="text-sm" style={{ fontWeight: 400 }}>@{el.username}</span>
+                        <span id="username" style={{ fontWeight: 400 }}>@{el.username}</span>
                       </div>
                       <div id="phone-table-body" className="h-full flex items-center w-56 p-4">
                         <span style={{ fontWeight: 400 }}>{el.nohape}</span>
