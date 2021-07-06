@@ -16,7 +16,7 @@ function GarbageItemModal(props) {
   })
   const id = ID;
 
-  const umountModal = () => {
+  const unmountModal = () => {
     clearData();
     close(false);
   }
@@ -42,7 +42,7 @@ function GarbageItemModal(props) {
     .then(res => {
       // console.log(res)
       setLoading(false);
-      umountModal()
+      unmountModal()
     })
     .catch(err => {
       console.log(err)
@@ -60,7 +60,7 @@ function GarbageItemModal(props) {
     .then(res => {
       // console.log(res);
       setLoading(false);
-      umountModal()
+      unmountModal()
     })
     .catch(err => {
       console.log(err)
@@ -71,7 +71,7 @@ function GarbageItemModal(props) {
     const listener = event => {
       if (event.code === 'Escape') {
         event.preventDefault();
-        umountModal()
+        unmountModal()
       }
     }
 
@@ -96,7 +96,7 @@ function GarbageItemModal(props) {
         {loading === true ? <BounceLoading /> : null}
         {/* <BounceLoading /> */}
         <div id="add-iteme-modals-wrapper" className="h-full w-full relative">
-          <div onClick={() => umountModal()} id="add-item-modals" className="h-full w-full bg-gray-400 top-0 right-0 absolute bg-opacity-50"></div>
+          <div onClick={() => unmountModal()} id="add-item-modals" className="h-full w-full bg-gray-400 top-0 right-0 absolute bg-opacity-50"></div>
           <div id="add-items-form" className="h-auto p-4 bg-white rounded box-border flex flex-col items-center absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" style={{boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px'}} >
             <div id="title" className="w-full h-20 flex items-center justify-center mb-4">
               <h1 className="text-gray-600 text-xl subpixel-antialiased tracking-wider" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 600 }}>Tambah Sampah</h1>
@@ -120,14 +120,14 @@ function GarbageItemModal(props) {
                 <div id="modal-input" className="flex flex-col w-64 space-y-8">
                   <div id="input-wrapper" className="flex flex-col">
                     <span id="label" className="text-gray-600" className="mb-2" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>Jenis Sampah</span>
-                    <input name="name" className="h-10 border-gray-400 border-2 rounded focus:outline-none focus:border-blue-400 p-2" value={garbageData.name} onChange={ev => setGarbageData({
+                    <input name="name" className="h-10 border-gray-100 bg-gray-100 border-2 rounded focus:outline-none focus:border-blue-400 p-2" value={garbageData.name} onChange={ev => setGarbageData({
                       ...garbageData, 
                       name: ev.target.value
                     })} />
                   </div>
                   <div id="input-wrapper" className="flex flex-col">
                     <span id="label" className="text-gray-600" className="mb-2" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>Harga per Kilogram Sampah</span>
-                    <input className="h-10 border-gray-400 border-2 rounded focus:outline-none focus:border-blue-400 p-2" value={garbageData.price} onChange={ev => setGarbageData({
+                    <input className="h-10 border-gray-100 bg-gray-100 border-2 rounded focus:outline-none focus:border-blue-400 p-2" value={garbageData.price} onChange={ev => setGarbageData({
                       ...garbageData,
                       price: ev.target.value
                     })} />
@@ -135,7 +135,7 @@ function GarbageItemModal(props) {
                 </div>
               </div>
               <div id="modal-button" className="h-10 w-full flex flex-row justify-center space-x-4 my-9">
-                <button className="w-30 h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg" onClick={() => umountModal()}>
+                <button className="w-30 h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg" onClick={() => unmountModal()}>
                   <span id="cancel-button" className="text-blue-400" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>Cancel</span>
                 </button>
                 <button className="w-30 h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => {

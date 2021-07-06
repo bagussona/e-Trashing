@@ -52,7 +52,7 @@ function CreateGarbage() {
 
   useEffect(() => {
     getGarbageMethod();
-  }, [addItemModal, loadingClick])
+  }, [addItemModal, BounceLoading])
 
   return (
     <>
@@ -120,7 +120,7 @@ function CreateGarbage() {
                     </div> : 
                     <div id="table-body" className="w-full h-auto flex flex-col space-y-1.5">
                       {garbages.map((el, idx) => (
-                        <div id="table-body-wrapper" className="cursor-pointer w-full flex flex-row bg-white rounded shadow-md hover:bg-gray-100 transition-colors h-14">
+                        <div key={idx} id="table-body-wrapper" className="cursor-pointer w-full flex flex-row bg-white rounded shadow-md hover:bg-gray-100 transition-colors h-14">
                           <div onClick={() => setPreviewId(idx)} id="table-content-wrapper" className="flex-grow flex flex-row h-auto">
                             <div id="table-body-content" className="text-gray-400 text-sm p-4 h-auto flex items-center justify-center" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 600 , width: 48+'px' }}>
                               <span>{idx+1}</span>
@@ -135,7 +135,6 @@ function CreateGarbage() {
                               <span>{el.created_at}</span>
                             </div>
                           </div>
-                          {/* <div id="table-action-wrapper" className=""> */}
                             <div id="table-body-action" className="h-full flex flex-row w-24">
                               <div id="edit" className="flex-1 h-full hover:bg-gray-200 h-14 w-12">
                                 <button id="button" className="h-full w-full flex items-center justify-center" onClick={() => editCurrentGarbage(el.name, el["@KG"], el.id)}>
@@ -152,7 +151,6 @@ function CreateGarbage() {
                                 </button>
                               </div>
                             </div>
-                          {/* </div> */}
                         </div>
                       ))}
                     </div>

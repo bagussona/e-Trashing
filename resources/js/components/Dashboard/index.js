@@ -26,8 +26,9 @@ function Dashboard(props) {
       localStorage.removeItem(userLogoutVar[i]);
     }
 
-    location.reload();
-    // history.push('/login')
+    // history.push('/dashboard');
+    // location.reload();
+    history.push('/login')
   }
 
   const userLogout = () => {
@@ -59,10 +60,6 @@ function Dashboard(props) {
       userLogout();
     }
   }, [])
-
-  // useEffect(() => {
-  //   console.log('test')
-  // })
 
   if (getCookie('logged_in') === 'true') {
     if (loading) {

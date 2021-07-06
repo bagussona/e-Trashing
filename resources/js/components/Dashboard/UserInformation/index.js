@@ -1,20 +1,21 @@
 import React, { useState, useEffect  } from 'react';
+import { browserData } from '../../../utilities/context';
 import Header from '../../Header';
 import UserBill from './UserBill';
-import UserProfile from './UserProfile';
+import UserProfile from './UserProfile'; 
 
 
 const queryString = require('query-string');
 
 // const ConditionalRender = (props) => {
-const conditionalRender = (val, data, props) => {
+const conditionalRender = (val) => {
   // switch (props.val) {
   switch (val) {
     case 'bukutabungan':
-      return <UserBill props={props} />
+      return <UserBill />
     default:
       // return <UserProfile data={props.data} />
-      return <UserProfile data={data} props={props}/>
+      return <UserProfile />
   }
 }
 
@@ -23,15 +24,18 @@ function UserInformation(props) {
 
   const [data, setData] = useState({})
 
-  useEffect(() => {
-    console.log(props)
-  }, [])
+  // useEffect(() => {
+  //   console.log(props)
+  // }, [])
 
   return (
     <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
         {/* <ConditionalRender val={queryParam.tab} data={data} /> */}
         <Header page='User Profile' />
-        {conditionalRender(queryParam.tab, data,)}
+
+        <browserData.Provider value={props}>
+          {conditionalRender(queryParam.tab)}
+        </browserData.Provider>
     </div>
   )
 }

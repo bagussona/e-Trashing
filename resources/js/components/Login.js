@@ -92,7 +92,7 @@ function Login(props) {
         for (let i in toLocalStorage) {
           localStorage.setItem(Object.keys(toLocalStorage[i]).toString(), Object.values(toLocalStorage[i]).toString())
         }
-
+        
         history.push('/dashboard')
       } else {
         setInvalidCredential({
