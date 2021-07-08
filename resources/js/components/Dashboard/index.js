@@ -12,6 +12,7 @@ import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
 import { ClimbingBoxLoading } from '../Assets/LoadingPage';
 import Settings from './Settings';
+import Chat from './Chat';
 
 
 function Dashboard(props) {
@@ -92,6 +93,17 @@ function Dashboard(props) {
                       </button>
                     </>
                   }
+                  <button onClick={() => history.push('/dashboard/chat')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/chat') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
+                    {(props.location.pathname).includes('/dashboard/chat') ? 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-blue-400 fill-current bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                        <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                      </svg> : 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-gray-400 fill-current bi bi-chat-right-dots" viewBox="0 0 16 16">
+                        <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
+                        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                      </svg>
+                    }
+                  </button>
                   <button onClick={() => history.push('/dashboard/settings')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/settings') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
                     <img src={(props.location.pathname).includes('/dashboard/settings') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1625236852/BTS-ID/sliders-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/sliders.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="settings" />
                   </button>
@@ -111,6 +123,7 @@ function Dashboard(props) {
             <Route path={`/dashboard/${localStorage.getItem(userRole)}profile`} component={StaffProfile} />
             <Route path='/dashboard/creategarbage' component={CreateGarbage} />
             <Route path='/dashboard/settings' component={Settings} />
+            <Route path='/dashboard/chat' component={Chat}/>
           </Switch>
         </div>
       )
