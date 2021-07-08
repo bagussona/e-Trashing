@@ -18,11 +18,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/{path?}', [
-  'uses' => 'ReactController@show', 
-  'as' => 'app', 
+  'uses' => 'ReactController@show',
+  'as' => 'app',
   'where' => ['path' => '.*']
 ]);
 
 Auth::routes();
+
+// Route::get('react-message', function() {
+//     return view('message');
+//   });
 
 // Route::get('/home', 'HomeController@index')->name('home');

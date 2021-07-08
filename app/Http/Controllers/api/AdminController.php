@@ -84,32 +84,57 @@ class AdminController extends Controller
         // $random = Str::random(6);
         $username = $request->get('first_name');
 
-        $staff = User::create([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
-            'username' => $role.".".strtolower($username),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'nohape' => '082128796431',
-            'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
-            'location' => '-7.995573596215699, 110.29540549192244',
-            'sampah_terkumpul' => 0,
-            'saldo' => 0
-        ]);
-
         // print($staff->id);
 
-        $staff->assignRole($role);
+        if ($role == "bendahara") {
+            $staff = User::create([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'username' => $role.".".strtolower($username),
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password')),
+                'nohape' => '082128796431',
+                'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+                'location' => '-7.995573596215699, 110.29540549192244',
+                'sampah_terkumpul' => 0,
+                'saldo' => 1000000
+            ]);
+            # code...
+            $passbook_staff = PassbookBendahara::create([
+                'user_id' => $staff->id,
+                'Tanggal' => date("Y-m-d"),
+                'Keterangan' => "saldo awal",
+                'Berat' => 0,
+                'Debit' => 0,
+                'Credit' => 0,
+                'Saldo' => 1000000
+                ]);
+        } else {
+            $staff = User::create([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'username' => $role.".".strtolower($username),
+                'email' => $request->get('email'),
+                'password' => Hash::make($request->get('password')),
+                'nohape' => '082128796431',
+                'avatar' => 'https://res.cloudinary.com/tookoo-dil/image/upload/v1623985010/BTS-ID/user.png',
+                'location' => '-7.995573596215699, 110.29540549192244',
+                'sampah_terkumpul' => 0,
+                'saldo' => 0
+            ]);
 
-        $passbook_staff = PassbookBendahara::create([
-            'user_id' => $staff->id,
-            'Tanggal' => date("Y-m-d"),
-            'Keterangan' => 0,
-            'Berat' => 0,
-            'Debit' => 0,
-            'Credit' => 0,
-            'Saldo' => 0
-        ]);
+            $passbook_staff = PassbookCustomer::create([
+                'user_id' => $staff->id,
+                'Tanggal' => date("Y-m-d"),
+                'Keterangan' => "saldo awal",
+                'Berat' => 0,
+                'Debit' => 0,
+                'Credit' => 0,
+                'Saldo' => 0
+                ]);
+            }
+
+            $staff->assignRole($role);
 
         return response()->json(compact('staff'), 201);
     }
@@ -247,7 +272,7 @@ public function getAllUser(){
     //     }
     // }
 
-    // dd($test);
+    // dd($test);;
 
 
     return response()->json(compact('values'), 200);

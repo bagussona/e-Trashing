@@ -15,7 +15,7 @@ class PassbookCustomerSeeder extends Seeder
         $raw = PassbookCustomer::create([
             "user_id" => 1,
             "Tanggal" => date("Y-m-d"),
-            "Keterangan" => "dijemput",
+            "Keterangan" => "Saldo Awal",
             "Berat" => 0,
             "Debit" => 0,
             "Credit" => 0,
@@ -25,7 +25,7 @@ class PassbookCustomerSeeder extends Seeder
         $raw = PassbookCustomer::create([
             "user_id" => 2,
             "Tanggal" => date("Y-m-d"),
-            "Keterangan" => "dijemput",
+            "Keterangan" => "Saldo Awal",
             "Berat" => 0,
             "Debit" => 0,
             "Credit" => 0,
@@ -35,7 +35,7 @@ class PassbookCustomerSeeder extends Seeder
         $raw = PassbookCustomer::create([
             "user_id" => 3,
             "Tanggal" => date("Y-m-d"),
-            "Keterangan" => "dijemput",
+            "Keterangan" => "Saldo Awal",
             "Berat" => 0,
             "Debit" => 0,
             "Credit" => 0,

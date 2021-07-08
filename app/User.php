@@ -61,4 +61,16 @@ class User extends Authenticatable implements JWTSubject
     public function passbooks(){
         return $this->hasMany(User::class);
     }
+
+    public function formrequests(){
+        return $this->hasMany(User::class);
+    }
+
+    public function formrequesttarikans(){
+        return $this->hasMany(User::class);
+    }
+
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
 }

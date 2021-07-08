@@ -55,11 +55,11 @@ function Login(props) {
 
   /** States */
   const [userCredential, setUserCredential] = useState({
-    username: '', 
+    username: '',
     password: ''
   });
   const [invalidCredential, setInvalidCredential] = useState({
-    username: false, 
+    username: false,
     password: false
   });
   /** End of State */
@@ -78,7 +78,7 @@ function Login(props) {
       if (res.status === 200) {
         const cookies = body.data;
         // console.log('executed second');
-  
+
         const date = new Date();
         document.cookie = `token = ${cookies.token}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
         document.cookie = `logged_in = ${cookies.logged_in}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
@@ -86,17 +86,17 @@ function Login(props) {
         document.cookie = `username = ${cookies.username}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
 
         const isLoggedIn = getCookieValue('logged_in');
-        const userRole = getCookieValue('role'); 
+        const userRole = getCookieValue('role');
 
         const toLocalStorage = [{ 'logged_in': isLoggedIn }, { 'role': userRole }];
         for (let i in toLocalStorage) {
           localStorage.setItem(Object.keys(toLocalStorage[i]).toString(), Object.values(toLocalStorage[i]).toString())
         }
-        
+
         history.push('/dashboard')
       } else {
         setInvalidCredential({
-          username: true, 
+          username: true,
           password: true
         })
       }
@@ -114,7 +114,7 @@ function Login(props) {
   useEffect(() => {
     const listener = event => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-        event.preventDefault(); 
+        event.preventDefault();
         userLogin(userCredential);
         // console.log(userCredential)
       }
@@ -143,20 +143,20 @@ function Login(props) {
               <div className="flex flex-col w-full h-full items-center p-5">
                 <div className="flex flex-row w-full items-center h-10 mb-6 relative">
                   <img alt="username" className="absolute transform -translate-y-1/2 h-4 w-4" src={invalidCredential.username ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669105/BTS-ID/random/person-fill-red.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669105/BTS-ID/random/person-fill.svg"} style={{ top: 45 + '%' }}/>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     className={`pl-7 text-gray-600 w-full h-full border-b-3 ${invalidCredential.username ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300` }
-                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }} 
-                    placeholder="Enter Your Username" 
+                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}
+                    placeholder="Enter Your Username"
                     value={userCredential.username}
                     onFocus={() => setInvalidCredential(
-                      {...invalidCredential, 
+                      {...invalidCredential,
                         username: false
                       }
                     )}
                     onChange={e => {
                       setUserCredential({
-                        ...userCredential, 
+                        ...userCredential,
                         username: e.target.value
                       })
                     }}
@@ -164,19 +164,19 @@ function Login(props) {
                 </div>
                 <div className="flex flex-row w-full items-center h-10 mb-6 relative">
                   <img alt="password" className="absolute transform -translate-y-1/2" src={invalidCredential.password ? 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624342696/BTS-ID/lock-red.svg' : 'https://res.cloudinary.com/tookoo-dil/image/upload/v1624286241/BTS-ID/lock-fill_3.svg'} style={{ top: 45 + '%' }}/>
-                  <input 
-                    type="password" 
+                  <input
+                    type="password"
                     className={`pl-7 text-gray-600 w-full h-full border-b-3 ${invalidCredential.password ? "border-red-400" : "border-gray-300"} placeholder-gray-400 bg-transparent focus:outline-none focus:border-blue-400 transition-colors duration-300`}
-                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}} 
-                    placeholder="Password" 
+                    style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}
+                    placeholder="Password"
                     value={userCredential.password}
                     onFocus={() => setInvalidCredential(
-                      {...invalidCredential, 
+                      {...invalidCredential,
                         password: false
                       }
                     )}
                     onChange={e => setUserCredential({
-                      ...userCredential, 
+                      ...userCredential,
                       password: e.target.value
                     })}
                   />

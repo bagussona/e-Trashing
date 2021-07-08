@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Passbook;
 use App\PassbookCustomer;
 use App\User;
+use App\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -181,5 +182,27 @@ class StaffController extends Controller
         return response()->json(["success" => "deleted successfully"], 204);
     }
 
+    public function orderanKu(){
+        $orderanKu = FormRequest::all();
+
+        return response()->json(compact('orderanKu'), 200);
+    }
+
+    public function orderanSelesai(Request $request){
+        $this->validate($request, [
+            'kode_book' => 'required|string'
+        ]);
+
+
+        $setorDiselesaikan = FormRequest::where("kode_book", $request->get('kode_book'))->get();
+        // dd()
+        $setorDiselesaikan->update([
+            'status' => "Selesai"
+        ]);
+
+        return response()->json([
+            "msg" => "Terima kasih! Request anda sudah diselesaikan",
+        ], 200);
+    }
 
 }

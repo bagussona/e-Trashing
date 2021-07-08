@@ -69,6 +69,9 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff']
 ], function () {
 
+    Route::get('staff/all/orderan', 'api\StaffController@orderanKu'); //Notifikasi orderan dari customer yang harus dijemput dan atau yang ditimbang di tempat
+    Route::post('staff/orderan/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
+
     Route::get('staff/all/passbooks', 'api\StaffController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
 
     Route::get('staff/{id}/timbangan', 'api\StaffController@listTimbangan'); //Staff1 ->cek sampah  di cart yg sudah di input
@@ -103,6 +106,11 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|bendahara']
 ], function () {
 
+    Route::get('bendahara/all/tarikanKu', 'api\BendaharaController@listsRequestTarikan'); //Notification
+    Route::get('bendahara/{id}/tarikanKu', 'api\BendaharaController@listTarikan');
+    Route::post('bendahara/{id}/accepted/tarikanKu', 'api\BendaharaController@checkout'); //Acc
+    Route::post('bendahara/{id}/rejected/tarikanKu', 'api\BendaharaController@checkoutReject'); //Reject
+
     Route::get('bendahara/all/setoran', 'api\BendaharaController@readAllSetoran'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
     Route::get('bendahara/customer/{id}/setoran', 'api\BendaharaController@readAllSetoranCustomer');
     Route::get('bendahara/customer/{id}/passbook', 'api\BendaharaController@readPassbookCustomers');
@@ -110,3 +118,28 @@ Route::group([
     Route::get('bendahara/{id}/passbook', 'api\BendaharaController@readPassbookBendaharas');
 
 });
+
+
+### Customer Area
+Route::group([
+    'middleware' => ['jwt.verify', 'role:admin|customer']
+], function () {
+
+
+    //history orders [form request jemput, dtg, form request tarik];
+    //history transactions [setor, tarik];
+
+    Route::get('customer/setoran/{id}', 'api\CustomerController@index');
+    Route::post('customer/setoran/dijemput', 'api\CustomerController@formSetorDijemput');
+    Route::post('customer/setoran/diantar', 'api\CustomerController@formSetorDiantar');
+    Route::post('customer/setoran/dibatalin', 'api\CustomerController@batalSetor');
+
+    Route::get('customer/tarikanKu', 'api\CustomerController@tarikanKu');
+    Route::post('customer/tarikanKu', 'api\CustomerController@formRequestTarikan');
+
+});
+
+
+Route::get('all/message', 'ChatsController@index');
+Route::get('some/messages', 'ChatsController@fetchMessages');
+Route::post('create/messages', 'ChatsController@sendMessage');

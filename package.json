@@ -31,6 +31,8 @@
     },
     "dependencies": {
         "fs": "0.0.1-security",
+        "laravel-echo": "^1.11.0",
+        "pusher-js": "^7.0.3",
         "query-string": "^7.0.1",
         "react-router-dom": "^5.2.0",
         "react-spinners": "^0.11.0",

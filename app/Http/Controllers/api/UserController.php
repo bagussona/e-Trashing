@@ -109,19 +109,20 @@ class UserController extends Controller
             'saldo' => 0
         ]);
 
-        $customer->assignRole('customer');
 
         $passbook_customer = PassbookCustomer::create([
             'user_id' => $customer->id,
             'Tanggal' => date("Y-m-d"),
-            'Keterangan' => 0,
+            'Keterangan' => 'saldo awal',
             'Berat' => 0,
             'Debit' => 0,
             'Credit' => 0,
             'Saldo' => 0
-        ]);
+            ]);
 
-        return response()->json(compact('customer'), 201);
+            $customer->assignRole('customer');
+
+            return response()->json(compact('customer'), 201);
     }
 
 ##### End of Customer Area #####

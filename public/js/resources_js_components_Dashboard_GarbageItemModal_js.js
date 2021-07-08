@@ -76,7 +76,7 @@ function GarbageItemModal(props) {
 
   var id = ID;
 
-  var umountModal = function umountModal() {
+  var unmountModal = function unmountModal() {
     clearData();
     close(false);
   };
@@ -98,7 +98,7 @@ function GarbageItemModal(props) {
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_1__.setGarbage)((0,_utilities_obtain_cookie__WEBPACK_IMPORTED_MODULE_2__.getCookie)('token'), formData).then(function (res) {
       // console.log(res)
       setLoading(false);
-      umountModal();
+      unmountModal();
     })["catch"](function (err) {
       console.log(err);
     }); // console.log(typeof(getCookie('token')))
@@ -112,7 +112,7 @@ function GarbageItemModal(props) {
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_1__.editGarbage)((0,_utilities_obtain_cookie__WEBPACK_IMPORTED_MODULE_2__.getCookie)('token'), formData, id).then(function (res) {
       // console.log(res);
       setLoading(false);
-      umountModal();
+      unmountModal();
     })["catch"](function (err) {
       console.log(err);
     });
@@ -122,7 +122,7 @@ function GarbageItemModal(props) {
     var listener = function listener(event) {
       if (event.code === 'Escape') {
         event.preventDefault();
-        umountModal();
+        unmountModal();
       }
     };
 
@@ -146,7 +146,7 @@ function GarbageItemModal(props) {
       className: "h-full w-full relative",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         onClick: function onClick() {
-          return umountModal();
+          return unmountModal();
         },
         id: "add-item-modals",
         className: "h-full w-full bg-gray-400 top-0 right-0 absolute bg-opacity-50"
@@ -227,7 +227,7 @@ function GarbageItemModal(props) {
                   fontWeight: 600
                 }), _defineProperty(_jsx2, "children", "Jenis Sampah"), _jsx2)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
                   name: "name",
-                  className: "h-10 border-gray-400 border-2 rounded focus:outline-none focus:border-blue-400 p-2",
+                  className: "h-10 border-gray-100 bg-gray-100 border-2 rounded focus:outline-none focus:border-blue-400 p-2",
                   value: garbageData.name,
                   onChange: function onChange(ev) {
                     return setGarbageData(_objectSpread(_objectSpread({}, garbageData), {}, {
@@ -245,7 +245,7 @@ function GarbageItemModal(props) {
                   fontFamily: ['Inter', 'sans-serif'],
                   fontWeight: 600
                 }), _defineProperty(_jsx3, "children", "Harga per Kilogram Sampah"), _jsx3)), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-                  className: "h-10 border-gray-400 border-2 rounded focus:outline-none focus:border-blue-400 p-2",
+                  className: "h-10 border-gray-100 bg-gray-100 border-2 rounded focus:outline-none focus:border-blue-400 p-2",
                   value: garbageData.price,
                   onChange: function onChange(ev) {
                     return setGarbageData(_objectSpread(_objectSpread({}, garbageData), {}, {
@@ -261,7 +261,7 @@ function GarbageItemModal(props) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               className: "w-30 h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg",
               onClick: function onClick() {
-                return umountModal();
+                return unmountModal();
               },
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
                 id: "cancel-button",
