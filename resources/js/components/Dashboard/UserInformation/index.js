@@ -32,10 +32,11 @@ function UserInformation(props) {
     <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
         {/* <ConditionalRender val={queryParam.tab} data={data} /> */}
         <Header page='User Profile' />
-
-        <browserData.Provider value={props}>
-          {conditionalRender(queryParam.tab)}
-        </browserData.Provider>
+        <div id="page-content">
+          <browserData.Provider value={props}>
+            {conditionalRender(queryParam.tab)}
+          </browserData.Provider>
+        </div>
     </div>
   )
 }

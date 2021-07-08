@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const apiURL = "https://bts-id.herokuapp.com/api"
+/** BTS ID Official API */
+const API_URL = "https://bts-id.herokuapp.com/api"
 
 const loginAxios = data => {
   
-  const axiosData = axios.post(`${apiURL}/login`, data)
+  const axiosData = axios.post(`${API_URL}/login`, data)
   .then(res => res)
   .catch(err => err)
 
@@ -12,7 +13,7 @@ const loginAxios = data => {
 }
 
 const getUserList = token => {
-  const axiosData = axios.get(`${apiURL}/get/user`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/get/user`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -20,7 +21,7 @@ const getUserList = token => {
 }
 
 const getUser = token => {
-  const axiosData = axios.get(`${apiURL}/profile`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/profile`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -28,7 +29,7 @@ const getUser = token => {
 }
 
 const getGarbage = token => {
-  const axiosData = axios.get(`${apiURL}/jenisSampah`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/jenisSampah`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -36,7 +37,7 @@ const getGarbage = token => {
 }
 
 const setGarbage = (token, data) => {
-  const axiosData = axios.post(`${apiURL}/jenisSampah`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.post(`${API_URL}/jenisSampah`, data, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -44,7 +45,7 @@ const setGarbage = (token, data) => {
 }
 
 const editGarbage = (token, data, id) => {
-  const axiosData = axios.post(`${apiURL}/jenisSampah/update/${id}`,data, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.post(`${API_URL}/jenisSampah/update/${id}`,data, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -52,7 +53,7 @@ const editGarbage = (token, data, id) => {
 }
 
 const deleteGarbage = (token, id) => {
-  const axiosData = axios.delete(`${apiURL}/jenisSampah/delete/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.delete(`${API_URL}/jenisSampah/delete/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -60,7 +61,7 @@ const deleteGarbage = (token, id) => {
 }
 
 const getUserDetailsByID = (token, id) => {
-  const axiosData = axios.get(`${apiURL}/profile/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/profile/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -68,7 +69,7 @@ const getUserDetailsByID = (token, id) => {
 }
 
 const getUserPassbook = (token, id) => {
-  const axiosData = axios.get(`${apiURL}/bendahara/customer/${id}/passbook`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/bendahara/customer/${id}/passbook`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -76,13 +77,31 @@ const getUserPassbook = (token, id) => {
 }
 
 const createStaff = (token, data) => {
-  const axiosData = axios.post(`${apiURL}/register/staff`,data , {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.post(`${API_URL}/register/staff`,data , {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
   return axiosData;
 }
+/** End Of BTS ID Official APIs */
 
+
+/** External APIs */
+
+/**  Nominatim Open Source Geolocation APIs */
+const EXTERNAL_URL = "https://nominatim.openstreetmap.org/reverse?";
+// Reverse Geocode API
+
+const getLocation = (lat, lon) => {
+  const axiosData = axios.get(`${EXTERNAL_URL}lat=${lat}&lon=${lon}&format=json&zoom=18`)
+  .then(async res => {
+    const data = res;
+    return data
+  })
+  .catch(err => err)
+
+  return axiosData;
+}
 
 export { 
   loginAxios, 
@@ -94,5 +113,7 @@ export {
   deleteGarbage,
   getUserDetailsByID,
   getUserPassbook,
-  createStaff
+  createStaff,
+  /** External APIs Export */
+  getLocation
 };

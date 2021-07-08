@@ -188,7 +188,7 @@ function UserListMain(props) {
                 </div>
                 <div id="table-body" className="w-full h-auto flex flex-col space-y-1.5">
                   {userList.map((el, idx) => (
-                    <Link to={`/dashboard/userlist/user/${el.uid}`} id="user" className="hover:bg-gray-100 cursor-pointer w-full h-16 flex flex-row items-center bg-white shadow-md rounded text-gray-600" style={{fontFamily: ['Inter', 'sans-serif']}}>
+                    <Link key={idx} to={`/dashboard/userlist/user/${el.uid}`} id="user" className="hover:bg-gray-100 cursor-pointer w-full h-16 flex flex-row items-center bg-white shadow-md rounded text-gray-600" style={{fontFamily: ['Inter', 'sans-serif']}}>
                       <div id="avatar-table-body" className="w-28 h-full flex items-center justify-center">
                         <picture id="image-wrapper" className="flex items-center justify-center">
                           <img src={el.avatar} alt="avatar" className="w-11 h-11 rounded-full object-cover" />

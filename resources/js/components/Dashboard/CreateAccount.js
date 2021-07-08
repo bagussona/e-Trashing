@@ -60,11 +60,11 @@ function CreateAccount() {
       <div id="dashboard-content" className="flex flex-col px-16 py-10 ml-20 h-full">
         <Header page="Add Staff" />
         <div id="page-content-container" className="w-full h-full flex items-center justify-center">
-          <div id="page-content-wrapper" className="w-2/5 h-full bg-white shadow-md rounded py-8 px-16 flex flex-col">
-            <div id="create-account-title" className="w-full h-20 flex items-center justify-center mb-4">
+          <div id="page-content-wrapper" className="w-2/5 h-auto pb-10 bg-white shadow-md rounded px-16 flex flex-col">
+            <div id="create-account-title" className="w-full py-10 text-center">
               <h1 className="text-gray-600 text-xl subpixel-antialiased tracking-wider" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 600 }}>Buat Akun Pengurus</h1>
             </div>
-            <div id="create-account-content-container" className="w-full flex-grow flex flex-col h-full space-y-8 py-4">
+            <div id="create-account-content-container" className="w-full flex-grow flex flex-col h-full space-y-8">
               <div id="name-input-wrapper" className="w-full flex flex-row h-auto pb-8">
                 <div id="name-input-title" className="w-1/3 h-auto">
                   <span id="label" className="text-gray-600" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>Name</span>
@@ -101,7 +101,7 @@ function CreateAccount() {
                     <option id="option" className="text-gray-600 bg-gray-100 p-2 h-10" value="pengepul">Staff 1 - Pengepul</option>
                     <option id="option" className="text-gray-600 bg-gray-100 p-2 h-10" value="staff">Staff 2 - Penjemput</option>
                   </select> */}
-                  <div id="dropdown" className="cursor-pointer transition-colors h-10 p-2 bg-white shadow rounded w-full hover:bg-gray-100 active:bg-white flex flex-row items-center justify-between z-10" onClick={() => {setIsDropdown(!isDropdown)}}>
+                  <div id="dropdown" className="cursor-pointer transition-colors h-10 p-2 bg-gray-100 shadow rounded w-full hover:bg-gray-200 active:bg-gray-100 flex flex-row items-center justify-between z-10" onClick={() => {setIsDropdown(!isDropdown)}}>
                     <span id="dropdown-preview" className="text-gray-600" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 400}}>{roleParser(value.role)}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="fill-current text-gray-600 bi bi-caret-down-fill" viewBox="0 0 16 16">
                       <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
