@@ -140,6 +140,17 @@ Route::group([
 });
 
 
-Route::get('all/message', 'ChatsController@index');
-Route::get('some/messages', 'ChatsController@fetchMessages');
-Route::post('create/messages', 'ChatsController@sendMessage');
+// Route::get('all/message', 'ChatsController@index');
+// Route::post('create/messages', 'ChatsController@sendMessage');
+
+### Customer Area
+Route::group([
+    'middleware' => ['jwt.verify', 'role:admin|staff|pengepul|bendahara|customer']
+], function () {
+
+    Route::get('/contact', 'ChatsController@index'); //contact
+    Route::get('some/messages', 'ChatsController@fetchMessages');
+    Route::get('/message/{id}', 'ChatsController@getMessage'); //message from & to
+    Route::post('message', 'ChatsController@sendMessage'); //send message
+
+});

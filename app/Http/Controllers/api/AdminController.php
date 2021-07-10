@@ -26,7 +26,7 @@ class AdminController extends Controller
     $this->validate($request, [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
-            'email' => 'nullable|email|max:50',
+            // 'email' => 'nullable|email|max:50',
             'nohape' => 'required|string|max:15',
             'avatar' => 'nullable|image|mimes:png,jpg,jpeg',
             'location' => 'nullable|string',
@@ -39,7 +39,7 @@ class AdminController extends Controller
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'email' => $request->email,
+            // 'email' => $user->email,
             'nohape' => $request->nohape,
             'avatar' => $response,
             'location' => $request->location
