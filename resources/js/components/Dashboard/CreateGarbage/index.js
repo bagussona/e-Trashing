@@ -1,8 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { deleteGarbage, getGarbage } from '../../apis/api';
-import { getCookie } from '../../utilities/obtain_cookie';
-import { BounceLoading, ClimbingBoxLoading } from '../Assets/LoadingPage';
-import Header from '../Header';
+import { deleteGarbage, getGarbage } from '../../../apis/api';
+import { getCookie } from '../../../utilities/obtain_cookie';
+import { BounceLoading, ClimbingBoxLoading } from '../../Assets/LoadingPage';
+import Header from '../../Header';
 // import GarbageItemModal from './GarbageItemModal';
 
 const GarbageItemModal = React.lazy(() => import('./GarbageItemModal'));

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { setGarbage, editGarbage } from '../../apis/api';
-import { getCookie } from '../../utilities/obtain_cookie';
-import { BounceLoading } from '../Assets/LoadingPage';
+import { setGarbage, editGarbage } from '../../../apis/api';
+import { getCookie } from '../../../utilities/obtain_cookie';
+import { BounceLoading } from '../../Assets/LoadingPage';
 
 
 function GarbageItemModal(props) {

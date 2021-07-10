@@ -8,6 +8,7 @@ function Chat() {
       <Header page="Chat" />
       <div id="page-content" className="w-full h-full flex flex-row px-16 py-10">
         <span>Chat App</span>
+        
       </div>
     </div>
   )

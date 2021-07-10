@@ -79,12 +79,12 @@ function Dashboard(props) {
                   <button onClick={() => history.push('/dashboard')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname) === '/dashboard' ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
                     <img src={(props.location.pathname) === '/dashboard' ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668205/BTS-ID/active/house-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/house.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="home" />
                   </button>
-                  <button onClick={() => history.push('/dashboard/userlist')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/userlist') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
-                    <img src={(props.location.pathname).includes('/dashboard/userlist') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669474/BTS-ID/active/people-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669408/BTS-ID/inactive/people.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="userlist" />
-                  </button>
                   {
                     localStorage.getItem(userRole) === 'bendahara' ? null : 
                     <>
+                      <button onClick={() => history.push('/dashboard/userlist')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/userlist') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
+                        <img src={(props.location.pathname).includes('/dashboard/userlist') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669474/BTS-ID/active/people-fill-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624669408/BTS-ID/inactive/people.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="userlist" />
+                      </button>
                       <button onClick={() => history.push('/dashboard/createaccount')} className={`py-5 w-full h-full flex items-center justify-center border-r-3 ${(props.location.pathname).includes('/dashboard/createaccount') ? 'border-blue-400 bg-blue-100' : 'border-white bg-transparent'} transition-colors duration-200`}>
                         <img src={(props.location.pathname).includes('/dashboard/createaccount') ? "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668235/BTS-ID/active/person-plus-active.svg" : "https://res.cloudinary.com/tookoo-dil/image/upload/v1624668717/BTS-ID/inactive/person-plus.svg"} style={{ height: 24 + 'px', width: 24 + 'px' }} alt="create user" />
                       </button>

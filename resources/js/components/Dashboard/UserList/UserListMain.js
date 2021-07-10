@@ -1,6 +1,5 @@
 import React, { 
   useEffect, 
-  useRef, 
   useState 
 } from 'react';
 import { Link, Redirect } from 'react-router-dom';
@@ -8,8 +7,6 @@ import { ClimbingBoxLoading } from '../../Assets/LoadingPage';
 import Header from '../../Header';
 import { getUserList } from '../../../apis/api';
 import { getCookie } from '../../../utilities/obtain_cookie';
-import { userRole } from '../../../cookie_const';
-// import { useStore } from '../../../utilities/store';
 
 const weightParser = val => {
   var result = 0;
@@ -26,51 +23,9 @@ const weightParser = val => {
 }
 
 function UserListMain(props) {
-  // const { user, loading } = props;
-
-  // const [custAmount, setCustAmount] = useState(0);
-  // const [staffAmount, setStaffAmount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [firstAttempt, setFirstAttempt] = useState(false);
-  // const [currentUser, setCurrentUser] = useState({});
+  // const [firstAttempt, setFirstAttempt] = useState(false);
   const [userList, setUserList] = useState([]);
-  // const [staff, setStaff] = useState([])
-  // const [customer, setCustomer] = useState([]);
-  // const manipulate = useStore(state => state.setData)
-
-  // const toTitleCase = (str) => {
-  //   return str.replace(
-  //     /\w\S*/g,
-  //     function (txt) {
-  //       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  //     }
-  //   );
-  // }
-  
-  // const setUserList = (users) => {
-  //   var currentStaff = null;
-  //   var newStaff = [];
-  //   var newCust = [];
-
-  //   for (let i = 0; i < users.length; i++) {
-  //     if (users[i].first_name !== 'customer') {
-  //       if (users[i].first_name === localStorage.getItem(userRole)) {
-  //         currentStaff = users[i];
-  //       } else {
-  //         newStaff.push(users[i])
-  //       }
-  //     } else {
-  //       // console.log(users[i].role_names, 'a customer');
-  //       newCust.push(users[i])
-  //     }
-  //   }
-
-  //   setCustAmount(newCust.length);
-  //   setStaffAmount(newStaff.length+1);
-  //   setCustomer(newCust);
-  //   setStaff(newStaff);
-  //   setCurrentUser(currentStaff);
-  // }
 
   var intervalId;
 
@@ -95,7 +50,7 @@ function UserListMain(props) {
   }
 
   useEffect(() => {
-    if (firstAttempt === false) {
+    // if (firstAttempt === false) {
       getUserList(getCookie('token'))
       .then(res => {
         if (res.status === 200) {
@@ -105,25 +60,24 @@ function UserListMain(props) {
           } else {
             setUserList(user)
           }
-          // console.log(res)
         } else {
           console.log('error getting user list')
         }
 
-        if (firstAttempt === false) {
-          setFirstAttempt(true)
-        }
+        // if (firstAttempt === false) {
+        //   setFirstAttempt(true)
+        // }
 
         setLoading(false)
       })
-    } else {
-      fetchIntervally();
-    }
+    // } else {
+    //   fetchIntervally();
+    // }
 
-    return () => {
-      setFirstAttempt(false)
-      clearInterval(intervalId);
-    }
+    // return () => {
+    //   setFirstAttempt(false)
+    //   clearInterval(intervalId);
+    // }
   }, [])
 
 

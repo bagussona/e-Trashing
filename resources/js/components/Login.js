@@ -175,10 +175,12 @@ function Login(props) {
                         password: false
                       }
                     )}
-                    onChange={e => setUserCredential({
+                    onChange={e => {setUserCredential({
                       ...userCredential,
                       password: e.target.value
-                    })}
+                    })
+                    }
+                  }
                   />
                 </div>
                 <div className="flex flex-row w-full justify-end items-center h-10 mb-6">
@@ -188,7 +190,11 @@ function Login(props) {
                   <button className="w-30 h-full bg-white px-6 rounded focus:outline-none hover:bg-gray-100 active:bg-white transition-colors duration-300 shadow-lg">
                     <span className="text-blue-400" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN UP</span>
                   </button>
-                  <button className="w-30 h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => userLogin()}>
+                  <button className="w-30 h-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg" onClick={() => {
+                    userLogin(userCredential)
+                    // console.log(userCredential)
+                    }
+                  }>
                     <span className="text-white" style={{ fontFamily: ['Inter', 'sans-serif'], fontWeight: 400 }}>SIGN IN</span>
                   </button>
                 </div>
