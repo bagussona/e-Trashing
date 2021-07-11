@@ -122,7 +122,7 @@ class UserController extends Controller
 
             $customer->assignRole('customer');
 
-            return response()->json(compact('customer'), 201);
+            return response()->json(["success" => true, "msg" => "Terimakasih! Anda telah berhasil mendaftar. Silahkan login ke aplikasi.", "data" => $customer], 201);
     }
 
 ##### End of Customer Area #####

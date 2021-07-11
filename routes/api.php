@@ -25,6 +25,8 @@ Route::middleware(['cors'])->group(function () {
     Route::post('login', 'api\UserController@login'); //[All User]
     Route::get('token', 'api\UserController@getToken'); //[All User]
     Route::post('register', 'api\UserController@registerCustomer'); //[Customer]
+    Route::post('password/reset/email', 'api\ForgotPasswordController@forgot');
+    Route::post('password/reset', 'api\ForgotPasswordController@reset');
 
 });
 
@@ -50,6 +52,7 @@ Route::group([
 
     // CRUD Bendahara, Staff 1 & Pengepul
     Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [Admin]
+    Route::post('upload/image', 'api\AdminController@uploadImage'); //POST Image [Admin]
 
     Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
     Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [Admin]
@@ -148,9 +151,9 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff|pengepul|bendahara|customer']
 ], function () {
 
-    Route::get('/contact', 'ChatsController@index'); //contact
-    Route::get('some/messages', 'ChatsController@fetchMessages');
-    Route::get('/message/{id}', 'ChatsController@getMessage'); //message from & to
-    Route::post('message', 'ChatsController@sendMessage'); //send message
+    Route::get('chats/contact', 'ChatsController@index'); //contact
+    Route::get('chats/some/messages', 'ChatsController@fetchMessages');
+    Route::get('chats/message/{id}', 'ChatsController@getMessage'); //message from & to
+    Route::post('chats/message', 'ChatsController@sendMessage'); //send message
 
 });

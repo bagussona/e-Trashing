@@ -22,42 +22,57 @@ class AdminController extends Controller
 
 ##### Admin Permission #####
 
+    private function getUrlAvatar(){
+        $avatar = json_decode(request()->cookie('avatar'), true);
+
+        return $avatar;
+    }
+
+    public function uploadImage(){
+    $this->validate(request(), [
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+    ]);
+
+    $response = cloudinary()->upload(request()->file('avatar')->getRealPath())->getSecurePath();
+
+    $cookie = cookie('avatar', json_encode($response), 180);
+
+        return response()->json(["msg" => "gambar berhasil diupload"], 200)->cookie($cookie);
+    }
+
     public function update(Request $request, $id){
     $this->validate($request, [
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
             // 'email' => 'nullable|email|max:50',
             'nohape' => 'required|string|max:15',
-            'avatar' => 'nullable|image|mimes:png,jpg,jpeg',
+            // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'location' => 'nullable|string',
     ]);
 
-        $response = cloudinary()->upload($request->file('avatar')->getRealPath())->getSecurePath();
-            // dd($response);
+    $avatar = $this->getUrlAvatar();
 
+    if ($avatar != []) {
         $user = User::find($id);
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            // 'email' => $user->email,
             'nohape' => $request->nohape,
-            'avatar' => $response,
+            'avatar' => $avatar,
             'location' => $request->location
         ]);
 
-        try {
-            $user->save();
-            return response()->json([
-                'status'        => 'success',
-                'message'       => 'User Updated Successfully',
-                'data'          => $user
-                ], Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status'        => 'failed',
-                'message'       => 'Something went wrong',
-                'data'          => $th
-                ], Response::HTTP_BAD_REQUEST);
+        return response()->json(["msg" => "Data Profile berhasil diupdate!"], 200);
+    } else{
+    $user = User::find($id);
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'nohape' => $request->nohape,
+            'location' => $request->location
+        ]);
+
+        return response()->json(["msg" => "Profile berhasil diupdate!"], 200);
         }
     }
 
