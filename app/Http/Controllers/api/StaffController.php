@@ -67,7 +67,7 @@ class StaffController extends Controller
             $wkwk = PassbookCustomer::create([
                 "user_id" => $listsTimbangan[0]["user_id"],
                 "Tanggal" => date("Y-m-d"),
-                "Keterangan" => $listsTimbangan[0]["Keterangan"],
+                "Keterangan" => "Deposit",
                 "Berat" => $jee2,
                 "Debit" => $debit,
                 "Saldo" => $saldo
@@ -193,16 +193,9 @@ class StaffController extends Controller
             'kode_book' => 'required|string'
         ]);
 
+        FormRequest::where("kode_book", $request->get('kode_book'))->update(["status" => "Selesai"]);
 
-        $setorDiselesaikan = FormRequest::where("kode_book", $request->get('kode_book'))->get();
-        // dd()
-        $setorDiselesaikan->update([
-            'status' => "Selesai"
-        ]);
-
-        return response()->json([
-            "msg" => "Terima kasih! Request anda sudah diselesaikan",
-        ], 200);
+        return response()->json(["msg" => "Terima kasih! Request anda sudah diselesaikan"], 200);
     }
 
 }

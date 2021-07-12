@@ -106,10 +106,12 @@ class PengepulController extends Controller
         if ($keterangan == "bts-id" ) {
 
             $total_timbangan = ($berat_input * $harga_tetap);
+            $fee = ($total_timbangan * 20 / 100);
+            $subtotal = $total_timbangan + $fee;
 
         } else{
 
-            return response()->json(["Maaf, kamu bukan staff bts-id"]);
+            return response()->json(["msg" => "Maaf, kamu bukan bendahara bts-id"], 403);
         }
 
         $hasilJual = Passbook::create([
@@ -118,7 +120,7 @@ class PengepulController extends Controller
             'Jenis' => $request->get('jenis_sampah'),
             'Berat' => $berat_input,
             '@KG' => $harga_tetap,
-            'Subtotal' => $total_timbangan,
+            'Subtotal' => $subtotal,
             'user_id' => $id
         ]);
 
@@ -144,6 +146,9 @@ class PengepulController extends Controller
         if ($keterangan == "bts-id" ) {
 
             $total_timbangan = ($berat_input * $harga_tetap);
+            $fee = ($total_timbangan * 20 / 100);
+            $subtotal = $total_timbangan + $fee;
+
         } else{
             return response()->json(["Maaf, kamu bukan staff bts-id"]);
         }
@@ -154,7 +159,7 @@ class PengepulController extends Controller
             'Jenis' => $request->get('jenis_sampah'),
             'Berat' => $berat_input,
             '@KG' => $harga_tetap,
-            'Subtotal' => $total_timbangan,
+            'Subtotal' => $subtotal
         ]);
         try {
             $passbook->save();

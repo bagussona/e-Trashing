@@ -14,7 +14,7 @@ class ForgotPasswordController extends Controller
 
         Password::sendResetLink($credentials);
 
-        return response()->json(["success" => "Link reset password berhasil dikirim. Silahkan cek email, untuk konfirmasi reset password anda!"], 200);
+        return response()->json(["msg" => "Link reset password berhasil dikirim. Silahkan cek email, untuk konfirmasi reset password anda!"], 200);
     }
 
     public function reset(){

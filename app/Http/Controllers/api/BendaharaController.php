@@ -14,14 +14,12 @@ use Illuminate\Support\Facades\Auth;
 class BendaharaController extends Controller
 {
     public function readAllSetoran(){
-        #code..
         $setoran = Passbook::all();
 
         return response()->json(compact('setoran'), 200);
     }
 
     public function readAllSetoranCustomer(){
-        #code..
         $id = Auth::user()->id;
         $setoran_customer = Passbook::where("user_id", $id)->get();
 
@@ -29,7 +27,6 @@ class BendaharaController extends Controller
     }
 
     public function readPassbookCustomers(){
-        #code..
         $id = Auth::user()->id;
         $passbook_customer = PassbookCustomer::where("user_id", $id)->get();
 
@@ -37,7 +34,6 @@ class BendaharaController extends Controller
     }
 
     public function readAllSetoranPengepul(){
-        #code..
         $id = Auth::user()->id;
         $setoran_pengepul = Passbook::where("user_id", $id)->get();
 
@@ -45,7 +41,6 @@ class BendaharaController extends Controller
     }
 
     public function readPassbookBendaharas(){
-        #code..
         $id = Auth::user()->id;
         $passbook_bendahara = PassbookBendahara::where("user_id", $id)->get();
 
@@ -64,16 +59,33 @@ class BendaharaController extends Controller
 
     public function listTarikan($id){
 
+        // dd($id);
+        $listsTarikans = [];
         $listsTarikan = FormRequestTarikan::where("user_id", $id)->get();
-        return $listsTarikan;
+        foreach ($listsTarikan as $listTarikan) {
+            $listsTarikans[] = [
+                "user_id" => $listTarikan["user_id"],
+                "jumlah" => $listTarikan["jumlah"],
+                "kode_pembayaran" => $listTarikan["kode_pembayaran"]
+            ];
+        }
 
+        $latest = $listsTarikans[count($listsTarikans)-1];
+        // dd($latest);
+
+        return $latest;
     }
 
     public function checkout($id){
     $listsTarikan = $this->listTarikan($id);
 
-        $credit = $listsTarikan[0]['jumlah'];
-        $payment_code = $listsTarikan[0]['kode_pembayaran'];
+    // dd($listsTarikan);
+        $credit = $listsTarikan['jumlah'];
+        // dd($credit);
+        $payment_code = $listsTarikan['kode_pembayaran'];
+        $usid = $listsTarikan['user_id'];
+        // dd($usid);
+        // $date = $listsTarikan['tanggal'];
 
     $wkwk = PassbookCustomer::where("user_id", $id)->get();
     // dd($wkwk);
@@ -98,8 +110,9 @@ class BendaharaController extends Controller
         ##Proses pembuatan history transaction di buku tabungan customer, disini yang diisi credit. karena melakukan penarikan dana.
 
         $wkwk = PassbookCustomer::create([
-        "user_id" => $listsTarikan[0]["user_id"],
-        "Tanggal" => $listsTarikan[0]["tanggal"],
+        // "user_id" => $listsTarikan[0]["user_id"],
+        "user_id" => $usid,
+        "Tanggal" => date('Y-m-d'),
         "Keterangan" => $payment_code,
         "Berat" => $berat,
         "Credit" => $credit,
@@ -117,16 +130,12 @@ class BendaharaController extends Controller
             "saldo" => $saldo
         ]);
 
-        $request_success = FormRequestTarikan::where('kode_pembayaran', $payment_code)->get();
-        $request_success->update([
-            "status" => "Accepted"
-        ]);
+        FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Accepted"]);
 
         ##end update status
 
 
-        $duits = PassbookBendahara::where("user_id", $id)->get();
-
+        $duits = PassbookBendahara::where("user_id", 4)->get();
 
         $hasil = [];
         foreach ($duits as $duit){
@@ -137,19 +146,22 @@ class BendaharaController extends Controller
             ];
         }
 
+        // dd($hasil);
         $counting = $hasil[count($hasil)-1];
 
+        // dd($counting);
         $keuangan_sekarang = $counting["Saldo"] -= $credit;
 
+        // dd($keuangan_sekarang);
         ##Proses pembuatan History Transaction di buku tabungan bendahara, disini yang diisi credit, karena melakukan pemberian dana ke customer
 
-        $duit_bendahara = PassbookBendahara::create([
-            "user_id" => $listsTarikan[0]["user_id"],
+        PassbookBendahara::create([
+            "user_id" => $listsTarikan["user_id"],
             "Keterangan" => $payment_code,
-            "Tanggal" => $listsTarikan[0]["tanggal"],
+            "Tanggal" => date('Y-m-d'),
             "Berat" => $berat,
             "Credit" => $credit,
-            "Saldo" => $saldo
+            "Saldo" => $keuangan_sekarang
             ]);
 
         ##end pembuatan history transaction
@@ -158,30 +170,22 @@ class BendaharaController extends Controller
         ##update saldo untuk dikurangi di akun bendahara
         $bendahara = "Bendahara";
 
-        $keuangan_bendahara_diupdate = User::where('last_name', $bendahara)->get();
-        // dd($passbook);
-        $keuangan_bendahara_diupdate->update([
-            // "sampah_terkumpul" => $berat,
-            "saldo" => $keuangan_sekarang
-        ]);
+        User::where('last_name', $bendahara)->update(["saldo" => $keuangan_sekarang ]);
 
         ##end pengurangan saldo
+
         // dd($passbook);
-    return response()->json([
-        "msg" => "Permintaan anda berhasil diproses.",
-        "data" => $wkwk
-        ], 200);
+        return response()->json(["msg" => "Permintaan anda berhasil diproses.", "data" => $wkwk], 200);
     }
 
     public function checkoutReject($id){
         $listsTarikan = $this->listTarikan($id);
 
-        $payment_code = $listsTarikan[0]['kode_pembayaran'];
+        // dd($listsTarikan);
+        $payment_code = $listsTarikan['kode_pembayaran'];
+        // dd($payment_code);
 
-        $request_success = FormRequestTarikan::where('kode_pembayaran', $payment_code)->get();
-        $request_success->update([
-            "status" => "Rejected"
-        ]);
+        FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Rejected"]);
 
         return response()->json(["msg" => "Maaf! Permintaan anda tidak dapat di proses."], 202);
     }

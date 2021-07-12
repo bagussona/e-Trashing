@@ -7,6 +7,7 @@ use App\FormRequestTarikan;
 use App\Http\Controllers\Controller;
 use App\Passbook;
 use App\PassbookCustomer;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -117,20 +118,21 @@ class CustomerController extends Controller
 
     public function formRequestTarikan(Request $request){
         $usid = Auth::user()->id;
+        $name = Auth::user()->first_name;
+        // dd($name);
         $validator = Validator::make($request->all(), [
-            // 'user_id'
-            'tanggal' => 'required|string',
+            // 'tanggal' => 'required|string',
             'jumlah' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
-            # code...
             return response()->json($validator->errors()->toJson(), 400);
         }
 
         $tarikDana = FormRequestTarikan::create([
             'user_id' => $usid,
-            'tanggal' => $request->get('tanggal'),
+            'tanggal' => date('Y-m-d'),
+            'name' => $name,
             'jumlah' => $request->get('jumlah'),
             'status' => 'Proses',
             'kode_pembayaran' => 'BTS-ID' . '/Payment/' . date('Y-m-d') . '/' . Str::random(6),
@@ -148,5 +150,30 @@ class CustomerController extends Controller
         $tarikanKu = FormRequestTarikan::where('user_id', $usid)->get();
 
         return response()->json(compact('tarikanKu'), 200);
+    }
+
+    public function historyOrders(){
+        $usid = Auth::user()->id;
+
+        // $historyOrders = FormRequest::where('user_id', $usid)->get();
+        $historyOrders = DB::table('form_requests')->select('*')->where('user_id','=',$usid)->orderBy('created_at')->limit(10)->get();
+
+        return response()->json(compact('historyOrders'), 200);
+    }
+
+    public function historyTransactions(){
+        $usid = Auth::user()->id;
+
+        // $historyTransactions = FormRequestTarikan::where('user_id', $usid)->get();
+        $historyTransactions = DB::table('form_request_tarikans')->select('*')->where('user_id','=',$usid)->orderBy('created_at')->limit(10)->get();
+
+        return response()->json(compact('historyTransactions'), 200);
+    }
+
+    public function leaderboards(){
+        $leaderboards = User::orderBy('sampah_terkumpul', 'desc')->get();
+
+        // dd($leaderboards);
+        return response()->json(compact('leaderboards'), 200);
     }
 }

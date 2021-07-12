@@ -72,18 +72,30 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff']
 ], function () {
 
+    //Orderan masuk
+    #1
     Route::get('staff/all/orderan', 'api\StaffController@orderanKu'); //Notifikasi orderan dari customer yang harus dijemput dan atau yang ditimbang di tempat
+    #2
     Route::post('staff/orderan/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
 
-    Route::get('staff/all/passbooks', 'api\StaffController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
+    //Transaksi
+    //#1
+    Route::post('staff/{id}/addToTimbangan', 'api\StaffController@addToTimbangan'); //Staff1 ->add sampah ke cart
 
+    //#2
     Route::get('staff/{id}/timbangan', 'api\StaffController@listTimbangan'); //Staff1 ->cek sampah  di cart yg sudah di input
 
+    //#3
     Route::post('staff/{id}/checkout', 'api\StaffController@checkout'); //Staff1 ->Transaksi sampah yg sudah di input
 
-    Route::post('staff/{id}/addToTimbangan', 'api\StaffController@addToTimbangan'); //Staff1 ->add sampah ke cart
+    //#4 jika ada yg diedit
     Route::post('staff/timbangan/update/{id}', 'api\StaffController@updateTimbanganSampah'); //Staff1 ->update sampah yg masih di cart
+    //#5 jika ada yg dihapus
     Route::delete('staff/delete/timbangan/{id}', 'api\StaffController@destroy'); //Staff1 ->delete sampah yg ada di cart
+
+
+    //all setoran untuk bendahara
+    Route::get('staff/all/passbooks', 'api\StaffController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
 
 });
 
@@ -92,15 +104,25 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|pengepul']
 ], function () {
 
-    Route::get('pengepul/{id}/passbooks', 'api\PengepulController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
+    //Transaksi
+    //#1
+    Route::post('pengepul/{id}/addToTimbangan', 'api\PengepulController@addToTimbanganBendahara'); //Pengepul ->add sampah ke cart
 
+    //#2
     Route::get('pengepul/{id}/timbangan', 'api\PengepulController@listTimbanganBendahara'); //Pengepul ->cek sampah  di cart yg sudah di input
 
+    //#3
     Route::post('pengepul/{id}/checkout', 'api\PengepulController@checkoutBendahara'); //Pengepul ->Transaksi sampah yg sudah di input
 
-    Route::post('pengepul/{id}/addToTimbangan', 'api\PengepulController@addToTimbanganBendahara'); //Pengepul ->add sampah ke cart
+    //#4 jika ada yg diedit
     Route::post('pengepul/timbangan/update/{id}', 'api\PengepulController@updateTimbanganSampahBendahara'); //Pengepul ->update sampah yg masih di cart
+
+    //#5 jika ada yg dihapus
     Route::delete('pengepul/delete/timbangan/{id}', 'api\PengepulController@destroy'); //Pengepul ->delete sampah yg ada di cart
+
+
+    //all setoran bendahara ke pengepul.
+    Route::get('pengepul/{id}/passbooks', 'api\PengepulController@index'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
 
 });
 
@@ -130,7 +152,9 @@ Route::group([
 
 
     //history orders [form request jemput, dtg, form request tarik];
+    Route::get('history/orders', 'api\CustomerController@historyOrders');
     //history transactions [setor, tarik];
+    Route::get('history/transactions', 'api\CustomerController@historyTransactions');
 
     Route::get('customer/setoran/{id}', 'api\CustomerController@index');
     Route::post('customer/setoran/dijemput', 'api\CustomerController@formSetorDijemput');
@@ -140,11 +164,10 @@ Route::group([
     Route::get('customer/tarikanKu', 'api\CustomerController@tarikanKu');
     Route::post('customer/tarikanKu', 'api\CustomerController@formRequestTarikan');
 
+    Route::get('customer/leaderboards', 'api\CustomerController@leaderboards');
+
 });
 
-
-// Route::get('all/message', 'ChatsController@index');
-// Route::post('create/messages', 'ChatsController@sendMessage');
 
 ### Customer Area
 Route::group([
