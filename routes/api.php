@@ -52,7 +52,7 @@ Route::group([
 
     // CRUD Bendahara, Staff 1 & Pengepul
     Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [Admin]
-    Route::post('upload/image', 'api\AdminController@uploadImage'); //POST Image [Admin]
+    Route::post('upload/image/{id}', 'api\AdminController@uploadImage'); //POST Image [Admin]
 
     Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
     Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [Admin]
@@ -165,6 +165,10 @@ Route::group([
     Route::post('customer/tarikanKu', 'api\CustomerController@formRequestTarikan');
 
     Route::get('customer/leaderboards', 'api\CustomerController@leaderboards');
+
+    Route::post('customer/profile/image', 'api\CustomerController@uploadImage'); //POST Image [Customer]
+    Route::post('customer/profile/update', 'api\CustomerController@update'); //POST profile [Customer]
+
 
 });
 

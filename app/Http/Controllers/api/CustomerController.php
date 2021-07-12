@@ -176,4 +176,56 @@ class CustomerController extends Controller
         // dd($leaderboards);
         return response()->json(compact('leaderboards'), 200);
     }
+
+    public function uploadImage(){
+        $id = Auth::user()->id;
+
+        $this->validate(request(), [
+            'avatar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $response = cloudinary()->upload(request()->file('avatar')->getRealPath())->getSecurePath();
+        // dd($response);
+
+        $user = User::find($id);
+        $user->update([
+            "avatar" => $response
+            ]);
+
+        return response()->json(["msg" => "gambar berhasil diubah"], 200);
+    }
+
+    public function update(Request $request){
+        $id = Auth::user()->id;
+
+        $this->validate($request, [
+                    'first_name' => 'required|string|max:50',
+                    'last_name' => 'required|string|max:50',
+                    'nohape' => 'required|string|max:15',
+                    'location' => 'string'
+            ]);
+
+            $user = User::find($id);
+            $user->update([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'nohape' => $request->get('nohape'),
+                'location' => $request->get('location'),
+            ]);
+
+            try {
+                $user->save();
+                return response()->json([
+                    'status'        => 'success',
+                    'message'       => 'Profile Updated Successfully',
+                    'data'          => $user
+                    ], Response::HTTP_OK);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status'        => 'failed',
+                    'message'       => 'Something went wrong',
+                    'data'          => $th
+                    ], Response::HTTP_BAD_REQUEST);
+            }
+    }
 }

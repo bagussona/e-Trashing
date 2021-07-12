@@ -22,59 +22,110 @@ class AdminController extends Controller
 
 ##### Admin Permission #####
 
-    private function getUrlAvatar(){
-        $avatar = json_decode(request()->cookie('avatar'), true);
+//Catatam Ini adlah pure murni buatan @bagus_sona
 
-        return $avatar;
-    }
+    // private function getUrlAvatar(){
+    //     $avatar = json_decode(request()->cookie('avatar'), true);
 
-    public function uploadImage(){
-    $this->validate(request(), [
-        'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
-    ]);
+    //     return $avatar;
+    // }
 
-    $response = cloudinary()->upload(request()->file('avatar')->getRealPath())->getSecurePath();
+    // public function uploadImage(){
+    // $this->validate(request(), [
+    //     'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+    // ]);
 
-    $cookie = cookie('avatar', json_encode($response), 180);
+    // $response = cloudinary()->upload(request()->file('avatar')->getRealPath())->getSecurePath();
 
-        return response()->json(["msg" => "gambar berhasil diupload"], 200)->cookie($cookie);
+    // $cookie = cookie('avatar', json_encode($response), 180);
+
+    //     return response()->json(["msg" => "gambar berhasil diupload"], 200)->cookie($cookie);
+    // }
+
+    public function uploadImage($id){
+        $this->validate(request(), [
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
+        $response = cloudinary()->upload(request()->file('avatar')->getRealPath())->getSecurePath();
+
+        $user = User::find($id);
+        $user->update([
+            "avatar" => $response
+            ]);
+
+        return response()->json(["msg" => "gambar berhasil diubah"], 200);
     }
 
     public function update(Request $request, $id){
-    $this->validate($request, [
-            'first_name' => 'required|string|max:50',
-            'last_name' => 'required|string|max:50',
-            // 'email' => 'nullable|email|max:50',
-            'nohape' => 'required|string|max:15',
-            // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'location' => 'nullable|string',
-    ]);
+        $this->validate($request, [
+                    'first_name' => 'required|string|max:50',
+                    'last_name' => 'required|string|max:50',
+                    'nohape' => 'required|string|max:15',
+                    'location' => 'nullable|string',
+            ]);
 
-    $avatar = $this->getUrlAvatar();
+            $user = User::find($id);
+            $user->update([
+                'first_name' => $request->get('first_name'),
+                'last_name' => $request->get('last_name'),
+                'nohape' => $request->get('nohape'),
+                'location' => $request->get('location'),
+            ]);
 
-    if ($avatar != []) {
-        $user = User::find($id);
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'nohape' => $request->nohape,
-            'avatar' => $avatar,
-            'location' => $request->location
-        ]);
-
-        return response()->json(["msg" => "Data Profile berhasil diupdate!"], 200);
-    } else{
-    $user = User::find($id);
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'nohape' => $request->nohape,
-            'location' => $request->location
-        ]);
-
-        return response()->json(["msg" => "Profile berhasil diupdate!"], 200);
-        }
+            try {
+                $user->save();
+                return response()->json([
+                    'status'        => 'success',
+                    'message'       => 'Profile Updated Successfully',
+                    'data'          => $user
+                    ], Response::HTTP_OK);
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status'        => 'failed',
+                    'message'       => 'Something went wrong',
+                    'data'          => $th
+                    ], Response::HTTP_BAD_REQUEST);
+            }
     }
+
+//Catatam Ini adlah pure murni buatan @bagus_sona
+
+    // public function update(Request $request, $id){
+    // $this->validate($request, [
+    //         'first_name' => 'required|string|max:50',
+    //         'last_name' => 'required|string|max:50',
+    //         // 'email' => 'nullable|email|max:50',
+    //         'nohape' => 'required|string|max:15',
+    //         // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    //         'location' => 'nullable|string',
+    // ]);
+
+    // $avatar = $this->getUrlAvatar();
+
+    // if ($avatar != []) {
+    //     $user = User::find($id);
+    //     $user->update([
+    //         'first_name' => $request->first_name,
+    //         'last_name' => $request->last_name,
+    //         'nohape' => $request->nohape,
+    //         'avatar' => $avatar,
+    //         'location' => $request->location
+    //     ]);
+
+    //     return response()->json(["msg" => "Data Profile berhasil diupdate!"], 200);
+    // } else{
+    // $user = User::find($id);
+    //     $user->update([
+    //         'first_name' => $request->first_name,
+    //         'last_name' => $request->last_name,
+    //         'nohape' => $request->nohape,
+    //         'location' => $request->location
+    //     ]);
+
+    //     return response()->json(["msg" => "Profile berhasil diupdate!"], 200);
+    //     }
+    // }
 
 ##### End of Update profile by admin #####
 
