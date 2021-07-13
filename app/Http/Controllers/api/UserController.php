@@ -154,52 +154,29 @@ class UserController extends Controller
         return response()->json(compact('user'));
     }
 
-// Get Profile
+    // Get Profile
+    public function profileDetail(){
+        $id = Auth::user()->id;
 
-public function profileDetail($id){
-    $user = User::find($id);
-    $wkwk = PassbookCustomer::where("user_id", $id)->get();
-    // dd($wkwk);
+        $user = User::find($id);
 
-    $result = [];
-    foreach ($wkwk as $wk){
-        // dd($wkwk);
-        // dd($wk);
-        $result[] = [
-            "Berat" => $wk["Berat"],
-            "Saldo" => $wk["Saldo"]
-        ];
-    }
+        $token = $this->getToken();
 
-    $awikwo = $result[count($result)-1];
-
-    $saldo = $awikwo["Saldo"];
-    $total_setoran = $awikwo["Berat"];
-
-    // dd($total_setoran);
-
-    $token = $this->getToken();
-
-    if ($user == ! $token) {
-        # code...
+        if ($user == ! $token) {
+        //     # code...
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Something went wrong',
+                'data1' => $user
+            ], Response::HTTP_BAD_REQUEST);
+        } else{
         return response()->json([
-            'status' => 'failed',
-            'message' => 'Something went wrong',
-            'data1' => $user,
-            // 'data2' => $padd,
-            // 'data3' => $pavt,
-        ], Response::HTTP_BAD_REQUEST);
-    } else{
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Profile Detail',
-        'data' => $user
-        // 'saldo' => $saldo,
-        // 'berat.sampah.terkumpul' => $total_setoran,
-        ], Response::HTTP_OK);
-        }
+            'status' => 'success',
+            'message' => 'Profile Detail',
+            'data' => $user
+            ], Response::HTTP_OK);
+            }
     }
-
 
 }
 

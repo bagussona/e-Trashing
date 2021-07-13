@@ -57,6 +57,12 @@ class AdminController extends Controller
         return response()->json(["msg" => "gambar berhasil diubah"], 200);
     }
 
+    public function profileDetail($id){
+        $user = User::find($id);
+
+        return response()->json(compact('user'), 200);
+    }
+
     public function update(Request $request, $id){
         $this->validate($request, [
                     'first_name' => 'required|string|max:50',
