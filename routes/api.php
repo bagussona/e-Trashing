@@ -35,11 +35,12 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|customer|staff|bendahara|pengepul']
 ], function () {
 
-    Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
     Route::get('profile', 'api\UserController@userProfile')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer]
-    Route::get('profile/detail', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer]
-    Route::post('customer/profile/image', 'api\CustomerController@uploadImage'); //POST Image [Customer]
-    Route::post('customer/profile/update', 'api\CustomerController@update'); //POST profile [Customer]
+
+    Route::get('profile/detail', 'api\UserController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer, Staff, Bendahara, Pengepul]
+
+    Route::post('customer/profile/image', 'api\CustomerController@uploadImage'); //POST Image [All]
+    Route::post('customer/profile/update', 'api\CustomerController@update'); //POST profile [All]
 
 });
 
@@ -159,7 +160,7 @@ Route::group([
     //history transactions [setor, tarik];
     Route::get('history/transactions', 'api\CustomerController@historyTransactions');
 
-    Route::get('customer/setoran/{id}', 'api\CustomerController@index');
+    Route::get('customer/setoran', 'api\CustomerController@index');
     Route::post('customer/setoran/dijemput', 'api\CustomerController@formSetorDijemput');
     Route::post('customer/setoran/diantar', 'api\CustomerController@formSetorDiantar');
     Route::post('customer/setoran/dibatalin', 'api\CustomerController@batalSetor');

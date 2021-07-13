@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 
 class CustomerController extends Controller
 {
-    public function index($id){
+    public function index(){
         // $setoranKu = FormRequest::all();
         $id = Auth::user()->id;
         // dd($id);
@@ -35,7 +35,7 @@ class CustomerController extends Controller
             'jam' => 'required|string',
             'address' => 'required|string',
             'geolocation' => 'required|string',
-            'keterangan' => 'required|string'
+            // 'keterangan' => 'required|string'
         ]);
 
         // dd($usid);
@@ -71,7 +71,8 @@ class CustomerController extends Controller
             'tanggal' => 'required|string',
             'nohape' => 'required|string',
             'name' => 'required|string',
-            'jam' => 'required|string'
+            'jam' => 'required|string',
+            'keterangan' => 'string'
         ]);
 
         if ($validator->fails()) {
