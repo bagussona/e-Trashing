@@ -82,7 +82,8 @@ Route::group([
     #2
     Route::post('staff/orderan/{id}/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
     #3
-    Route::get('staff/find/orderan', 'api\StaffController@search');
+    Route::post('staff/find/orderan', 'api\StaffController@search');
+    Route::get('staff/find/orderan', 'api\StaffController@getSearch');
 
     //Transaksi
     //#1
