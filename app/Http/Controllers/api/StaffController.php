@@ -188,14 +188,37 @@ class StaffController extends Controller
         return response()->json(compact('orderanKu'), 200);
     }
 
-    public function orderanSelesai(Request $request){
-        $this->validate($request, [
+    public function detailOrderanKu($id){
+
+        // dd($kode_book);
+        $details = FormRequest::where("id", $id)->get();
+
+        return response()->json(compact('details'), 200);
+    }
+
+    public function orderanSelesai($id){
+
+        FormRequest::where("id", $id)->update(["status" => "Selesai"]);
+
+        return response()->json(["msg" => "Terima kasih! Request anda sudah diselesaikan"], 200);
+    }
+
+    public function searchOrderanKu(Request $request){
+        // $this->validate($request, [
+        //     'kode_book' => 'required|string'
+        // ]);
+        $validator = Validator::make($request->all(), [
             'kode_book' => 'required|string'
         ]);
 
-        FormRequest::where("kode_book", $request->get('kode_book'))->update(["status" => "Selesai"]);
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
 
-        return response()->json(["msg" => "Terima kasih! Request anda sudah diselesaikan"], 200);
+        $search = FormRequest::where("kode_book", $request->get('kode_book'))->get();
+        // dd($search);
+
+        return response()->json(compact('search'), 200);
     }
 
 }

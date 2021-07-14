@@ -80,7 +80,9 @@ Route::group([
     #1
     Route::get('staff/all/orderan', 'api\StaffController@orderanKu'); //Notifikasi orderan dari customer yang harus dijemput dan atau yang ditimbang di tempat
     #2
-    Route::post('staff/orderan/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
+    Route::post('staff/orderan/{id}/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
+    #3
+    Route::get('staff/find/orderan', 'api\StaffController@searchOrderanKu');
 
     //Transaksi
     //#1
