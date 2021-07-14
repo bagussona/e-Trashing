@@ -203,20 +203,10 @@ class StaffController extends Controller
         return response()->json(["msg" => "Terima kasih! Request anda sudah diselesaikan"], 200);
     }
 
-    public function searchOrderanKu(Request $request){
-        // $this->validate($request, [
-        //     'kode_book' => 'required|string'
-        // ]);
-        $validator = Validator::make($request->all(), [
-            'kode_book' => 'required|string'
-        ]);
+    public function search(Request $request){
+        $keyword = $request->kode_book;
 
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $search = FormRequest::where("kode_book", $request->get('kode_book'))->get();
-        // dd($search);
+        $search = FormRequest::where('kode_book', 'like', "%" . $keyword . "%")->get();
 
         return response()->json(compact('search'), 200);
     }
