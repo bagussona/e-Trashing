@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /** BTS ID Official API */
-const API_URL = "https://bts-id.herokuapp.com/api"
+const API_URL = 'https://bts-id.herokuapp.com/api'
 
 const loginAxios = data => {
   
@@ -22,6 +22,45 @@ const getUserList = token => {
 
 const getUser = token => {
   const axiosData = axios.get(`${API_URL}/profile`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const updateStaffProfile = (token, data, id) => {
+  const axiosData = axios.post(`${API_URL}/profile/update/${id}`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+
+  // const fetchData = fetch(
+  //   `${API_URL}/profile/update/${id}`, 
+  //   {
+  //     method: 'POST',
+  //     body: data, 
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`
+  //     }
+  //   }
+  // )
+  // .then(res => res)
+  // .catch(err => err)
+
+  // return fetchData
+}
+
+const updateProfile = (token, data, id) => {
+  const axiosData = axios.post(`${API_URL}/customer/profile/update`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const updateStaffPhoto = (token, data) => {
+  const axiosData = axios.post(`${API_URL}/customer/profile/image`, data, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -61,7 +100,7 @@ const deleteGarbage = (token, id) => {
 }
 
 const getUserDetailsByID = (token, id) => {
-  const axiosData = axios.get(`${API_URL}/profile/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.get(`${API_URL}/get/profile/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -83,17 +122,35 @@ const createStaff = (token, data) => {
 
   return axiosData;
 }
+
+const getNotification = token => {
+  const axiosData = axios.get(`${API_URL}/bendahara/all/tarikanKu`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const getSetoranAll = token => {
+  const axiosData = axios.get(`${API_URL}/bendahara/all/setoran`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
 /** End Of BTS ID Official APIs */
 
 
 /** External APIs */
 
 /**  Nominatim Open Source Geolocation APIs */
-const EXTERNAL_URL = "https://nominatim.openstreetmap.org/reverse?";
+const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
+
 // Reverse Geocode API
 
 const getLocation = (lat, lon) => {
-  const axiosData = axios.get(`${EXTERNAL_URL}lat=${lat}&lon=${lon}&format=json&zoom=18`)
+  const axiosData = axios.get(`${NOMINATIM_URL}reverse?lat=${lat}&lon=${lon}&format=json&zoom=18`)
   .then(async res => {
     const data = res;
     return data
@@ -103,10 +160,33 @@ const getLocation = (lat, lon) => {
   return axiosData;
 }
 
+const getCoordinate = query => {
+  const axiosData = axios.get(`${NOMINATIM_URL}search?q=${query}&format=json&addressdetails=1`)
+  .then(res => res)
+  .catch(err => err);
+
+  return axiosData;
+}
+
+/** Kode Pos Open Source APIs */
+const KODE_POS_URL = 'https://kodepos-496sqx5d6-sooluh.vercel.app/search?q=';
+
+// Address Search API
+const getAddress = query => {
+  const axiosData = axios.get(`${KODE_POS_URL}${query}`)
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
 export { 
   loginAxios, 
   getUserList, 
   getUser,
+  updateStaffProfile,
+  updateStaffPhoto,
+  updateProfile,
   getGarbage,
   setGarbage,
   editGarbage,
@@ -114,6 +194,10 @@ export {
   getUserDetailsByID,
   getUserPassbook,
   createStaff,
+  getNotification,
+  getSetoranAll,
   /** External APIs Export */
-  getLocation
+  getLocation,
+  getAddress,
+  getCoordinate
 };

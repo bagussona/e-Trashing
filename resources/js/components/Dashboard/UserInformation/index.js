@@ -1,41 +1,19 @@
-import React, { useState, useEffect  } from 'react';
-import { browserData } from '../../../utilities/context';
+import React from 'react';
 import Header from '../../Header';
-import UserBill from './UserBill';
-import UserProfile from './UserProfile'; 
-
-
-const queryString = require('query-string');
-
-// const ConditionalRender = (props) => {
-const conditionalRender = (val) => {
-  // switch (props.val) {
-  switch (val) {
-    case 'bukutabungan':
-      return <UserBill />
-    default:
-      // return <UserProfile data={props.data} />
-      return <UserProfile />
-  }
-}
+import Profile from './Profile';
+import History from './History';
+import Passbook from './Passbook';
 
 function UserInformation(props) {
-  const queryParam = queryString.parse(props.location.search);
-
-  const [data, setData] = useState({})
-
-  // useEffect(() => {
-  //   console.log(props)
-  // }, [])
-
+    
   return (
-    <div id="dashboard-content" className="px-16 pt-10 ml-20 h-full">
+    <div id="dashboard-content" className="px-16 py-10 ml-20 h-full">
         {/* <ConditionalRender val={queryParam.tab} data={data} /> */}
-        <Header page='User Profile' />
-        <div id="page-content">
-          <browserData.Provider value={props}>
-            {conditionalRender(queryParam.tab)}
-          </browserData.Provider>
+      <Header page='User Account' />
+        <div id="page-content" className="w-full h-auto flex flex-row">
+          <Profile id={props.match.params.id} />
+          <Passbook />
+          <History />
         </div>
     </div>
   )

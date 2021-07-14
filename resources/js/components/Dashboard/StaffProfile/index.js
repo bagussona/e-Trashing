@@ -10,7 +10,7 @@ function StaffProfile() {
   const [loading, setLoading] = useState(true);
   const [staffProfile, setStaffProfile] = useState({});
   const [location, setLocation] = useState({});
-  const [isModal, setIsModal] = useState(true);
+  const [isModal, setIsModal] = useState(false);
 
   const mountData = () => {
     getUser(getCookie('token'))
@@ -44,10 +44,10 @@ function StaffProfile() {
         <div id="page-content" className="w-full h-full flex flex-row px-16 py-10">
           {/* <div id="content-container" className="w-full flex-grow flex px-16 py-10 flex-row"> */}
             <div id="left-content" className="w-80 mr-8 bg-white rounded shadow-md py-10 flex items-center justify-center">
-            <div id="content-wrapper" className="flex flex-col w-full items-center justify-center space-y-10">
-                <div id="picture-container" className="w-full flex justify-center items-center flex-col space-y-5">
+              <div id="content-wrapper" className="flex flex-col w-full items-center justify-center space-y-10">
+                <div id="picture-container" className="w-full flex justify-center items-center flex-col space-y-5 rounded">
                   <picture id="picture-wrapper">
-                    <img src={staffProfile.user.avatar} className="h-60" alt="current avatar" />
+                    <img src={staffProfile.user.avatar} className="h-80 w-80 object-cover" alt="current avatar" />
                   </picture>
                   <div id="name-wrapper" className="text-center text-gray-600 text-2xl" style={{fontFamily: ['Inter', 'sans-serif'], fontWeight: 600}}>
                     <span id="name">{staffProfile.user.first_name} {staffProfile.user.last_name}</span>
@@ -59,7 +59,7 @@ function StaffProfile() {
                       <path fillRule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z" />
                       <path fillRule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z" />
                     </svg>  
-                    <span id="city" style={{fontWeight: 400}}>{location.county}, {location.country}</span>
+                    <span id="city" style={{fontWeight: 400}}>{location.county || location.city}, {location.country}</span>
                   </div>
                   <div id="summary-email" className="flex flex-row items-center space-x-4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" className="text-gray-400 fill-current bi bi-envelope" viewBox="0 0 16 16">
@@ -108,7 +108,7 @@ function StaffProfile() {
         </div>
         {isModal ? 
         <Suspense fallback={<BounceLoading />}>
-          <Modal close={setIsModal} />
+          <Modal close={setIsModal} userData={staffProfile} />
         </Suspense> : 
         <span></span>
         }

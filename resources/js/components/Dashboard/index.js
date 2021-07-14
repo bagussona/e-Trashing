@@ -6,13 +6,14 @@ import UserList from './UserList';
 import CreateAccount from './CreateAccount';
 import CreateGarbage from './CreateGarbage';
 import StaffProfile from './StaffProfile';
-import { getUser } from '../../apis/api';
+import { getNotification, getUser } from '../../apis/api';
 // import UserInformation from './UserInformation';
 import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
 import { ClimbingBoxLoading } from '../Assets/LoadingPage';
 import Settings from './Settings';
 import Chat from './Chat';
+import { useStore } from '../../utilities/store';
 
 
 function Dashboard(props) {
@@ -20,6 +21,8 @@ function Dashboard(props) {
   const { history } = props;
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const setNotification = useStore(state => state.setNotification);
+  const [testNotif, setTesNotif] = useState({})
 
   const logoutMethod = () => {
     const userLogoutVar = [isLogin, userRole];
@@ -27,8 +30,7 @@ function Dashboard(props) {
       localStorage.removeItem(userLogoutVar[i]);
     }
 
-    // history.push('/dashboard');
-    // location.reload();
+  
     history.push('/login')
   }
 
@@ -41,6 +43,7 @@ function Dashboard(props) {
     logoutMethod();
   }
 
+
   useEffect(() => {
     if (localStorage.getItem(isLogin) === 'true') {
       getUser(getCookie('token'))
@@ -49,6 +52,15 @@ function Dashboard(props) {
           if (res.data.status === 'Token is Expired') {
             userLogout();
           } else {
+            if (localStorage.getItem('role') === 'bendahara') {
+              getNotification(getCookie('token'))
+              .then(resp => {
+                setNotification(resp.data)
+                // console.log(resp.data)
+                setUserData(res.data.user);
+                setLoading(false)
+              })
+            }
             setUserData(res.data.user);
             setLoading(false)
           }
@@ -57,9 +69,12 @@ function Dashboard(props) {
           setLoading(false)
         }
       });
-    } else {
+    } else {  
       userLogout();
     }
+
+    // if (localStorage.getItem('role') === 'bendahara' ?)
+
   }, [])
 
   if (getCookie('logged_in') === 'true') {

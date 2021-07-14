@@ -23,8 +23,8 @@
         "popper.js": "^1.12",
         "postcss": "^8.3.4",
         "postcss-loader": "^6.1.0",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "react-refresh": "^0.10.0",
         "resolve-url-loader": "^3.1.0",
         "tailwindcss": "^2.2.4"

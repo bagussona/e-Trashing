@@ -87,7 +87,7 @@ function UserListMain(props) {
         <ClimbingBoxLoading height="full" width="full"/> : 
         <>
           <Header page='User List'/>
-          <div id="page-content" className="flex w-full h-full justify-center flex-col">
+          <div id="page-content" className="flex w-full flex-col">
             <div id="users-information" className="h-auto w-full grid grid-cols-5 gap-8">
               <div id="information-2" className="w-full flex flex-row py-4 mb-16 box-border items-center" style={{ height: 110 + 'px', marginTop: 3 + 'px' }}>
                 <span id="long-line" className="inline-block bg-gray-400 h-full mr-6" style={{ width: 2 + 'px' }}></span>
