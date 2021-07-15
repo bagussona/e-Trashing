@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Passbook;
 use App\PassbookBendahara;
 use App\PassbookCustomer;
+use App\PassbookHistory;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class PengepulController extends Controller
     public function index($id){
         //READ ALL
         // $passbooks = Passbook::find($id)->get();
-        $passbooks = Passbook::where("user_id", $id)->get();
+        $passbooks = PassbookHistory::where("user_id", $id)->get();
 
         return response()->json(compact('passbooks'), 200);
 
@@ -65,7 +66,7 @@ class PengepulController extends Controller
         // dd($awikwo["Saldo"]);
         // dd($jee);
 
-            $wkwk = PassbookBendahara::create([
+            $passbookBendahara = PassbookBendahara::create([
                 "user_id" => $listsTimbangan[0]["user_id"],
                 "Tanggal" => date("Y-m-d"),
                 "Keterangan" => $listsTimbangan[0]["Keterangan"],
@@ -81,8 +82,10 @@ class PengepulController extends Controller
                 "saldo" => $saldo
             ]);
 
+            Passbook::where('user_id', $id)->delete();
+
             // dd($passbook);
-        return response()->json(compact('wkwk'), 200);
+        return response()->json(compact('passbookBendahara'), 200);
     }
 
     public function addToTimbanganBendahara(Request $request, $id){
@@ -114,7 +117,17 @@ class PengepulController extends Controller
             return response()->json(["msg" => "Maaf, kamu bukan bendahara bts-id"], 403);
         }
 
-        $hasilJual = Passbook::create([
+        Passbook::create([
+            'Tanggal' => date("Y-m-d"),
+            'Keterangan' => $keterangan,
+            'Jenis' => $request->get('jenis_sampah'),
+            'Berat' => $berat_input,
+            '@KG' => $harga_tetap,
+            'Subtotal' => $subtotal,
+            'user_id' => $id
+        ]);
+
+        PassbookHistory::create([
             'Tanggal' => date("Y-m-d"),
             'Keterangan' => $keterangan,
             'Jenis' => $request->get('jenis_sampah'),
