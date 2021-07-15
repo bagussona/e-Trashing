@@ -210,9 +210,9 @@ class StaffController extends Controller
 
         $search = FormRequest::where('kode_book', 'like', "%" . $keyword . "%")->get();
 
-        // return response()->json(compact('search'), 200);
+        return response()->json(compact('search'), 200);
 
-        return $search;
+        // return $search;
     }
 
 }

@@ -190,4 +190,11 @@ class BendaharaController extends Controller
         return response()->json(["msg" => "Maaf! Permintaan anda tidak dapat di proses."], 202);
     }
 
+    public function detailTarikan($id){
+        $tarikanKu = FormRequestTarikan::where('id', $id)->get();
+        dd($tarikanKu);
+
+        return response()->json(compact('tarikanKu'), 200);
+    }
+
 }

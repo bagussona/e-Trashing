@@ -82,8 +82,9 @@ Route::group([
     #2
     Route::post('staff/orderan/{id}/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
     #3
+    Route::get('staff/detail/orderan/{id}', 'api\StaffController@detailOrderanKu');
+    #4
     Route::post('staff/find/orderan', 'api\StaffController@search');
-    Route::get('staff/find/orderan', 'api\StaffController@getSearch');
 
     //Transaksi
     //#1
@@ -139,7 +140,7 @@ Route::group([
 ], function () {
 
     Route::get('bendahara/all/tarikanKu', 'api\BendaharaController@listsRequestTarikan'); //Notification
-    Route::get('bendahara/{id}/tarikanKu', 'api\BendaharaController@listTarikan');
+    Route::get('bendahara/tarikanKu/{id}', 'api\BendaharaController@detailTarikan'); //Detail
     Route::post('bendahara/{id}/accepted/tarikanKu', 'api\BendaharaController@checkout'); //Acc
     Route::post('bendahara/{id}/rejected/tarikanKu', 'api\BendaharaController@checkoutReject'); //Reject
 
