@@ -192,7 +192,7 @@ class BendaharaController extends Controller
 
     public function detailTarikan($id){
         $tarikanKu = FormRequestTarikan::where('id', $id)->get();
-        dd($tarikanKu);
+        // dd($tarikanKu);
 
         return response()->json(compact('tarikanKu'), 200);
     }

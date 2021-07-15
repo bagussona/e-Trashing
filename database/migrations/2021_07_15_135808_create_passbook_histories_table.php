@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePassbooksTable extends Migration
+class CreatePassbookHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePassbooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('passbooks', function (Blueprint $table) {
+        Schema::create('passbook_histories', function (Blueprint $table) {
             $table->id();
             $table->string('Tanggal')->nullable();
             $table->string('Keterangan')->nullable();
@@ -23,7 +23,7 @@ class CreatePassbooksTable extends Migration
             // $table->integer('Debit')->nullable()->default(0);
             // $table->integer('Credit')->nullable()->default(0);
             $table->integer('Subtotal')->nullable()->default(0);
-            $table->string('user_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class CreatePassbooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('passbooks');
+        Schema::dropIfExists('passbook_histories');
     }
 }
