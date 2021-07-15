@@ -182,9 +182,9 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff|pengepul|bendahara|customer']
 ], function () {
 
-    Route::get('chats/contact', 'ChatsController@index'); //contact
-    Route::get('chats/some/messages', 'ChatsController@fetchMessages');
-    Route::get('chats/message/{id}', 'ChatsController@getMessage'); //message from & to
-    Route::post('chats/message', 'ChatsController@sendMessage'); //send message
+    Route::get('chats/contact', 'api\ChatsController@index'); //contact
+    Route::get('chats/some/messages', 'api\ChatsController@fetchMessages');
+    Route::get('chats/message/{id}', 'api\ChatsController@getMessage'); //message from & to
+    Route::post('chats/message', 'api\ChatsController@sendMessage'); //send message
 
 });
