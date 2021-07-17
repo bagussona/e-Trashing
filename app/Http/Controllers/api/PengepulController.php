@@ -203,7 +203,10 @@ class PengepulController extends Controller
 
     public function destroy(Passbook $id){
         //DELETE
+        $created_at = $id->created_at;
         $id->delete();
+        PassbookHistory::where('created_at', $created_at)->delete();
+
         return response()->json(["success" => "deleted successfully"], 204);
     }
 
