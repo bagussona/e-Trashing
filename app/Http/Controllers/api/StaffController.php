@@ -174,6 +174,17 @@ class StaffController extends Controller
             'Subtotal' => $subtotal,
         ]);
 
+        // dd($passbook->created_at);
+        $passbook_history = PassbookHistory::where('created_at', $passbook->created_at);
+        // dd($passbook_history);
+        $passbook_history->update([
+            'Keterangan' => $keterangan,
+            'Jenis' => $request->get('jenis_sampah'),
+            'Berat' => $berat_input,
+            '@KG' => $harga_tetap,
+            'Subtotal' => $subtotal,
+        ]);
+
         try {
             $passbook->save();
             return response()->json([
@@ -192,7 +203,11 @@ class StaffController extends Controller
 
     public function destroy(Passbook $id){
         //DELETE
+        // dd($id->created_at);
+        $created_at = $id->created_at;
         $id->delete();
+        PassbookHistory::where('created_at', $created_at)->delete();
+
         return response()->json(["success" => "deleted successfully"], 204);
     }
 
