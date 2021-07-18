@@ -44,6 +44,7 @@ class BendaharaController extends Controller
     public function readPassbookBendaharas(){
         $id = Auth::user()->id;
         $passbook_bendahara = PassbookBendahara::where("user_id", $id)->get();
+        // $form_request_tarikan = FormRequestTarikan::where("user_id", $id)->get();
 
         return response()->json(compact('passbook_bendahara'), 200);
     }

@@ -189,7 +189,7 @@ Route::group([
 });
 
 
-### Customer Area
+### Chats Area
 Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff|pengepul|bendahara|customer']
 ], function () {
