@@ -37,12 +37,26 @@ const useStore = create(set => ({
     'PAPUA BARAT',
     'PAPUA'
   ],
+  currentData: null,
+  setCurrentData: data => set(() => ({currentData: data})),
   addressDropdown: false,
   setAddressDropdown: v => set(() => ({addressDropdown: v})),
   defaultCoordinate: false,
   setDefaultCoordinate: b => set(() => ({defaultCoordinate: b})),
   notification: null,
-  setNotification: v => set(() => ({notification: v}))
+  setNotification: v => set(state => (state.notification = v)),
+  clickedData: null,
+  clicked: false,
+  setClicked: (cd, c) => set(state => {
+    state.clickedData = cd,
+    state.clicked = true
+  }),
+  setUnclicked: () => set(state => {
+    state.clickedData = null,
+    state.clicked = false
+  })
+  // currentUserID: 0,
+  // setCurrentUserID: id => set(() => ({currentUserID: id}))
 }))
 
 export { useStore };

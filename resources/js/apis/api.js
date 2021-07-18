@@ -139,6 +139,38 @@ const getSetoranAll = token => {
   return axiosData;
 }
 
+const getWithdrawDetail = (token, id) => {
+  const axiosData = axios.get(`${API_URL}/bendahara/tarikanKu/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const getMessage = (token, id) => {
+  const axiosData = axios.get(`${API_URL}/chats/message/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const getContact = token => {
+  const axiosData = axios.get(`${API_URL}/chats/contact`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const sendMessageAPI = (token, data) => {
+  const axiosData = axios.post(`${API_URL}/chats/message`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
 /** End Of BTS ID Official APIs */
 
 
@@ -176,7 +208,7 @@ const getAddress = query => {
   const axiosData = axios.get(`${KODE_POS_URL}${query}`)
   .then(res => res)
   .catch(err => err)
-
+           
   return axiosData;
 }
 
@@ -196,6 +228,10 @@ export {
   createStaff,
   getNotification,
   getSetoranAll,
+  getWithdrawDetail,
+  getMessage,
+  getContact,
+  sendMessageAPI,
   /** External APIs Export */
   getLocation,
   getAddress,

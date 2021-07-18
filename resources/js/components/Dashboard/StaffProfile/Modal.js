@@ -239,7 +239,7 @@ function Modal({ close, userData }) {
                     }}>
                       <span id="button-text" className="text-white">Update Account</span>
                     </button>
-                    <button onClick={() => console.log(defaultCoordinate)}>test</button>
+                    {/* <button onClick={() => console.log(defaultCoordinate)}>test</button> */}
                   </div>
                 </div>
               </div>

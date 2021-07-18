@@ -13,6 +13,7 @@ import { isLogin, userRole } from '../../cookie_const';
 import { ClimbingBoxLoading } from '../Assets/LoadingPage';
 import Settings from './Settings';
 import Chat from './Chat';
+import RequestWithdraw from './RequestWithdraw';
 import { useStore } from '../../utilities/store';
 
 
@@ -22,7 +23,10 @@ function Dashboard(props) {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const setNotification = useStore(state => state.setNotification);
-  const [testNotif, setTesNotif] = useState({})
+  const setCurrentData = useStore(state => state.setCurrentData)
+
+  // const setCurrentUserID = useStore(state => state.setCurrentUserID);
+  // const [testNotif, setTesNotif] = useState({})
 
   const logoutMethod = () => {
     const userLogoutVar = [isLogin, userRole];
@@ -43,6 +47,14 @@ function Dashboard(props) {
     logoutMethod();
   }
 
+  const getWithInterval = () => {
+    setInterval(() => {
+      getNotification(getCookie('token'))
+      .then(resp => {
+        setNotification(resp.data)
+      })
+    }, 300000)
+  }
 
   useEffect(() => {
     if (localStorage.getItem(isLogin) === 'true') {
@@ -52,16 +64,19 @@ function Dashboard(props) {
           if (res.data.status === 'Token is Expired') {
             userLogout();
           } else {
+            setCurrentData(res.data.user);
             if (localStorage.getItem('role') === 'bendahara') {
               getNotification(getCookie('token'))
               .then(resp => {
                 setNotification(resp.data)
                 // console.log(resp.data)
                 setUserData(res.data.user);
+                getWithInterval()
                 setLoading(false)
               })
             }
             setUserData(res.data.user);
+            // setCurrentUserID(res.data.user.id);
             setLoading(false)
           }
         } else {
@@ -139,6 +154,10 @@ function Dashboard(props) {
             <Route path='/dashboard/creategarbage' component={CreateGarbage} />
             <Route path='/dashboard/settings' component={Settings} />
             <Route path='/dashboard/chat' component={Chat}/>
+            {localStorage.getItem('role') === 'bendahara' ? 
+              <Route path='/dashboard/requestwithdraw/:withdrawid' component={RequestWithdraw}/> : 
+              null
+            }
           </Switch>
         </div>
       )

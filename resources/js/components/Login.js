@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { loginAxios } from '../apis/api';
 import { getCookieValue } from '../utilities/obtain_cookie';
 import Footer from './Footer';
+import { useStore } from '../utilities/store';
 
 
 /** Custom External Functions */
@@ -52,7 +53,7 @@ function Login(props) {
   /** Token */
   const { history } = props;
   /** End of Token */
-
+  
   /** States */
   const [userCredential, setUserCredential] = useState({
     username: '',
@@ -76,14 +77,16 @@ function Login(props) {
       // console.log('executed first');
 
       if (res.status === 200) {
-        const cookies = body.data;
+        const data = body.data;
+
+        // setCurrentID(data.id);
         // console.log('executed second');
 
         const date = new Date();
-        document.cookie = `token = ${cookies.token}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
-        document.cookie = `logged_in = ${cookies.logged_in}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
-        document.cookie = `role = ${cookies.role}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
-        document.cookie = `username = ${cookies.username}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+        document.cookie = `token = ${data.token}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+        document.cookie = `logged_in = ${data.logged_in}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+        document.cookie = `role = ${data.role}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
+        document.cookie = `username = ${data.username}; expires = ${dayParser(date.getDay() + 1)}, ${date.getDate() + 1} ${monthParser(date.getMonth())} ${date.getFullYear()} ${timeDigitParser(date.getHours())}:${timeDigitParser(date.getMinutes())}:${timeDigitParser(date.getSeconds())} GMT; path=/;`
 
         const isLoggedIn = getCookieValue('logged_in');
         const userRole = getCookieValue('role');
@@ -123,7 +126,7 @@ function Login(props) {
     window.addEventListener("keydown", listener);
 
     return () => window.removeEventListener("keydown", listener);
-  })
+  }, [userCredential])
 
   // useEffect(() => {
   //   console.log(userCredential);

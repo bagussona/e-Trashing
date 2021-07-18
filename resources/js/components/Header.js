@@ -79,7 +79,7 @@ function Header(props) {
   }
 
   useEffect(() => {
-    console.log(notification)
+    console.log(props)
   }, [])
 
   return (
@@ -105,8 +105,8 @@ function Header(props) {
                 <span className="text-xs text-blue-400" style={{ fontWeight: 600 }}>Mark all as read</span>
               </div>
               <div id="notification-content" className="h-auto w-full flex flex-col">
-                {(notification.reqTarikan).length >= 1 ? notification.reqTarikan.map((el, idx) => (
-                  <div key={idx} className="flex flex-col h-auto w-full hover:bg-gray-100 overflow-auto p-4 cursor-pointer transition-colors" onClick={() => console.log('clicked')}>
+                {notification === null ? null : ((notification.reqTarikan).length >= 1 ? notification.reqTarikan.filter(el => el.status === 'Proses').map((el, idx) => (
+                  <Link to={`/dashboard/requestwithdraw/${el.id}`} key={idx} className="flex flex-col h-auto w-full hover:bg-gray-100 overflow-auto p-4 cursor-pointer transition-colors">
                     <div id="top-content" className="flex flex-row justify-between items-center w-full h-auto">
                       <span className="text-gray-600" style={{fontWeight: 600}}>{el.name}</span>
                       <span className={`text-sm text-${statusColor(el.status)}`}>{el.status}</span>
@@ -115,11 +115,11 @@ function Header(props) {
                       {process(el.status, el.jumlah)}
                       <span style={{ fontWeight: 600 }} className="text-blue-400 text-sm"><span className="text-gray-600" style={{ fontWeight: 400 }}>Kode pembayaran :</span> {el.kode_pembayaran}</span>
                     </div>
-                  </div>
+                  </Link>
                 )) : 
                 <div id="notification-empty" className="h-20 w-full items-center flex justify-center">
                   <span className="text-gray-600">Tidak ada Notifikasi untuk hari ini ^.^</span>
-                </div>
+                </div>)
                 }
               </div>
               <div id="notification-bottom-nav" className="h-auto justify-end flex flex-row items-center px-4 pb-4">

@@ -36,17 +36,21 @@ module.exports = {
         '140': '35rem',
       },
       minHeight: {
-        '125': '31.25rem'
+        '125': '31.25rem',
+        '14': '3.5rem'
       }
     },
   },
   variants: {
     extend: {
       backgroundColor: ['active'],
-      margin: ['first', 'last', 'hover', 'active']
+      margin: ['first', 'last', 'hover', 'active'],
+      
     },
+    scrollbars: ['rounded'],
   },
   plugins: [
+    require('tailwind-scrollbar')
     // plugin(({ addVariant, e }) => {
     //   addVariant('before', ({ modifySelectors, separator }) => {
     //     modifySelectors(({ className }) => {
@@ -68,7 +72,7 @@ module.exports = {
     //       content: 'attr(data-before)',
     //     }, 
     //     '.content-after': {
-    //       content: 'attr(data-after)',
+    //       content: 'attr(data-after)', 
     //     },
     //   };
 
