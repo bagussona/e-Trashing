@@ -113,7 +113,7 @@ class UserController extends Controller
         $passbook_customer = PassbookCustomer::create([
             'user_id' => $customer->id,
             'Tanggal' => date("Y-m-d"),
-            'Keterangan' => 'saldo awal',
+            'Keterangan' => 'Saldo Awal',
             'Berat' => 0,
             'Debit' => 0,
             'Credit' => 0,

@@ -8,26 +8,27 @@ use App\Passbook;
 use App\User;
 use App\PassbookBendahara;
 use App\PassbookCustomer;
+use App\PassbookHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BendaharaController extends Controller
 {
     public function readAllSetoran(){
-        $setoran = Passbook::all();
+        $setoran = PassbookHistory::all();
 
         return response()->json(compact('setoran'), 200);
     }
 
-    public function readAllSetoranCustomer(){
-        $id = Auth::user()->id;
-        $setoran_customer = Passbook::where("user_id", $id)->get();
+    public function readAllSetoranCustomer($id){
+        // $id = Auth::user()->id;
+        $setoran_customer = PassbookHistory::where("user_id", $id)->get();
 
         return response()->json(compact('setoran_customer'), 200);
     }
 
-    public function readPassbookCustomers(){
-        $id = Auth::user()->id;
+    public function readPassbookCustomers($id){
+        // $id = Auth::user()->id;
         $passbook_customer = PassbookCustomer::where("user_id", $id)->get();
 
         return response()->json(compact('passbook_customer'), 200);
@@ -35,7 +36,7 @@ class BendaharaController extends Controller
 
     public function readAllSetoranPengepul(){
         $id = Auth::user()->id;
-        $setoran_pengepul = Passbook::where("user_id", $id)->get();
+        $setoran_pengepul = PassbookHistory::where("user_id", $id)->get();
 
         return response()->json(compact('setoran_pengepul'), 200);
     }
@@ -43,6 +44,7 @@ class BendaharaController extends Controller
     public function readPassbookBendaharas(){
         $id = Auth::user()->id;
         $passbook_bendahara = PassbookBendahara::where("user_id", $id)->get();
+        // $form_request_tarikan = FormRequestTarikan::where("user_id", $id)->get();
 
         return response()->json(compact('passbook_bendahara'), 200);
     }
@@ -188,6 +190,13 @@ class BendaharaController extends Controller
         FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Rejected"]);
 
         return response()->json(["msg" => "Maaf! Permintaan anda tidak dapat di proses."], 202);
+    }
+
+    public function detailTarikan($id){
+        $tarikanKu = FormRequestTarikan::where('id', $id)->get();
+        // dd($tarikanKu);
+
+        return response()->json(compact('tarikanKu'), 200);
     }
 
 }

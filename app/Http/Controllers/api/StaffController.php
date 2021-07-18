@@ -7,6 +7,7 @@ use App\Passbook;
 use App\PassbookCustomer;
 use App\User;
 use App\FormRequest;
+use App\PassbookHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,7 @@ class StaffController extends Controller
 
     public function index(){
         //READ ALL
-        $passbooks = Passbook::all();
+        $passbooks = PassbookHistory::all();
 
         return response()->json(compact('passbooks'), 200);
 
@@ -64,7 +65,7 @@ class StaffController extends Controller
         // dd($awikwo["Saldo"]);
         // dd($jee);
 
-            $wkwk = PassbookCustomer::create([
+            $passbookCustomer = PassbookCustomer::create([
                 "user_id" => $listsTimbangan[0]["user_id"],
                 "Tanggal" => date("Y-m-d"),
                 "Keterangan" => "Deposit",
@@ -80,8 +81,10 @@ class StaffController extends Controller
                 "saldo" => $saldo
             ]);
 
+            Passbook::where('user_id', $id)->delete();
+
             // dd($passbook);
-        return response()->json(compact('wkwk'), 200);
+        return response()->json(compact('passbookCustomer'), 200);
     }
 
     public function addToTimbangan(Request $request, $id){
@@ -113,7 +116,17 @@ class StaffController extends Controller
         }
         // dd($harga_tetap);
 
-        $hasilJual = Passbook::create([
+        Passbook::create([
+            'Tanggal' => date("Y-m-d"),
+            'Keterangan' => $keterangan,
+            'Jenis' => $request->get('jenis_sampah'),
+            'Berat' => $berat_input,
+            '@KG' => $harga_tetap,
+            'Subtotal' => $subtotal,
+            'user_id' => $id
+        ]);
+
+        PassbookHistory::create([
             'Tanggal' => date("Y-m-d"),
             'Keterangan' => $keterangan,
             'Jenis' => $request->get('jenis_sampah'),
@@ -160,6 +173,18 @@ class StaffController extends Controller
             '@KG' => $harga_tetap,
             'Subtotal' => $subtotal,
         ]);
+
+        // dd($passbook->created_at);
+        $passbook_history = PassbookHistory::where('created_at', $passbook->created_at);
+        // dd($passbook_history);
+        $passbook_history->update([
+            'Keterangan' => $keterangan,
+            'Jenis' => $request->get('jenis_sampah'),
+            'Berat' => $berat_input,
+            '@KG' => $harga_tetap,
+            'Subtotal' => $subtotal,
+        ]);
+
         try {
             $passbook->save();
             return response()->json([
@@ -178,7 +203,11 @@ class StaffController extends Controller
 
     public function destroy(Passbook $id){
         //DELETE
+        // dd($id->created_at);
+        $created_at = $id->created_at;
         $id->delete();
+        PassbookHistory::where('created_at', $created_at)->delete();
+
         return response()->json(["success" => "deleted successfully"], 204);
     }
 
@@ -188,14 +217,31 @@ class StaffController extends Controller
         return response()->json(compact('orderanKu'), 200);
     }
 
-    public function orderanSelesai(Request $request){
-        $this->validate($request, [
-            'kode_book' => 'required|string'
-        ]);
+    public function detailOrderanKu($id){
 
-        FormRequest::where("kode_book", $request->get('kode_book'))->update(["status" => "Selesai"]);
+        // dd($kode_book);
+        $details = FormRequest::where("id", $id)->get();
+
+        return response()->json(compact('details'), 200);
+    }
+
+    public function orderanSelesai($id){
+
+        FormRequest::where("id", $id)->update(["status" => "Selesai"]);
 
         return response()->json(["msg" => "Terima kasih! Request anda sudah diselesaikan"], 200);
+    }
+
+    public function search(Request $request){
+        // dd($request);
+        $keyword = $request->kode_book;
+        // dd($keyword);
+
+        $search = FormRequest::where('kode_book', 'like', "%" . $keyword . "%")->get();
+
+        return response()->json(compact('search'), 200);
+
+        // return $search;
     }
 
 }

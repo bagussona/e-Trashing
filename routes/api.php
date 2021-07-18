@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -41,9 +42,9 @@ Route::group([
 
     Route::post('customer/profile/image', 'api\CustomerController@uploadImage'); //POST Image [All]
     Route::post('customer/profile/update', 'api\CustomerController@update'); //POST profile [All]
+    Route::post('logout', 'api\AdminController@logout'); //Logout api [Admin, Staff1, Pengepul, Bendahara, Customer]
 
 });
-
 
 ### Admin Area->
 Route::group([
@@ -51,22 +52,36 @@ Route::group([
 ], function () {
 
     // CRUD User management
+
+    // OK 1 [Admin /endpoint API OK]
     Route::get('get/user', 'api\AdminController@getAllUser')->middleware('jwt.verify'); //READ All User [Admin, Bendahara]
+    // OK 2 [Admin /endpoint API OK]
     Route::get('get/profile/{id}', 'api\AdminController@profileDetail')->middleware('jwt.verify'); //READ Detail User [R] [Admin, Customer]
 
     // CRUD Bendahara, Staff 1 & Pengepul
+    // OK 1 [User Management /endpoint API OK]
     Route::post('register/staff', 'api\AdminController@registerStaff'); //CREATE User [Admin]
-    Route::post('upload/image/{id}', 'api\AdminController@uploadImage'); //POST Image [Admin]
 
+    // OK 1 [Admin /endpoint API OK]
+    Route::post('upload/image/{id}', 'api\AdminController@uploadImage'); //POST Image [Admin]
+    //OK 3 [User Management /endpoint API OK]
     Route::post('profile/update/{id}', 'api\AdminController@update'); //UPDATE Data Profile all Staff [Admin, Customer]
+    // OK 4 [User Management /endpoint API OK]
     Route::delete('profile/delete/{id}', 'api\AdminController@destroy'); //DELETE All User [Admin]
+
+    // OK 1 [Authentication /endpoint API OK]
     Route::post('logout', 'api\AdminController@logout'); //Logout api [Admin, Staff1, Pengepul, Bendahara, Customer]
 
     // CRUD Jenis Sampah & @KG
+    // OK 2 [Sampah Management /endpoint API OK]
     Route::get('jenisSampah', 'api\AdminController@getAllSampah')->middleware('jwt.verify'); //READ Semua data jenis sampah [Admin, Staff1]
+    // OK 3 [Sampah Management /endpoint API OK]
     Route::get('jenisSampah/detail/{id}', 'api\AdminController@getDetailSampah')->middleware('jwt.verify'); //READ detail jenis sampah [Admin, Staff1]
+    // OK 1 [Sampah Management /endpoint API OK]
     Route::post('jenisSampah', 'api\AdminController@storeJenisSampah'); //CREATE jenis sampah [Admin]
+    // OK 4 [Sampah Management /endpoint API OK]
     Route::post('jenisSampah/update/{id}', 'api\AdminController@updateJenisSampah'); //UPDATE jenis sampah [Admin]
+    // OK 5 [Sampah Management /endpoint API OK]
     Route::delete('jenisSampah/delete/{id}', 'api\AdminController@destroyJenisSampah'); //DELETE jenis sampahDelete [Admin]
 
 });
@@ -80,18 +95,19 @@ Route::group([
     #1
     Route::get('staff/all/orderan', 'api\StaffController@orderanKu'); //Notifikasi orderan dari customer yang harus dijemput dan atau yang ditimbang di tempat
     #2
-    Route::post('staff/orderan/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
+    Route::post('staff/orderan/{id}/diselesaikan', 'api\StaffController@orderanSelesai'); //Update status ke Selesai agar tidak ditampilkan di all orderan
+    #3
+    Route::get('staff/detail/orderan/{id}', 'api\StaffController@detailOrderanKu');
+    #4
+    Route::post('staff/find/orderan', 'api\StaffController@search');
 
     //Transaksi
     //#1
     Route::post('staff/{id}/addToTimbangan', 'api\StaffController@addToTimbangan'); //Staff1 ->add sampah ke cart
-
     //#2
     Route::get('staff/{id}/timbangan', 'api\StaffController@listTimbangan'); //Staff1 ->cek sampah  di cart yg sudah di input
-
     //#3
     Route::post('staff/{id}/checkout', 'api\StaffController@checkout'); //Staff1 ->Transaksi sampah yg sudah di input
-
     //#4 jika ada yg diedit
     Route::post('staff/timbangan/update/{id}', 'api\StaffController@updateTimbanganSampah'); //Staff1 ->update sampah yg masih di cart
     //#5 jika ada yg dihapus
@@ -136,7 +152,7 @@ Route::group([
 ], function () {
 
     Route::get('bendahara/all/tarikanKu', 'api\BendaharaController@listsRequestTarikan'); //Notification
-    Route::get('bendahara/{id}/tarikanKu', 'api\BendaharaController@listTarikan');
+    Route::get('bendahara/tarikanKu/{id}', 'api\BendaharaController@detailTarikan'); //Detail
     Route::post('bendahara/{id}/accepted/tarikanKu', 'api\BendaharaController@checkout'); //Acc
     Route::post('bendahara/{id}/rejected/tarikanKu', 'api\BendaharaController@checkoutReject'); //Reject
 
@@ -173,14 +189,14 @@ Route::group([
 });
 
 
-### Customer Area
+### Chats Area
 Route::group([
     'middleware' => ['jwt.verify', 'role:admin|staff|pengepul|bendahara|customer']
 ], function () {
 
-    Route::get('chats/contact', 'ChatsController@index'); //contact
-    Route::get('chats/some/messages', 'ChatsController@fetchMessages');
-    Route::get('chats/message/{id}', 'ChatsController@getMessage'); //message from & to
-    Route::post('chats/message', 'ChatsController@sendMessage'); //send message
+    Route::get('chats/contact', 'api\ChatsController@index'); //contact
+    Route::get('chats/some/messages', 'api\ChatsController@fetchMessages');
+    Route::get('chats/message/{id}', 'api\ChatsController@getMessage'); //message from & to
+    Route::post('chats/message', 'api\ChatsController@sendMessage'); //send message
 
 });
