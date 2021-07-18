@@ -632,10 +632,10 @@ function Modal(_ref) {
                       setParams: setParams
                     })]
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                   id: "form-button",
                   className: "w-full justify-end",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                     className: "h-10 w-full bg-blue-400 px-6 rounded focus:outline-none hover:bg-blue-500 active:bg-blue-400 transition-colors duration-300 shadow-lg",
                     onClick: function onClick() {
                       // console.log(params);
@@ -646,12 +646,7 @@ function Modal(_ref) {
                       className: "text-white",
                       children: "Update Account"
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
-                    onClick: function onClick() {
-                      return console.log(defaultCoordinate);
-                    },
-                    children: "test"
-                  })]
+                  })
                 })]
               })]
             })]
