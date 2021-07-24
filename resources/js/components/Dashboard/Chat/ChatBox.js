@@ -63,7 +63,7 @@ function ChatBox({messages}) {
           <div id="current-user-chat-with" className="w-full h-20 border-1 border-gray-200 flex items-center justify-between flex-row px-6">
             <div id="left-details" className="flex flex-row h-full items-center space-x-4">
               <img src={chatUser.avatar} className="h-14 w-14 rounded-full object-cover bg-white" />
-              <span className="text-gray-600 text-xl" style={{ fontWeight: 600 }}>{chatUser.first_name}</span>
+              <span className="text-gray-600 text-xl" style={{ fontWeight: 600 }}>{chatUser.username}</span>
             </div>
           </div>
           <div id="chatbox" className="w-full" style={{ height: 677 + 'px' }}>

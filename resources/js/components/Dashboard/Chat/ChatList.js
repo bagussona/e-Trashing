@@ -25,7 +25,7 @@ function ChatList({ contacts }) {
             <img id="user-avatar" src={el.avatar} className="h-14 w-14 rounded-full object-cover bg-white" />
             <div id="user-message-details" className="flex flex-col h-14 flex-grow">
               <div id="user-name-date" className={`${chatUser === null ? 'text-blue-400' : el.id === chatUser.id ?  'text-white' : "text-blue-400"} `} style={{fontWeight: 600}}>
-                <span>{el.first_name}</span>
+                <span>{el.username}</span>
               </div>
               <div id="user-message" className="flex flex-row flex-grow w-full justify-between items-center">
                 <span className={`${chatUser === null ? 'text-gray-600' : el.id === chatUser.id ? 'text-white' : "text-gray-600"}`}>Ini contoh pesan</span>
