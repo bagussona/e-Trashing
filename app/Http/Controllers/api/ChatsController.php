@@ -15,9 +15,9 @@ class ChatsController extends Controller
     //READ Contacts
     public function index(){
         // $chats = Message::all();
-        $users = DB::select("select users.id, users.first_name, users.avatar, users.email, count(is_read) as unread from users LEFT JOIN messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        $users = DB::select("select users.id, users.username, users.avatar, users.email, count(is_read) as unread from users LEFT JOIN messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
         where users.id != " . Auth::id() . "
-        group by users.id, users.first_name, users.avatar, users.email");
+        group by users.id, users.username, users.avatar, users.email");
 
         return response()->json(compact('users'), 200);
     }
