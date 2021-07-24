@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
 import { useStore } from '../../../utilities/store';
@@ -13,6 +13,12 @@ function ChatBox({messages}) {
   const currentUserID = useStore(state => state.currentUserID);
 
   const [message, setMessage] = useState('');
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'})
+  }
 
   const messageHandle = e => {
     setMessage(e.target.value);
@@ -42,6 +48,10 @@ function ChatBox({messages}) {
 
     return () => window.removeEventListener('keydown', listener);
   }, [message])
+
+  
+  useEffect(() => scrollToBottom(), [messages])
+  
 
   return (
     <div id="chatbox-container" className="flex-grow bg-white shadow-md rounded" style={{fontFamily: ['Inter', 'sans-serif']}}>
@@ -82,7 +92,7 @@ function ChatBox({messages}) {
                   </div>
                 </div>
                 ))}
-                {/* {console.log(messages)} */}
+                <div ref={messagesEndRef} />
               </div>
             }
           </div>
