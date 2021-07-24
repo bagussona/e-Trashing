@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\PassbookCustomer;
+use App\PassbookUsers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +111,7 @@ class UserController extends Controller
         ]);
 
 
-        $passbook_customer = PassbookCustomer::create([
+        PassbookCustomer::create([
             'user_id' => $customer->id,
             'Tanggal' => date("Y-m-d"),
             'Keterangan' => 'Saldo Awal',
@@ -118,7 +119,15 @@ class UserController extends Controller
             'Debit' => 0,
             'Credit' => 0,
             'Saldo' => 0
-            ]);
+        ]);
+
+        PassbookUsers::create([
+            'user_id' => $customer->id,
+            'Tanggal' => date('Y-m-d'),
+            'Keterangan' => 'Saldo Awal',
+            'Berat' => 0,
+            'Saldo' => 0
+        ]);
 
             $customer->assignRole('customer');
 
