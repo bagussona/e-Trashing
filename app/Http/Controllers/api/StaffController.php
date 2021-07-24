@@ -8,6 +8,7 @@ use App\PassbookCustomer;
 use App\User;
 use App\FormRequest;
 use App\PassbookHistory;
+use App\PassbookUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -79,6 +80,13 @@ class StaffController extends Controller
             $passbook->update([
                 "sampah_terkumpul" => $jee2,
                 "saldo" => $saldo
+            ]);$passbook_users =
+
+            $passbook_users = PassbookUsers::where('user_id', $id)->update([
+                "Tanggal" => date("Y-m-d"),
+                // "Keterangan" =>
+                "Berat" => $jee2,
+                "Saldo" => $saldo
             ]);
 
             Passbook::where('user_id', $id)->delete();
