@@ -1,67 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../Header';
-import Pusher from 'pusher-js';
+import { useStore } from '../../../utilities/store';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
-import { useStore } from '../../../utilities/store';
-import { getContact, getMessage } from '../../../apis/api';
-// import { useStore } from '../../../utilities/store';
+import Header from '../../Header';
+import Pusher from 'pusher-js';
+import { getContacts, getMessage } from '../../../apis/api';
 import { getCookie } from '../../../utilities/obtain_cookie';
 
+
 function Chat() {
-  const [messages, setMessages] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const setUnclicked = useStore(state => state.setUnclicked)
-  const clicked = useStore(state => state.clicked);
-  const clickedData = useStore(state => state.clickedData);
-  // const currentUserID = useStore(state => state.currentUserID);
-
-  const updateContacts = bool => {
-    getContact(getCookie('token'))
-      .then(res => {
-        setContacts(res.data.users);
-        if (bool) {
-          setLoading(false);
-        }
-      })
-  }
+  const chatUser = useStore(state => state.chatUser);
+  // const setMessages = useStore(state => state.setMessages);
+  const setMessageLoading = useStore(state => state.setMessageLoading);
+  // const [initialArray, setInitialArray] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    updateContacts(true);
-
+    getContacts(getCookie('token'))
+    .then(res => {
+      setContacts(res.data.users);
+      setLoading(false);      
+    })
     const pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
       cluster: process.env.MIX_PUSHER_APP_CLUSTER,
       encrypted: true
     });
     const channel = pusher.subscribe('my-channel');
     channel.bind('my-event', data => {
-      getMessage(getCookie('token'), data.to)
-      .then(res => setMessages(res.data.messages))
-
-      updateContacts(false);
-      // console.log(data)
+      setMessages(currentMessages => [...currentMessages, data])
     })
-    // console.log(process.env.MIX_PUSHER_APP_KEY, process.env.MIX_PUSHER_APP_CLUSTER)
-
-    return () => {
-      setUnclicked()
-    }
   }, [])
 
   useEffect(() => {
-    if (clicked) {
-      getMessage(getCookie('token'), clickedData.id)
-        .then(res => setMessages(res.data.messages))
-    }
-  }, [clickedData])
+    chatUser === null ? 'null' : getMessage(getCookie('token'), chatUser.id).then(res => {
+      setMessages(res.data.messages)
+      setMessageLoading(false);
+    })
+  }, [chatUser])
+  
+  // useEffect(() => console.log(chatUser));
 
   return (
     <div id="dashboard-content" className="px-16 py-10 ml-20 h-full flex flex-col">
-      <Header page="Chat" />
-      <div id="page-content" className="w-full flex flex-row space-x-8">
-        <ChatList loading={loading} contacts={contacts} />
-        <ChatBox loading={loading} messages={messages} />
+      <Header page="Chat App" />
+      <div id="page-content" className="w-full flex-grow flex flex-row space-x-8">
+        {
+          loading ? <div>Loading</div> :
+          <>
+            <ChatList contacts={contacts} />
+            <ChatBox messages={messages} />
+          </>
+        }
       </div>
     </div>
   )

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import DashboardMain from './DashboardMain';
-// import Footer from '../Footer';
 import UserList from './UserList';
 import CreateAccount from './CreateAccount';
 import CreateGarbage from './CreateGarbage';
 import StaffProfile from './StaffProfile';
 import { getNotification, getUser } from '../../apis/api';
-// import UserInformation from './UserInformation';
 import { getCookie } from '../../utilities/obtain_cookie';
 import { isLogin, userRole } from '../../cookie_const';
 import { ClimbingBoxLoading } from '../Assets/LoadingPage';
@@ -18,23 +16,22 @@ import { useStore } from '../../utilities/store';
 
 
 function Dashboard(props) {
-
   const { history } = props;
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const setNotification = useStore(state => state.setNotification);
-  const setCurrentData = useStore(state => state.setCurrentData)
+  const setCurrentUserID = useStore(state => state.setCurrentUserID);
 
-  // const setCurrentUserID = useStore(state => state.setCurrentUserID);
-  // const [testNotif, setTesNotif] = useState({})
-
+  /**
+   * Logout
+   */
   const logoutMethod = () => {
     const userLogoutVar = [isLogin, userRole];
     for (let i in userLogoutVar) {
       localStorage.removeItem(userLogoutVar[i]);
     }
 
-  
+    // history.push('/login')
     history.push('/login')
   }
 
@@ -46,7 +43,11 @@ function Dashboard(props) {
     
     logoutMethod();
   }
+  /** End of Logout */
 
+  /**
+   * Get Notification
+   */
   const getWithInterval = () => {
     setInterval(() => {
       getNotification(getCookie('token'))
@@ -55,6 +56,7 @@ function Dashboard(props) {
       })
     }, 300000)
   }
+  /** End of Get Notification */
 
   useEffect(() => {
     if (localStorage.getItem(isLogin) === 'true') {
@@ -64,7 +66,6 @@ function Dashboard(props) {
           if (res.data.status === 'Token is Expired') {
             userLogout();
           } else {
-            setCurrentData(res.data.user);
             if (localStorage.getItem('role') === 'bendahara') {
               getNotification(getCookie('token'))
               .then(resp => {
@@ -76,7 +77,7 @@ function Dashboard(props) {
               })
             }
             setUserData(res.data.user);
-            // setCurrentUserID(res.data.user.id);
+            setCurrentUserID(res.data.user.id);
             setLoading(false)
           }
         } else {
@@ -87,12 +88,9 @@ function Dashboard(props) {
     } else {  
       userLogout();
     }
-
-    // if (localStorage.getItem('role') === 'bendahara' ?)
-
   }, [])
 
-  if (getCookie('logged_in') === 'true') {
+  if (localStorage.getItem(isLogin) === 'true') {
     if (loading) {
       return <ClimbingBoxLoading />
     } else {

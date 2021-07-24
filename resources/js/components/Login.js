@@ -79,7 +79,8 @@ function Login(props) {
       if (res.status === 200) {
         const data = body.data;
 
-        // setCurrentID(data.id);
+        // set
+        (data.id);
         // console.log('executed second');
 
         const date = new Date();

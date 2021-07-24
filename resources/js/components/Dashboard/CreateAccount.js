@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createStaff } from '../../apis/api';
+import { createStaff, createCustomer } from '../../apis/api';
 // import { useStore } from '../../utilities/store';
 import Header from '../Header';
 import { getCookie } from '../../utilities/obtain_cookie';
@@ -14,6 +14,8 @@ const roleParser = (role) => {
       return 'Staff 1 - Pengepul';
     case 'staff':
       return 'Staff 2 - Penjemput';
+    case 'customer':
+      return 'Customer';
   }
 }
 
@@ -29,7 +31,7 @@ function CreateAccount() {
   });
   const [loading, setLoading] = useState(false);
   const [isDropdown, setIsDropdown] = useState(false);
-  const roleList = ['bendahara', 'pengepul', 'staff'];
+  const roleList = ['bendahara', 'pengepul', 'staff', 'customer'];
 
   const sendAccount = () => {
     setLoading(true);
@@ -40,18 +42,28 @@ function CreateAccount() {
     formData.append('email', value.email);
     formData.append('password', value.password);
     formData.append('password_confirmation', value.password_confirmation);
-    formData.append('role', value.role)
 
+    
     // for (let pair of formData.entries()) {
-    //   console.log(pair[0]+ ' ' + pair[1])
-    // }
-
-    createStaff(getCookie('token'), formData)
-    .then(res => {
-      console.log(res)
-      setLoading(false);
-    })
-    .catch(err => console.log(res))
+      //   console.log(pair[0]+ ' ' + pair[1])
+      // }
+      
+    if (value.role != 'customer') {
+      formData.append('role', value.role)
+      createStaff(getCookie('token'), formData)
+      .then(res => {
+        console.log(res)
+        setLoading(false);
+      })
+      // .catch(err => console.log(res))
+    } else if (value.role == 'customer') {
+      formData.append('username', (value.email).substr(0, 4))
+      createCustomer(getCookie('token'), formData)
+      .then(res => {
+        console.log(res)
+        setLoading(false)
+      })  
+    }
   }
 
   return (

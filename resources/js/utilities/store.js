@@ -1,6 +1,9 @@
 import create from 'zustand';
 
 const useStore = create(set => ({
+  /**
+   * Required by Geo Location API
+   */
   provinces: [
     'ACEH',
     'SUMATERA BARAT',
@@ -37,26 +40,47 @@ const useStore = create(set => ({
     'PAPUA BARAT',
     'PAPUA'
   ],
-  currentData: null,
-  setCurrentData: data => set(() => ({currentData: data})),
+  /** End of Geo Location APIs */
+  /**
+   * Current User Data
+   */
+    currentUserID: null,
+    setCurrentUserID: id => set(() => ({currentUserID: id})),
+  /** End of Current User Data */
+  /**
+   * Address Component
+   */
   addressDropdown: false,
   setAddressDropdown: v => set(() => ({addressDropdown: v})),
   defaultCoordinate: false,
   setDefaultCoordinate: b => set(() => ({defaultCoordinate: b})),
+  /** End of Address Component */
+
+  /**
+   * Header Component
+   */
   notification: null,
   setNotification: v => set(state => (state.notification = v)),
-  clickedData: null,
+  /** End Of Header Component */
+
+  /**
+   * Required by Chat App
+   */
+  /**
+   * Click State
+   */
   clicked: false,
-  setClicked: (cd, c) => set(state => {
-    state.clickedData = cd,
-    state.clicked = true
-  }),
-  setUnclicked: () => set(state => {
-    state.clickedData = null,
-    state.clicked = false
-  })
-  // currentUserID: 0,
-  // setCurrentUserID: id => set(() => ({currentUserID: id}))
+  chatUser: null,
+  setChatUser: user => set(() => ({chatUser: user})),
+  /** End of Click State */
+  /**
+   * Global Messages
+   */
+  messages: null,
+  setMessages: messages => set(() => ({messages: messages})),
+  messageLoading: true,
+  setMessageLoading: bool => set(() => ({messageLoading: bool})),
+  /** End of Chat App */
 }))
 
 export { useStore };

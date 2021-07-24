@@ -1,36 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import { RiSendPlaneFill } from 'react-icons/ri';
+import { IconContext } from 'react-icons';
+import { useStore } from '../../../utilities/store';
 import { sendMessageAPI } from '../../../apis/api';
 import { getCookie } from '../../../utilities/obtain_cookie';
-import { useStore } from '../../../utilities/store';
 
 
 function ChatBox({messages}) {
+  const chatUser = useStore(state => state.chatUser);
+  // const messages = useStore(state => state.messages);
+  const loading = useStore(state => state.messageLoading);
+  const currentUserID = useStore(state => state.currentUserID);
 
-  const clicked = useStore(state => state.clicked);
-  const currentData = useStore(state => state.currentData);
-  const clickedData = useStore(state => state.clickedData);
   const [message, setMessage] = useState('');
 
-  const handleMessage = e => {
-    setMessage(e.target.value)
-  }
+  const messageHandle = e => {
+    setMessage(e.target.value);
+  }  
 
   const sendMessage = () => {
-    const formData = new FormData();
-    formData.append('from', currentData.id)
-    formData.append('receiver_id', clickedData.id)
-    formData.append('message', message);
+    var formData = new FormData();
+    formData.append('from', currentUserID)
+    formData.append('receiver_id', chatUser.id);
+    formData.append('message', message)
 
     sendMessageAPI(getCookie('token'), formData)
-    .then(res => console.log(res))
+    .then(res => console.log(res.data))
 
-    setMessage('');
+    setMessage('')
   }
 
   useEffect(() => {
-    const listener = e => {
-      if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-        e.preventDefault()
+    const listener = event => {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+        event.preventDefault()
         sendMessage()
       }
     }
@@ -41,36 +44,58 @@ function ChatBox({messages}) {
   }, [message])
 
   return (
-    <div id="chat-box" className="w-3/4 h-full bg-white shadow-md rounded flex flex-col justify-between" style={{fontFamily: ['Inter', 'sans-serif']}}>
-      {clicked ? 
+    <div id="chatbox-container" className="flex-grow bg-white shadow-md rounded" style={{fontFamily: ['Inter', 'sans-serif']}}>
+      {chatUser === null ? 
+        <div id="empty-chat" className="w-full h-full flex items-center justify-center">
+          <span className="text-gray-400">Select chat to start messaging</span>
+        </div> :
         <>
-          <div id="user" className="w-full border-b-1 border-gray-100 h-20 flex flex-row items-center px-4">
-            <img src={clickedData.avatar} className="rounded-full h-12 w-12 object-cover mr-2" />
-            <span className="text-gray-600 text-lg" style={{ fontWeight: 600 }} >{clickedData.first_name} {clickedData.last_name}</span>
+          <div id="current-user-chat-with" className="w-full h-20 border-1 border-gray-200 flex items-center justify-between flex-row px-6">
+            <div id="left-details" className="flex flex-row h-full items-center space-x-4">
+              <img src={chatUser.avatar} className="h-14 w-14 rounded-full object-cover bg-white" />
+              <span className="text-gray-600 text-xl" style={{ fontWeight: 600 }}>{chatUser.first_name}</span>
+            </div>
           </div>
-          <div id="messages-container" className="flex flex-col w-full px-6 pt-4 pb-8 space-y-2 overflow-auto scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-100" style={{height: 684}}>
-            {messages.map((el, idx) => (
-              el.from == currentData.id ? 
-              <div id="message-box" className="flex flex-row w-full h-auto justify-end items-start space-x-4">
-                <div id="message-bubble" className="max-w-2xl min-h-14 px-4 flex items-center rounded bg-white bg-blue-200">
-                  {el.message}
+          <div id="chatbox" className="w-full" style={{ height: 677 + 'px' }}>
+            {/* {userMessages(chatUser.id)} */}
+            { loading ? 
+              <div id="loading" className="w-full h-full flex items-center justify-center text-gray-400">
+                <span>Fetching Messages from Server</span>
+              </div> :
+              <div className="flex flex-col w-full h-full overflow-auto scrollbar px-4 py-2 space-y-4">
+                {messages.map((el, idx) => (
+                <div key={idx} id="chat-bubble-container" className={`w-full flex items-center ${el.from == currentUserID ? 'justify-end' : 'justify-start'}`}>
+                  <div id="chat-bubble-wrapper" className="max-w-7xl h-auto flex flex-row items-center space-x-4">
+                    {el.from === currentUserID ?
+                    <>
+                      <div className="w-full h-auto text-left bg-gray-100 p-2 rounded">
+                        <span>{el.message}</span>
+                      </div>
+                      <img src={el.from === currentUserID ? null : chatUser.avatar} className="h-12 w-12 rounded-full object-cover"/> 
+                    </> : 
+                    <>
+                      <img src={el.from === currentUserID ? null : chatUser.avatar} className="h-12 w-12 rounded-full object-cover" />
+                      <div className="w-full h-auto text-left bg-blue-400 p-2 rounded text-white">
+                        <span>{el.message}</span>
+                      </div>
+                    </>}
+                  </div>
                 </div>
-                <img src={currentData.avatar} className="h-12 w-12 rounded-full object-cover" />
-              </div> : 
-              <span>uh!</span>
-            ))}
+                ))}
+                {/* {console.log(messages)} */}
+              </div>
+            }
           </div>
-        </> :
-        <span></span>
+          <div id="message-box" className="w-full h-14 bg-gray-100 flex flex-row justify-between items-center text-gray-600">
+            <input placeholder="Type any message here..." className="px-4 focus:outline-none bg-transparent w-full h-full" value={message} onChange={messageHandle}/>
+            <div id="send-button" className="px-4 h-full items-center justify-center flex cursor-pointer" onClick={() => sendMessage()}>
+              <IconContext.Provider value={{ color: '#60A5FA', size: 1.5 + 'em' }}>
+                <RiSendPlaneFill />
+              </IconContext.Provider>
+            </div>
+          </div>
+        </>
       }
-      <div id="input-wrapper" className="flex flex-row h-12 w-full bg-gray-100 items-center justify-between">
-        <input value={message} onChange={handleMessage} className="h-full w-full focus:outline-none px-4 bg-transparent" placeholder="Type a message..."/>
-        <button id="send-button" className="h-auto w-auto pr-4" onClick={sendMessage}>
-          <svg enableBackground="new 0 0 24 24" height="24" className="text-blue-400 fill-current" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="m8.75 17.612v4.638c0 .324.208.611.516.713.077.025.156.037.234.037.234 0 .46-.11.604-.306l2.713-3.692z" /><path d="m23.685.139c-.23-.163-.532-.185-.782-.054l-22.5 11.75c-.266.139-.423.423-.401.722.023.3.222.556.505.653l6.255 2.138 13.321-11.39-10.308 12.419 10.483 3.583c.078.026.16.04.242.04.136 0 .271-.037.39-.109.19-.116.319-.311.352-.53l2.75-18.5c.041-.28-.077-.558-.307-.722z" />
-          </svg>
-        </button>
-      </div>
     </div>
   )
 }

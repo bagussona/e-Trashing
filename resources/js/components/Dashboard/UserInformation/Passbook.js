@@ -27,7 +27,7 @@ function Passbook({ id, role }) {
 
   if (loading) {
     return (
-      <div id="user-passbook" className="w-3/5 px-6 py-9" style={{ height: 820 + 'px' }}>
+      <div id="user-passbook" className="w-3/5 flex flex-col space-y-4 ml-3 mr-3 py-9" style={{ height: 820 + 'px' }}>
         <div id="skeleton-wrapper" className="flex flex-col h-auto space-y-1.5">
           <div id="skeleton-table-header" className="w-full h-14 bg-white shadow-md flex flex-row">
             <div id="skeleton-title-id" className="h-full w-12 items-center justify-start flex px-4">
@@ -113,7 +113,10 @@ function Passbook({ id, role }) {
   } else {
     if (customer) {
       return (
-        <div id="user-passbook" className="w-3/5 px-6 py-9" style={{height: 820+'px'}} style={{fontFamily: ['Inter', 'sans-serif']}}>
+        <div id="user-passbook" className="w-3/5 flex flex-col space-y-4 ml-3 mr-3 py-9" style={{height: 820+'px'}} style={{fontFamily: ['Inter', 'sans-serif']}}>
+          <div id="passbook-title" className="w-full h-auto text-left">
+            <span className="text-lg text-gray-600" style={{fontWeight: 600}}>Passbook</span>
+          </div>
           <div id="passbook-table" className="flex flex-col h-full space-y-1.5">
             <div id="table-header" className="w-full h-14 bg-white shadow-md flex flex-row">
               <div id="header-id" className="h-full w-12 items-center justify-start flex px-4">
@@ -142,9 +145,9 @@ function Passbook({ id, role }) {
                 </div> :
                 <>
                   {data.map((el, idx) => (
-                    <div key={idx} id="table-row-wrapper" className={`w-full h-16 bg-${data[idx].id % 2 == 1 ? 'white' : 'gray-100'} shadow-md flex flex-row`}>
+                    <div key={idx} id="table-row-wrapper" className={`w-full h-16 bg-${(idx+1) % 2 == 1 ? 'white' : 'gray-100'} shadow-md flex flex-row`}>
                       <div id="body-row-id" className="h-full w-12 items-center justify-start flex px-4">
-                        <span className="text-gray-400 text-sm" style={{ fontWeight: 400 }}>{el.id}</span>
+                        <span className="text-gray-400 text-sm" style={{ fontWeight: 400 }}>{idx+1}</span>
                       </div>
                       <div id="body-row-date" className="h-full w-32 items-center justify-start flex px-4">
                         <span className="text-gray-400 text-sm" style={{ fontWeight: 600 }}>{el.Tanggal}</span>

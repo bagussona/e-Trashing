@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '../utilities/store';
-
+import { accTarikan, rejectTarikan } from '../apis/api';
+import { getCookie } from '../utilities/obtain_cookie';
 // const headerCondition = (location) => {
 //   switch (location) {
 //     case '/dashboard/userlist/user/:id':
@@ -78,6 +79,18 @@ function Header(props) {
     // setNotificationDrop(false)
   }
 
+  const handleAcc = id => {
+    accTarikan(getCookie('token'), id)
+    .then(res => console.log(res))
+    // console.log(id)
+  }
+
+  const handleReject = id => {
+    rejectTarikan(getCookie('token'), id)
+    .then(res => console.log(res))
+    // console.log(id)
+  }
+
   useEffect(() => {
     console.log(props)
   }, [])
@@ -92,7 +105,7 @@ function Header(props) {
         <div id="title-right" className="flex items-center justify-center">
           <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => setNotificationDrop(!notificationDrop)} className="z-20 p-2 bg-white rounded-full shadow-md   hover:bg-gray-200 focus:outline-none relative" >
             {icon(iconColor)}
-            {notification !== null ? 
+            {notification !== null && (notification.reqTarikan.filter(el => el.status === 'Proses')).length >= 1 ? 
               <div id="notification-indicator" className="h-3 w-3 rounded-full bg-red-400 shadow-md absolute top-2 right-2 transition-all">
               </div> : 
               <span></span>
@@ -105,17 +118,23 @@ function Header(props) {
                 <span className="text-xs text-blue-400" style={{ fontWeight: 600 }}>Mark all as read</span>
               </div>
               <div id="notification-content" className="h-auto w-full flex flex-col">
-                {notification === null ? null : ((notification.reqTarikan).length >= 1 ? notification.reqTarikan.filter(el => el.status === 'Proses').map((el, idx) => (
-                  <Link to={`/dashboard/requestwithdraw/${el.id}`} key={idx} className="flex flex-col h-auto w-full hover:bg-gray-100 overflow-auto p-4 cursor-pointer transition-colors">
-                    <div id="top-content" className="flex flex-row justify-between items-center w-full h-auto">
-                      <span className="text-gray-600" style={{fontWeight: 600}}>{el.name}</span>
-                      <span className={`text-sm text-${statusColor(el.status)}`}>{el.status}</span>
+                {notification === null ? null : ((notification.reqTarikan.filter(el => el.status === 'Proses')).length >= 1 ? notification.reqTarikan.filter(el => el.status === 'Proses').map((el, idx) => (
+                  <>
+                    <Link to={`/dashboard/requestwithdraw/${el.id}`} key={idx} className="flex flex-col h-auto w-full hover:bg-gray-100 overflow-auto p-4 cursor-pointer transition-colors">
+                      <div id="top-content" className="flex flex-row justify-between items-center w-full h-auto">
+                        <span className="text-gray-600" style={{fontWeight: 600}}>{el.name}</span>
+                        <span className={`text-sm text-${statusColor(el.status)}`}>{el.status}</span>
+                      </div>
+                      <div id="bottom-content" className="flex flex-col">
+                        {process(el.status, el.jumlah)}
+                        <span style={{ fontWeight: 600 }} className="text-blue-400 text-sm"><span className="text-gray-600" style={{ fontWeight: 400 }}>Kode pembayaran :</span> {el.kode_pembayaran}</span>
+                      </div>
+                    </Link>
+                    <div id="acc-reject-button" className="w-full h-auto flex flex-row space-x-4 justify-center items-center text-sm mt-2">
+                      <button className="focus:outline-none bg-green-400 text-white w-1/5 p-2 rounded hover:bg-green-500 active:bg-green-400" onClick={() => handleAcc(el.user_id)}>Acc</button>
+                      <button className="focus:outline-none bg-red-400 text-white w-1/5 p-2 rounded hover:bg-red-500 active:bg-red-400" onClick={() => handleReject(el.user_id)}>Reject</button>
                     </div>
-                    <div id="bottom-content" className="flex flex-col">
-                      {process(el.status, el.jumlah)}
-                      <span style={{ fontWeight: 600 }} className="text-blue-400 text-sm"><span className="text-gray-600" style={{ fontWeight: 400 }}>Kode pembayaran :</span> {el.kode_pembayaran}</span>
-                    </div>
-                  </Link>
+                  </>
                 )) : 
                 <div id="notification-empty" className="h-20 w-full items-center flex justify-center">
                   <span className="text-gray-600">Tidak ada Notifikasi untuk hari ini ^.^</span>

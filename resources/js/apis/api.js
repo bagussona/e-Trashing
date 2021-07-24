@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-/** BTS ID Official API */
+/** 
+ * BTS ID Official APIs
+*/
 const API_URL = 'https://bts-id.herokuapp.com/api'
 
 const loginAxios = data => {
@@ -34,21 +36,6 @@ const updateStaffProfile = (token, data, id) => {
   .catch(err => err)
 
   return axiosData;
-
-  // const fetchData = fetch(
-  //   `${API_URL}/profile/update/${id}`, 
-  //   {
-  //     method: 'POST',
-  //     body: data, 
-  //     headers: {
-  //       'Authorization': `Bearer ${token}`
-  //     }
-  //   }
-  // )
-  // .then(res => res)
-  // .catch(err => err)
-
-  // return fetchData
 }
 
 const updateProfile = (token, data, id) => {
@@ -131,8 +118,51 @@ const getNotification = token => {
   return axiosData;
 }
 
-const getSetoranAll = token => {
-  const axiosData = axios.get(`${API_URL}/bendahara/all/setoran`, {headers: {'Authorization': `Bearer ${token}`}})
+// const getSetoranAll = token => {
+//   const axiosData = axios.get(`${API_URL}/bendahara/all/setoran`, {headers: {'Authorization': `Bearer ${token}`}})
+//   .then(res => res)
+//   .catch(err => err)
+
+//   return axiosData;
+// }
+
+// const getSetoranPengepul = token => {
+//   const axiosData = axios.get(`${API_URL}/bendahara/4/setoran`, {headers: {'Authorization': `Bearer ${token}`}})
+//   .then(res => res)
+//   .catch(err => err)
+
+//   return axiosData;
+// }
+
+const getTreasurerDashboardData = (token, id) => {
+  const axiosMultipleData = Promise.all([
+    axios.get(`${API_URL}/bendahara/all/setoran`, { headers: { 'Authorization': `Bearer ${token}` } }),
+    id === 4 ? (
+      axios.get(`${API_URL}/bendahara/all/setoran`, {headers: {'Authorization': `Bearer ${token}`}}),
+      axios.get(`${API_URL}/bendahara/4/setoran`, {headers: {'Authorization': `Bearer ${token}`}}),
+      axios.get(`${API_URL}/bendahara/4/passbook`, {headers: {'Authorization': `Bearer ${token}`}})
+    ) : null
+  ])
+  .then(res => {
+    // return res[0], res[1], res[2]
+    // console.log(res)
+    return res
+  })
+  .catch(err => err)
+
+  return axiosMultipleData;
+}
+
+const createCustomer = (token, data) => {
+  const axiosData = axios.post(`${API_URL}/register`, data, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const getSetoranByID = (token, id) => {
+  const axiosData = axios.get(`${API_URL}/bendahara/customer/${id}/setoran`, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -155,8 +185,24 @@ const getMessage = (token, id) => {
   return axiosData;
 }
 
-const getContact = token => {
+const getContacts = token => {
   const axiosData = axios.get(`${API_URL}/chats/contact`, {headers: {'Authorization': `Bearer ${token}`}})
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const accTarikan = (token, id) => {
+  const axiosData = axios.post(`${API_URL}/bendahara/${id}/accepted/tarikanKu`, { headers: { 'Authorization': `Bearer ${token}` } })
+  .then(res => res)
+  .catch(err => err)
+
+  return axiosData;
+}
+
+const rejectTarikan = (token, id) => {
+  const axiosData = axios.post(`${API_URL}/bendahara/${id}/rejected/tarikanKu)`, { headers: { 'Authorization': `Bearer ${token}` } })
   .then(res => res)
   .catch(err => err)
 
@@ -178,7 +224,7 @@ const sendMessageAPI = (token, data) => {
 
 /**  Nominatim Open Source Geolocation APIs */
 const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
-
+  
 // Reverse Geocode API
 
 const getLocation = (lat, lon) => {
@@ -227,13 +273,19 @@ export {
   getUserPassbook,
   createStaff,
   getNotification,
-  getSetoranAll,
+  // getSetoranAll,
+  // getSetoranPengepul,
+  getTreasurerDashboardData,
+  getSetoranByID,
   getWithdrawDetail,
   getMessage,
-  getContact,
+  getContacts,
   sendMessageAPI,
   /** External APIs Export */
   getLocation,
   getAddress,
-  getCoordinate
+  getCoordinate,
+  accTarikan,
+  rejectTarikan,
+  createCustomer
 };

@@ -61,7 +61,7 @@ function CreateGarbage() {
       <div id="dashboard-content" className="px-16 pt-10 pb-16 ml-20 h-full overflow-auto ">
         {loading ? <ClimbingBoxLoading height="full" width="full"/> : 
         <>
-          <Header page='Garbages' />
+          <Header page="Garbages" />
           <div id="page-content" className="flex w-full h-auto justify-center flex-col">
             <div id="items-information-container" className="h-auto flex flex-row items-center justify-between mb-16">
               <div id="information-2" className=" w-3/4 flex flex-row py-4 box-border items-center" style={{ height: 110 + 'px', marginTop: 3 + 'px' }}>
