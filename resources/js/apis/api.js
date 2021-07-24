@@ -103,7 +103,7 @@ const getUserPassbook = (token, id) => {
 }
 
 const createStaff = (token, data) => {
-  const axiosData = axios.post(`${API_URL}/register/staff`,data , {headers: {'Authorization': `Bearer ${token}`}})
+  const axiosData = axios.post(`${API_URL}/register/staff`, data, {headers: {'Authorization': `Bearer ${token}`}})
   .then(res => res)
   .catch(err => err)
 
@@ -194,7 +194,7 @@ const getContacts = token => {
 }
 
 const accTarikan = (token, id) => {
-  const axiosData = axios.post(`${API_URL}/bendahara/${id}/accepted/tarikanKu`, { headers: { 'Authorization': `Bearer ${token}` } })
+  const axiosData = axios.post(`${API_URL}/bendahara/${id}/accepted/tarikanKu`,null , { headers: { 'Authorization': `Bearer ${token}` } })
   .then(res => res)
   .catch(err => err)
 
@@ -202,7 +202,7 @@ const accTarikan = (token, id) => {
 }
 
 const rejectTarikan = (token, id) => {
-  const axiosData = axios.post(`${API_URL}/bendahara/${id}/rejected/tarikanKu)`, { headers: { 'Authorization': `Bearer ${token}` } })
+  const axiosData = axios.post(`${API_URL}/bendahara/${id}/rejected/tarikanKu`, null, { headers: { 'Authorization': `Bearer ${token}` } })
   .then(res => res)
   .catch(err => err)
 

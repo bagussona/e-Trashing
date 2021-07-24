@@ -81,13 +81,19 @@ function Header(props) {
 
   const handleAcc = id => {
     accTarikan(getCookie('token'), id)
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      setNotificationDrop(false)
+    })
     // console.log(id)
   }
 
   const handleReject = id => {
     rejectTarikan(getCookie('token'), id)
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      setNotificationDrop(false)
+    })
     // console.log(id)
   }
 
