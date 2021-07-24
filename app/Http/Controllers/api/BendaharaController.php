@@ -44,7 +44,6 @@ class BendaharaController extends Controller
     public function readPassbookBendaharas(){
         $id = Auth::user()->id;
         $passbook_bendahara = PassbookBendahara::where("user_id", $id)->get();
-        // $form_request_tarikan = FormRequestTarikan::where("user_id", $id)->get();
 
         return response()->json(compact('passbook_bendahara'), 200);
     }
@@ -189,7 +188,7 @@ class BendaharaController extends Controller
 
         FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Rejected"]);
 
-        return response()->json(["msg" => "Maaf! Permintaan anda tidak dapat di proses."], 202);
+        return response()->json(["msg" => "Maaf! Permintaan anda kami reject dan tidak dapat di proses."], 202);
     }
 
     public function detailTarikan($id){

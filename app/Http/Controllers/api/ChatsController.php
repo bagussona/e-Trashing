@@ -76,7 +76,7 @@ class ChatsController extends Controller
             $options
           );
 
-          $data = ['from' => $from, 'to' => $to];
+        //   $data = ['from' => $from, 'to' => $to];
           $pusher->trigger('my-channel', 'my-event', $data);
 
           return response()->json(['status' => 'Pesan Terkirim!'], 201);
