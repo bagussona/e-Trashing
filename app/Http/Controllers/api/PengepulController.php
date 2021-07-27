@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Passbook;
 use App\PassbookBendahara;
-use App\PassbookCustomer;
 use App\PassbookHistory;
-use App\User;
+use App\PassbookUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
+use App\PassbookCustomer;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\VarDumper\Cloner\Data;
 
 class PengepulController extends Controller
@@ -80,6 +82,13 @@ class PengepulController extends Controller
             $passbook->update([
                 "sampah_terkumpul" => $jee2,
                 "saldo" => $saldo
+            ]);
+
+            $passbook_users = PassbookUsers::where('user_id', $id)->update([
+                "Tanggal" => date("Y-m-d"),
+                "Keterangan" => "BTS-ID/PassbookUsers/" . date('Y-m-d') . "/" . Str::random(6),
+                "Berat" => $jee2,
+                "Saldo" => $saldo
             ]);
 
             Passbook::where('user_id', $id)->delete();

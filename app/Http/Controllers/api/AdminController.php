@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use App\JenisSampah;
 use App\PassbookBendahara;
 use App\PassbookCustomer;
+use App\PassbookUsers;
 use Illuminate\Http\Request;
-use App\User;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use JWTAuth;
-use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
+use JWTAuth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -171,15 +172,23 @@ class AdminController extends Controller
                 'sampah_terkumpul' => 0,
                 'saldo' => 1000000
             ]);
-            # code...
+
             $passbook_staff = PassbookBendahara::create([
                 'user_id' => $staff->id,
                 'Tanggal' => date("Y-m-d"),
-                'Keterangan' => "saldo awal",
+                'Keterangan' => "Saldo Awal",
                 'Berat' => 0,
                 'Debit' => 0,
                 'Credit' => 0,
                 'Saldo' => 1000000
+                ]);
+
+            $passbook_users = PassbookUsers::create([
+                    'user_id' => $staff->id,
+                    'Tanggal' => date('Y-m-d'),
+                    'Keterangan' => 'BTS-ID/PassbookUsers/' . date('Y-m-d') . '/' . Str::random(6),
+                    'Berat' => 0,
+                    'Saldo' => 1000000
                 ]);
         } else {
             $staff = User::create([
@@ -203,10 +212,18 @@ class AdminController extends Controller
                 'Debit' => 0,
                 'Credit' => 0,
                 'Saldo' => 0
-                ]);
-            }
+            ]);
 
-            $staff->assignRole($role);
+            $passbook_users = PassbookUsers::create([
+                'user_id' => $staff->id,
+                'Tanggal' => date('Y-m-d'),
+                'Keterangan' => 'BTS-ID/PassbookUsers/' . date('Y-m-d') . '/' . Str::random(6),
+                'Berat' => 0,
+                'Saldo' => 0
+            ]);
+        }
+
+        $staff->assignRole($role);
 
         return response()->json(compact('staff'), 201);
     }

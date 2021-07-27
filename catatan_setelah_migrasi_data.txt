@@ -1,0 +1,17 @@
+### Catatan setelah migrasi database ###
+
+Ini hanya Catatan saja, biar setiap development projek ini. Terus melakukan migrasi database, entah itu untuk mereset ulang ataupun menambah table. Tinggal mengikuti SOP yang sudah saya buat.
+
+1. "php artisan migrate:fresh" --> database direset dan jika ada migrasi table baru,
+2. "melakukan seeding data default ke database",
+3. "login as admin, kemudian buat akun bendahara",
+4. "cek fungsi system apakah sudah run well"
+5. "buat user / customer, kemudian lakukan prosedur ini untuk cek lifecycle system berfungsi dengan baik atau tidak.
+    - Buat 2 user / customer, lalu login masing2,
+    - Customer --> Buat request setoran dijemput,
+    - "login as staff_1, kemudian lakukan setoran utk cek fungsi perhitungan berjalan atau tidak",
+    - jika run well dan saldo bertambah ke semua database yg dituju. lanjut..
+    - Customer --> Buat 2 request tarikan dana,
+    - "login as bendahara, kemudian lakukan proses reject dan proses approved",
+    - jika run well dan saldo berkurang ke semua database yg dituju. lanjut..
+6. jika step 1 - 5 berhasil, reset kembali dan ulangi sampai step 5. lalu deploy ke hosting.

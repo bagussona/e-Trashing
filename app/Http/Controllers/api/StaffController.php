@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\VarDumper\Cloner\Data;
+use Illuminate\Support\Str;
 
 class StaffController extends Controller
 {
@@ -80,11 +81,11 @@ class StaffController extends Controller
             $passbook->update([
                 "sampah_terkumpul" => $jee2,
                 "saldo" => $saldo
-            ]);$passbook_users =
+            ]);
 
             $passbook_users = PassbookUsers::where('user_id', $id)->update([
                 "Tanggal" => date("Y-m-d"),
-                // "Keterangan" =>
+                "Keterangan" => "BTS-ID/PassbookUsers/" . date('Y-m-d') . "/" . Str::random(6),
                 "Berat" => $jee2,
                 "Saldo" => $saldo
             ]);
@@ -213,8 +214,8 @@ class StaffController extends Controller
         //DELETE
         // dd($id->created_at);
         $created_at = $id->created_at;
-        $id->delete();
         PassbookHistory::where('created_at', $created_at)->delete();
+        $id->delete();
 
         return response()->json(["success" => "deleted successfully"], 204);
     }

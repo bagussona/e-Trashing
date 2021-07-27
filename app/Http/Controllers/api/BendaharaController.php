@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\api;
 
-use App\FormRequestTarikan;
 use App\Http\Controllers\Controller;
-use App\Passbook;
 use App\User;
+use App\PassbookUsers;
 use App\PassbookBendahara;
 use App\PassbookCustomer;
 use App\PassbookHistory;
-use Illuminate\Http\Request;
+use App\FormRequestTarikan;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Passbook;
+use Illuminate\Http\Request;
 
 class BendaharaController extends Controller
 {
@@ -20,15 +22,33 @@ class BendaharaController extends Controller
         return response()->json(compact('setoran'), 200);
     }
 
+    public function readAllPassbooks(){
+        $passbooks = PassbookUsers::all();
+
+        return response()->json(compact('passbooks'), 200);
+    }
+
+    public function detailPassbooks($id){
+        $passbook_details = PassbookUsers::where('id', $id)->get();
+
+        return response()->json(compact('passbook_details'), 200);
+    }
+
+    public function deletePassbooks(PassbookUsers $id){
+        // dd($id->id);
+        PassbookCustomer::where('user_id', $id->id)->delete();
+        $id->delete();
+
+        return response()->json(["msg" => "Passbook berhasil dihapus"], 200);
+    }
+
     public function readAllSetoranCustomer($id){
-        // $id = Auth::user()->id;
         $setoran_customer = PassbookHistory::where("user_id", $id)->get();
 
         return response()->json(compact('setoran_customer'), 200);
     }
 
     public function readPassbookCustomers($id){
-        // $id = Auth::user()->id;
         $passbook_customer = PassbookCustomer::where("user_id", $id)->get();
 
         return response()->json(compact('passbook_customer'), 200);
@@ -120,7 +140,6 @@ class BendaharaController extends Controller
         "Saldo" => $saldo
         ]);
 
-        ##end pembuatan history transaction
 
         ##Update status request menjadi di terima & penguran saldo di profile user nya!
 
@@ -129,52 +148,67 @@ class BendaharaController extends Controller
         $passbook->update([
             "sampah_terkumpul" => $berat,
             "saldo" => $saldo
-        ]);
-
-        FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Accepted"]);
-
-        ##end update status
-
-
-        $duits = PassbookBendahara::where("user_id", 4)->get();
-
-        $hasil = [];
-        foreach ($duits as $duit){
-            // dd($wkwk);
-            // dd($wk);
-            $hasil[] = [
-                "Saldo" => $duit["Saldo"]
-            ];
-        }
-
-        // dd($hasil);
-        $counting = $hasil[count($hasil)-1];
-
-        // dd($counting);
-        $keuangan_sekarang = $counting["Saldo"] -= $credit;
-
-        // dd($keuangan_sekarang);
-        ##Proses pembuatan History Transaction di buku tabungan bendahara, disini yang diisi credit, karena melakukan pemberian dana ke customer
-
-        PassbookBendahara::create([
-            "user_id" => $listsTarikan["user_id"],
-            "Keterangan" => $payment_code,
-            "Tanggal" => date('Y-m-d'),
-            "Berat" => $berat,
-            "Credit" => $credit,
-            "Saldo" => $keuangan_sekarang
             ]);
 
-        ##end pembuatan history transaction
+            FormRequestTarikan::where('kode_pembayaran', $payment_code)->update(["status" => "Accepted"]);
+
+            ##end update status
 
 
-        ##update saldo untuk dikurangi di akun bendahara
-        $bendahara = "Bendahara";
+            $duits = PassbookBendahara::where("user_id", 4)->get();
 
-        User::where('last_name', $bendahara)->update(["saldo" => $keuangan_sekarang ]);
+            $hasil = [];
+            foreach ($duits as $duit){
+                // dd($wkwk);
+                // dd($wk);
+                $hasil[] = [
+                    "Saldo" => $duit["Saldo"]
+                ];
+            }
 
-        ##end pengurangan saldo
+            // dd($hasil);
+            $counting = $hasil[count($hasil)-1];
 
+            // dd($counting);
+            $keuangan_sekarang = $counting["Saldo"] -= $credit;
+
+            // dd($keuangan_sekarang);
+            ##Proses pembuatan History Transaction di buku tabungan bendahara, disini yang diisi credit, karena melakukan pemberian dana ke customer
+
+            PassbookBendahara::create([
+                "user_id" => $listsTarikan["user_id"],
+                "Keterangan" => $payment_code,
+                "Tanggal" => date('Y-m-d'),
+                "Berat" => $berat,
+                "Credit" => $credit,
+                "Saldo" => $keuangan_sekarang
+                ]);
+
+
+
+                ##update saldo untuk dikurangi di akun bendahara
+                $bendahara = "Bendahara";
+
+                User::where('last_name', $bendahara)->update(["saldo" => $keuangan_sekarang ]);
+
+                $bendahara_id = 4;
+                PassbookUsers::where('user_id', $bendahara_id)->update([
+                    "Tanggal" => date("Y-m-d"),
+                    "Keterangan" => "BTS-ID/PassbookUsers/" . date('Y-m-d') . "/" . Str::random(6),
+                    // "Berat" => $jee2,
+                    "Saldo" => $keuangan_sekarang
+                    ]);
+
+                    PassbookUsers::where('user_id', $id)->update([
+                        "Tanggal" => date("Y-m-d"),
+                        "Keterangan" => "BTS-ID/PassbookUsers/" . date('Y-m-d') . "/" . Str::random(6),
+                        // "Berat" => $jee2,
+                        "Saldo" => $saldo
+                        ]);
+
+                        ##end pengurangan saldo
+
+            ##end pembuatan history transaction
         // dd($passbook);
         return response()->json(["msg" => "Permintaan anda berhasil diproses.", "data" => $wkwk], 200);
     }

@@ -151,15 +151,22 @@ Route::group([
     'middleware' => ['jwt.verify', 'role:admin|bendahara']
 ], function () {
 
+    //Notification
     Route::get('bendahara/all/tarikanKu', 'api\BendaharaController@listsRequestTarikan'); //Notification
     Route::get('bendahara/tarikanKu/{id}', 'api\BendaharaController@detailTarikan'); //Detail
     Route::post('bendahara/{id}/accepted/tarikanKu', 'api\BendaharaController@checkout'); //Acc
     Route::post('bendahara/{id}/rejected/tarikanKu', 'api\BendaharaController@checkoutReject'); //Reject
 
+    //setoran user
     Route::get('bendahara/all/setoran', 'api\BendaharaController@readAllSetoran'); //Bendahara ->cek semua sampah yg sudah di input [Bendahara, Pengepul, Staff1]
     Route::get('bendahara/customer/{id}/setoran', 'api\BendaharaController@readAllSetoranCustomer');
-    Route::get('bendahara/customer/{id}/passbook', 'api\BendaharaController@readPassbookCustomers');
     Route::get('bendahara/{id}/setoran', 'api\BendaharaController@readAllSetoranPengepul');
+
+    //buku tabungan user
+    Route::get('bendahara/all/passbookKu', 'api\BendaharaController@readAllPassbooks');
+    Route::get('bendahara/customer/{id}/passbookKu/detail', 'api\BendaharaController@detailPassbooks');
+    Route::delete('bendahara/customer/{id}/passbookKu/delete', 'api\BendaharaController@deletePassbooks');
+    Route::get('bendahara/customer/{id}/passbook', 'api\BendaharaController@readPassbookCustomers');
     Route::get('bendahara/{id}/passbook', 'api\BendaharaController@readPassbookBendaharas');
 
 });

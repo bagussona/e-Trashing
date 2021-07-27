@@ -17,6 +17,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 // use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -124,14 +125,14 @@ class UserController extends Controller
         PassbookUsers::create([
             'user_id' => $customer->id,
             'Tanggal' => date('Y-m-d'),
-            'Keterangan' => 'Saldo Awal',
+            'Keterangan' => 'BTS-ID/PassbookUsers/' . date('Y-m-d') . '/' . Str::random(6),
             'Berat' => 0,
             'Saldo' => 0
         ]);
 
-            $customer->assignRole('customer');
+        $customer->assignRole('customer');
 
-            return response()->json(["success" => true, "msg" => "Terimakasih! Anda telah berhasil mendaftar. Silahkan login ke aplikasi.", "data" => $customer], 201);
+        return response()->json(["success" => true, "msg" => "Terimakasih! Anda telah berhasil mendaftar. Silahkan login ke aplikasi.", "data" => $customer], 201);
     }
 
 ##### End of Customer Area #####

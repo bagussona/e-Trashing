@@ -105,11 +105,7 @@ class CustomerController extends Controller
 
 
         $kode_book = $request->get('kode_book');
-        $setorDibatalkan = FormRequest::where("kode_book", $kode_book)->get();
-        // dd()
-        $setorDibatalkan->update([
-            'status' => "Batal"
-        ]);
+        $setorDibatalkan = FormRequest::where("kode_book", $kode_book)->update(['status' => 'Canceled']);
 
         return response()->json([
             "msg" => "Terima kasih! Request anda sudah dibatalkan",
