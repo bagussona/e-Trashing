@@ -6224,7 +6224,7 @@ var getContacts = function getContacts(token) {
 };
 
 var accTarikan = function accTarikan(token, id) {
-  var axiosData = axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(API_URL, "/bendahara/").concat(id, "/accepted/tarikanKu"), {
+  var axiosData = axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(API_URL, "/bendahara/").concat(id, "/accepted/tarikanKu"), null, {
     headers: {
       'Authorization': "Bearer ".concat(token)
     }
@@ -6237,7 +6237,7 @@ var accTarikan = function accTarikan(token, id) {
 };
 
 var rejectTarikan = function rejectTarikan(token, id) {
-  var axiosData = axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(API_URL, "/bendahara/").concat(id, "/rejected/tarikanKu)"), {
+  var axiosData = axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(API_URL, "/bendahara/").concat(id, "/rejected/tarikanKu"), null, {
     headers: {
       'Authorization': "Bearer ".concat(token)
     }
@@ -6583,6 +6583,16 @@ function ChatBox(_ref) {
       message = _useState2[0],
       setMessage = _useState2[1];
 
+  var messagesEndRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+
+  var scrollToBottom = function scrollToBottom() {
+    var _messagesEndRef$curre;
+
+    (_messagesEndRef$curre = messagesEndRef.current) === null || _messagesEndRef$curre === void 0 ? void 0 : _messagesEndRef$curre.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
+
   var messageHandle = function messageHandle(e) {
     setMessage(e.target.value);
   };
@@ -6611,6 +6621,9 @@ function ChatBox(_ref) {
       return window.removeEventListener('keydown', listener);
     };
   }, [message]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    return scrollToBottom();
+  }, [messages]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
     id: "chatbox-container",
     className: "flex-grow bg-white shadow-md rounded",
@@ -6639,7 +6652,7 @@ function ChatBox(_ref) {
             style: {
               fontWeight: 600
             },
-            children: chatUser.first_name
+            children: chatUser.username
           })]
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -6654,9 +6667,9 @@ function ChatBox(_ref) {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
             children: "Fetching Messages from Server"
           })
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "flex flex-col w-full h-full overflow-auto scrollbar px-4 py-2 space-y-4",
-          children: messages.map(function (el, idx) {
+          children: [messages.map(function (el, idx) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               id: "chat-bubble-container",
               className: "w-full flex items-center ".concat(el.from == currentUserID ? 'justify-end' : 'justify-start'),
@@ -6686,7 +6699,9 @@ function ChatBox(_ref) {
                 })
               })
             }, idx);
-          })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            ref: messagesEndRef
+          })]
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
         id: "message-box",
@@ -6795,7 +6810,7 @@ function ChatList(_ref) {
                 fontWeight: 600
               },
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                children: el.first_name
+                children: el.username
               })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
               id: "user-message",
@@ -10646,13 +10661,15 @@ function Header(props) {
 
   var handleAcc = function handleAcc(id) {
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_2__.accTarikan)((0,_utilities_obtain_cookie__WEBPACK_IMPORTED_MODULE_3__.getCookie)('token'), id).then(function (res) {
-      return console.log(res);
+      console.log(res);
+      setNotificationDrop(false);
     }); // console.log(id)
   };
 
   var handleReject = function handleReject(id) {
     (0,_apis_api__WEBPACK_IMPORTED_MODULE_2__.rejectTarikan)((0,_utilities_obtain_cookie__WEBPACK_IMPORTED_MODULE_3__.getCookie)('token'), id).then(function (res) {
-      return console.log(res);
+      console.log(res);
+      setNotificationDrop(false);
     }); // console.log(id)
   };
 
