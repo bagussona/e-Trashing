@@ -12,9 +12,9 @@ class ForgotPasswordController extends Controller
     public function forgot(){
         $credentials = request()->validate(['email' => 'required|email']);
 
-        Password::sendResetLink($credentials);
+        $data = Password::sendResetLink($credentials);
 
-        return response()->json(["msg" => "Link reset password berhasil dikirim. Silahkan cek email, untuk konfirmasi reset password anda!"], 200);
+        return response()->json(["msg" => "Link reset password berhasil dikirim. Silahkan cek email, untuk konfirmasi reset password anda!", "data" => $data], 200);
     }
 
     public function reset(){
